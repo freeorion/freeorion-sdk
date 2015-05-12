@@ -300,6 +300,36 @@ ExternalProject_Add_Step(glew
     COMMENT "Remove glew additional files"
 )
 
+configure_file(
+    boost-config.jam.in
+    boost-config.jam
+)
+
+ExternalProject_Add(boost
+    DEPENDS zlib python
+    URL http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz/download
+    URL_MD5 5a5d5614d9a07672e1ab2a250b5defc5
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    BUILD_IN_SOURCE 1
+    CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh
+    BUILD_COMMAND <SOURCE_DIR>/b2 install
+        --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
+        --without-coroutine
+        --without-mpi
+        --without-program_options
+        --without-wave
+        --prefix=<INSTALL_DIR>
+        --threading=multi
+        --link=shared
+        --variant=release
+        -s NO_BZIP2=1
+        -s NO_ZLIB=0
+        -s ZLIB_SOURCE=${SDK_INSTALL_DIR}
+        -d0 # Please, shut up
+    INSTALL_COMMAND ""
+    INSTALL_DIR ${SDK_INSTALL_DIR}/Boost
+)
+
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES

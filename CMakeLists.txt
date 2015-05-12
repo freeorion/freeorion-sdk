@@ -102,6 +102,42 @@ ExternalProject_Add_Step(libogg
     COMMENT "Remove libogg additional files"
 )
 
+ExternalProject_Add(libvorbis
+    DEPENDS libogg
+    URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
+    URL_MD5 7220e089f3be3412a2317d6fde9e3944
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    CONFIGURE_COMMAND <SOURCE_DIR>/configure
+        --prefix=<INSTALL_DIR>
+        --disable-docs
+        --disable-examples
+        --disable-oggtest
+    INSTALL_DIR ${SDK_INSTALL_DIR}
+)
+
+# This circumvents a bug in the upstream configure.ac file
+ExternalProject_Add_Step(libvorbis
+    deleteDocumentation
+    DEPENDEES install
+    WORKING_DIRECTORY <INSTALL_DIR>
+    COMMAND ${CMAKE_COMMAND} -E remove_directory <INSTALL_DIR>/share/doc/libvorbis-1.3.5
+    COMMENT "Remove documentation for libvorbis from SDK"
+)
+
+# This circumvents a missing option to prevent installing the executables
+# pkgconfig files
+ExternalProject_Add_Step(libvorbis
+    removeExtraFiles
+    DEPENDEES install
+    WORKING_DIRECTORY <INSTALL_DIR>
+    COMMAND ${CMAKE_COMMAND} -E remove
+        <INSTALL_DIR>/lib/pkgconfig/vorbis.pc
+        <INSTALL_DIR>/lib/pkgconfig/vorbisenc.pc
+        <INSTALL_DIR>/lib/pkgconfig/vorbisfile.pc
+        <INSTALL_DIR>/share/aclocal/vorbis.m4
+    COMMENT "Remove libvorbis additional files"
+)
+
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES

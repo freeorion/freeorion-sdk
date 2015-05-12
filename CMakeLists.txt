@@ -39,6 +39,15 @@ ExternalProject_Add(libpng
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+ExternalProject_Add(freetype2
+    URL http://sourceforge.net/projects/freetype/files/freetype2/2.5.5/freetype-2.5.5.tar.gz/download
+    URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    INSTALL_DIR ${SDK_INSTALL_DIR}
+)
+
 ExternalProject_Add(sdl
     URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537

@@ -39,6 +39,37 @@ ExternalProject_Add(libpng
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+ExternalProject_Add(python
+    URL https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
+    URL_MD5 5eebcaa0030dc4061156d3429657fb83
+    CONFIGURE_COMMAND <SOURCE_DIR>/configure
+        --prefix=<INSTALL_DIR>
+    INSTALL_DIR ${SDK_INSTALL_DIR}
+)
+
+# This circumvents a missing option to prevent installing the executables
+# pkgconfig files
+ExternalProject_Add_Step(python
+    removeExtraFiles
+    DEPENDEES install
+    WORKING_DIRECTORY <INSTALL_DIR>
+    COMMAND ${CMAKE_COMMAND} -E remove
+        <INSTALL_DIR>/bin/2to3
+        <INSTALL_DIR>/bin/idle
+        <INSTALL_DIR>/bin/pydoc
+        <INSTALL_DIR>/bin/python-config
+        <INSTALL_DIR>/bin/python2-config
+        <INSTALL_DIR>/bin/python2.7-config
+        <INSTALL_DIR>/bin/smtpd.py
+        <INSTALL_DIR>/lib/pkgconfig/python.pc
+        <INSTALL_DIR>/lib/pkgconfig/python2.pc
+        <INSTALL_DIR>/lib/pkgconfig/python-2.7.pc
+        <INSTALL_DIR>/share/man/man1/python.1
+        <INSTALL_DIR>/share/man/man1/python2.1
+        <INSTALL_DIR>/share/man/man1/python2.7.1
+    COMMENT "Remove python additional files"
+)
+
 ExternalProject_Add(freetype2
     URL http://sourceforge.net/projects/freetype/files/freetype2/2.5.5/freetype-2.5.5.tar.gz/download
     URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8

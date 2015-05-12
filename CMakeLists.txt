@@ -23,6 +23,22 @@ ExternalProject_Add(zlib
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+ExternalProject_Add(libpng
+    DEPENDS zlib
+    URL http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.gz/download
+    URL_MD5 134282f1752dcf4cd81a37b8ff421cef
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DPNG_STATIC=OFF
+        -DPNG_TESTS=OFF
+        -DSKIP_INSTALL_EXECUTABLES=ON
+        -DSKIP_INSTALL_FILES=ON
+        -DSKIP_INSTALL_EXPORT=ON
+        -DZLIB_ROOT=<INSTALL_DIR>
+    INSTALL_DIR ${SDK_INSTALL_DIR}
+)
+
 ExternalProject_Add(sdl
     URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537

@@ -138,6 +138,31 @@ ExternalProject_Add_Step(libvorbis
     COMMENT "Remove libvorbis additional files"
 )
 
+ExternalProject_Add(openal-soft
+    URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.16.0.tar.bz2
+    URL_MD5 14db4b0d12f07252070b4fe5eb5911f6
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DALSOFT_UTILS=OFF
+        -DALSOFT_NO_CONFIG_UTIL=ON
+        -DALSOFT_EXAMPLES=OFF
+        -DALSOFT_CONFIG=OFF
+        -DALSOFT_HRTF_DEFS=OFF
+    INSTALL_DIR ${SDK_INSTALL_DIR}
+)
+
+# This circumvents a missing option to prevent installing the executables
+# pkgconfig files
+ExternalProject_Add_Step(openal-soft
+    removeExtraFiles
+    DEPENDEES install
+    WORKING_DIRECTORY <INSTALL_DIR>
+    COMMAND ${CMAKE_COMMAND} -E remove
+        <INSTALL_DIR>/lib/pkgconfig/openal.pc
+    COMMENT "Remove openal additional files"
+)
+
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES

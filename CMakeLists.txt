@@ -39,11 +39,85 @@ ExternalProject_Add(libpng
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+set(PYTHON_VERSION 2.7.9)
+set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
+
+ExternalProject_Add(python-cmake
+    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/master.zip
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+)
+
+ExternalProject_Get_Property(python-cmake SOURCE_DIR)
+set(PYTHON_CMAKE_SOURCE_DIR ${SOURCE_DIR})
+unset(SOURCE_DIR)
+
 ExternalProject_Add(python
-    URL https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
+    DEPENDS python-cmake zlib
+    URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
     URL_MD5 5eebcaa0030dc4061156d3429657fb83
-    CONFIGURE_COMMAND <SOURCE_DIR>/configure
-        --prefix=<INSTALL_DIR>
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CMakeLists.txt <SOURCE_DIR>
+    COMMAND ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CTestConfig.cmake <SOURCE_DIR>
+    COMMAND ${CMAKE_COMMAND} -E make_directory <SOURCE_DIR>/cmake
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DPY_VERSION=${PYTHON_VERSION}
+        -DDOWNLOAD_SOURCES=OFF
+        -DBUILD_SHARED=ON
+        -DBUILD_STATIC=OFF
+        -DBUILD_TESTING=OFF
+        -DENABLE_AUDIOOP=OFF
+        -DENABLE_BSDDB=OFF
+        #DENABLE_BZ2=OFF
+        #DENABLE_CODECS_CN=OFF
+        #DENABLE_CODECS_HK=OFF
+        #DENABLE_CODECS_ISO2022=OFF
+        #DENABLE_CODECS_JP=OFF
+        #DENABLE_CODECS_KR=OFF
+        #DENABLE_CODECS=OFF
+        #DENABLE_CODECS_TW=OFF
+        #DENABLE_CRYPT=OFF
+        -DENABLE_CSV=OFF
+        #DENABLE_CTYPES_TEST=OFF
+        #DENABLE_CURSES=OFF
+        #DENABLE_CURSES_PANEL=OFF
+        #DENABLE_DBM=OFF
+        #DENABLE_ELEMENTTREE=OFF
+        #DENABLE_FCNTL=OFF
+        -DENABLE_GDBM=OFF
+        -DENABLE_GRP=OFF
+        #DENABLE_HASHLIB=OFF
+        #DENABLE_HEAPQ=OFF
+        #DENABLE_HOTSHOT=OFF
+        #DENABLE_JSON=OFF
+        -DENABLE_LINUXAUDIODEV=OFF
+        #DENABLE_MMAP=OFF
+        #DENABLE_MULTIBYTECODEC=OFF
+        #DENABLE_MULTIPROCESSING=OFF
+        -DENABLE_NIS=OFF
+        #DENABLE_NT=OFF
+        -DENABLE_OSSAUDIODEV=OFF
+        #DENABLE_PARSER=OFF
+        #DENABLE_POSIX=OFF
+        -DENABLE_PWD=OFF
+        #DENABLE_PYEXPAT=OFF
+        #DENABLE_READLINE=OFF
+        #DENABLE_SELECT=OFF
+        #DENABLE_SOCKET=OFF
+        -DENABLE_SPWD=OFF
+        -DENABLE_SQLITE3=OFF
+        #DENABLE_SSL=OFF
+        #DENABLE_STRUCT=OFF
+        #DENABLE_SYSLOG=OFF
+        #DENABLE_TERMIOS=OFF
+        #DENABLE_TESTCAPI=OFF
+        #DENABLE_TKINTER=OFF
+        #DENABLE_UNICODEDATA=OFF
+        #DENABLE_ZLIB=OFF
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 

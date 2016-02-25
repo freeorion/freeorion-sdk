@@ -300,6 +300,12 @@ ExternalProject_Add_Step(glew
     COMMENT "Remove glew additional files"
 )
 
+if(NOT WIN32)
+    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
+else()
+    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
+endif()
+
 configure_file(
     boost-config.jam.in
     boost-config.jam
@@ -311,7 +317,7 @@ ExternalProject_Add(boost
     URL_MD5 5a5d5614d9a07672e1ab2a250b5defc5
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1
-    CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh
+    CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-coroutine

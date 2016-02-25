@@ -23,6 +23,26 @@ ExternalProject_Add(zlib
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+if(WIN32)
+    # This circumvents a wrongly installed include dir in the WIN32 SDK
+    ExternalProject_Add_Step(zlib
+        moveHeader
+        DEPENDEES install
+        WORKING_DIRECTORY <INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/include/zlib
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            <INSTALL_DIR>/include/zlib
+        COMMAND ${CMAKE_COMMAND} -E rename
+            <INSTALL_DIR>/include/zlib.h
+            <INSTALL_DIR>/include/zlib/zlib.h
+        COMMAND ${CMAKE_COMMAND} -E rename
+            <INSTALL_DIR>/include/zconf.h
+            <INSTALL_DIR>/include/zlib/zconf.h
+        COMMENT "Move zlib headers to broken WIN32 SDK location"
+    )
+endif()
+
 ExternalProject_Add(libpng
     DEPENDS zlib
     URL http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.gz/download
@@ -38,6 +58,34 @@ ExternalProject_Add(libpng
         -DZLIB_ROOT=<INSTALL_DIR>
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+
+if(WIN32)
+    # This circumvents a wrongly installed include dir in the WIN32 SDK
+    ExternalProject_Add_Step(libpng
+        moveHeader
+        DEPENDEES install
+        WORKING_DIRECTORY <INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/include/png
+        COMMAND ${CMAKE_COMMAND} -E rename
+            <INSTALL_DIR>/include/libpng16
+            <INSTALL_DIR>/include/png
+        COMMENT "Move FreeType headers to broken WIN32 SDK location"
+    )
+
+    # This circumvents a missing option to prevent installing the png header
+    # in the include root directory. (WIN32 SDK)
+    ExternalProject_Add_Step(libpng
+        removeHeaderFiles
+        DEPENDEES install
+        WORKING_DIRECTORY <INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} -E remove
+            <INSTALL_DIR>/include/png.h
+            <INSTALL_DIR>/include/pngconf.h
+            <INSTALL_DIR>/include/pnglibconf.h
+        COMMENT "Remove libpng root header files"
+    )
+endif()
 
 set(PYTHON_VERSION 2.7.9)
 set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
@@ -152,6 +200,19 @@ ExternalProject_Add(freetype2
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+
+if(WIN32)
+    # This circumvents a wrongly installed include dir in the WIN32 SDK
+    ExternalProject_Add_Step(freetype2
+        moveHeader
+        DEPENDEES install
+        WORKING_DIRECTORY <INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} -E rename
+            <INSTALL_DIR>/include/freetype2
+            <INSTALL_DIR>/include/freetype
+        COMMENT "Move FreeType headers to broken WIN32 SDK location"
+    )
+endif(WIN32)
 
 ExternalProject_Add(sdl
     URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz

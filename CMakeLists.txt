@@ -11,7 +11,7 @@ set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
 # Common download directory for all dependency source releases.  Storing
 # those in a separate directory from the standard *-prefix directories
 # prevents re-downloading them when cleaning up the SDK build.
-set(SDK_DOWNLOAD_DIR downloads)
+set(SDK_DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads)
 
 ExternalProject_Add(zlib
     URL http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download

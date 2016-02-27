@@ -52,6 +52,48 @@ else()
     endif()
 endif()
 
+if(WIN32)
+    # CMake doesn't allow to pack directories as zip files without adding a prefix to the zip
+    # file entries, so we download the zip tool from the GNUWIN32 project
+    ExternalProject_Add(zip-deps
+        URL http://downloads.sourceforge.net/project/gnuwin32/zip/3.0/zip-3.0-dep.zip
+        URL_MD5 8bd9a45e1259238c1f6bb277fe6386c0
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
+            <SOURCE_DIR>/bin/bzip2.dll
+            ${SDK_BINARY_DIR}/bzip2.dll
+    )
+
+    ExternalProject_Add(zip
+        DEPENDS zip-deps
+        URL http://downloads.sourceforge.net/project/gnuwin32/zip/3.0/zip-3.0-bin.zip
+        URL_MD5 5b268fe06ce5f89bc5762805a7a9d7aa
+        # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
+        # privileges.  By installing the manifest we assure that this isn't the case.
+        PATCH_COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/exe.manifest
+            <SOURCE_DIR>/bin/zip.exe.manifest
+        # To let UAC pick up the manifest the executable needs to be more recent than the manifest
+        COMMAND ${CMAKE_COMMAND} -E touch <SOURCE_DIR>/bin/zip.exe
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
+            <SOURCE_DIR>/bin/zip.exe.manifest
+            ${SDK_BINARY_DIR}/zip.exe.manifest
+        COMMAND ${CMAKE_COMMAND} -E copy
+            <SOURCE_DIR>/bin/zip.exe
+            ${SDK_BINARY_DIR}/zip.exe
+    )
+    set(ZIP_EXECUTABLE ${SDK_BINARY_DIR}/zip.exe)
+else()
+    add_custom_target(zip)
+    find_program(ZIP_EXECUTABLE zip)
+    if(NOT ZIP_EXECUTABLE)
+        message(FATAL_ERROR "Unable to locate `zip` executable.")
+    endif()
+endif()
+
 ExternalProject_Add(zlib
     DEPENDS patch
     URL http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download

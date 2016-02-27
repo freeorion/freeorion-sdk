@@ -75,6 +75,9 @@ if(WIN32)
             <INSTALL_DIR>/include/zlib/zconf.h
         COMMENT "Move zlib headers to broken WIN32 SDK location"
     )
+    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include/zlib)
+else()
+    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include)
 endif()
 
 ExternalProject_Add(libpng
@@ -90,6 +93,7 @@ ExternalProject_Add(libpng
         -DSKIP_INSTALL_FILES=ON
         -DSKIP_INSTALL_EXPORT=ON
         -DZLIB_ROOT=<INSTALL_DIR>
+        -DZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 

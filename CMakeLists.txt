@@ -108,20 +108,11 @@ if(WIN32)
         COMMAND ${CMAKE_COMMAND} -E rename
             <INSTALL_DIR>/include/libpng16
             <INSTALL_DIR>/include/png
-        COMMENT "Move FreeType headers to broken WIN32 SDK location"
-    )
-
-    # This circumvents a missing option to prevent installing the png header
-    # in the include root directory. (WIN32 SDK)
-    ExternalProject_Add_Step(libpng
-        removeHeaderFiles
-        DEPENDEES install
-        WORKING_DIRECTORY <INSTALL_DIR>
         COMMAND ${CMAKE_COMMAND} -E remove
             <INSTALL_DIR>/include/png.h
             <INSTALL_DIR>/include/pngconf.h
             <INSTALL_DIR>/include/pnglibconf.h
-        COMMENT "Remove libpng root header files"
+        COMMENT "Move FreeType headers to broken WIN32 SDK location"
     )
 endif()
 

@@ -1,0 +1,6 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+# Normalize all detected text files to LF line endings when checking in.
+* text=auto
+
+# MS Application manifest
+*.manifest text eol=crlf

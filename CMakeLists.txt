@@ -13,6 +13,40 @@ set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
 # prevents re-downloading them when cleaning up the SDK build.
 set(SDK_DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads)
 
+# Common directory for all executables to build the SDK.
+set(SDK_BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
+
+if(WIN32)
+    # Windows doesn't provide a basic patch tool, so we download one from the GNUWIN32 project
+    ExternalProject_Add(patch
+        URL http://downloads.sourceforge.net/project/gnuwin32/patch/2.5.9-7/patch-2.5.9-7-bin.zip
+        URL_MD5 b9c8b31d62f4b2e4f1887bbb63e8a905
+        DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+        # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
+        # privileges.  By installing the manifest we assure that this isn't the case.
+        PATCH_COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/exe.manifest
+            <SOURCE_DIR>/bin/patch.exe.manifest
+        # To let UAC pick up the manifest the executable needs to be more recent than the manifest
+        COMMAND ${CMAKE_COMMAND} -E touch <SOURCE_DIR>/bin/patch.exe
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
+            <SOURCE_DIR>/bin/patch.exe.manifest
+            ${SDK_BINARY_DIR}/patch.exe.manifest
+        COMMAND ${CMAKE_COMMAND} -E copy
+            <SOURCE_DIR>/bin/patch.exe
+            ${SDK_BINARY_DIR}/patch.exe
+    )
+    set(PATCH_EXECUTABLE ${SDK_BINARY_DIR}/patch.exe)
+else()
+    add_custom_target(patch)
+    find_program(PATCH_EXECUTABLE patch)
+    if(NOT ${PATCH_EXECUTABLE})
+        message(FATAL_ERROR "Unable to locate `patch` executable.")
+    endif()
+endif()
+
 ExternalProject_Add(zlib
     URL http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download
     URL_MD5 44d667c142d7cda120332623eab69f40
@@ -401,4 +435,5 @@ set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES
     ${SDK_INSTALL_DIR}
+    ${SDK_BINARY_DIR}
 )

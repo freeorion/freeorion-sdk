@@ -434,6 +434,5 @@ ExternalProject_Add(boost
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES
-    ${SDK_INSTALL_DIR}
-    ${SDK_BINARY_DIR}
+    "${SDK_INSTALL_DIR};${SDK_BINARY_DIR}"
 )

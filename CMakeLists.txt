@@ -82,7 +82,7 @@ endif()
 
 ExternalProject_Add(libpng
     DEPENDS zlib
-    URL http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.gz/download
+    URL https://sourceforge.net/projects/libpng/files/libpng16/older-releases/1.6.17/libpng-1.6.17.tar.gz/download
     URL_MD5 134282f1752dcf4cd81a37b8ff421cef
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS

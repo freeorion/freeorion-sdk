@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
+option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Set the default build configuration for this build" FORCE)
+endif()
+
 project(FreeOrionSDK)
 
 include(ExternalProject)
@@ -53,6 +58,8 @@ ExternalProject_Add(zlib
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DSKIP_INSTALL_FILES=ON
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
@@ -87,6 +94,8 @@ ExternalProject_Add(libpng
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DPNG_STATIC=OFF
         -DPNG_TESTS=OFF
         -DSKIP_INSTALL_EXECUTABLES=ON
@@ -131,6 +140,12 @@ ExternalProject_Get_Property(python-cmake SOURCE_DIR)
 set(PYTHON_CMAKE_SOURCE_DIR ${SOURCE_DIR})
 unset(SOURCE_DIR)
 
+if(BUILD_SHARED_LIBS)
+    set(PYTHON_BUILD_STATIC OFF)
+else()
+    set(PYTHON_BUILD_STATIC ON)
+endif()
+
 ExternalProject_Add(python
     DEPENDS python-cmake zlib
     URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
@@ -142,10 +157,11 @@ ExternalProject_Add(python
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED=${BUILD_SHARED_LIBS}
+        -DBUILD_STATIC=${PYTHON_BUILD_STATIC}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DPY_VERSION=${PYTHON_VERSION}
         -DDOWNLOAD_SOURCES=OFF
-        -DBUILD_SHARED=ON
-        -DBUILD_STATIC=OFF
         -DBUILD_TESTING=OFF
         -DENABLE_AUDIOOP=OFF
         -DENABLE_BSDDB=OFF
@@ -227,6 +243,8 @@ ExternalProject_Add(freetype2
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
@@ -248,10 +266,12 @@ ExternalProject_Add(sdl
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DSDL_STATIC=OFF
         -DDIRECTX=OFF
         -DRENDER_D3D=OFF
-        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
@@ -341,6 +361,8 @@ ExternalProject_Add(openal-soft
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DALSOFT_UTILS=OFF
         -DALSOFT_NO_CONFIG_UTIL=ON
         -DALSOFT_EXAMPLES=OFF
@@ -366,6 +388,8 @@ ExternalProject_Add(glew
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
@@ -398,6 +422,18 @@ else()
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
 endif()
 
+if(BUILD_SHARED_LIBS)
+    set(BOOST_LINK "shared")
+else()
+    set(BOOST_LINK "static")
+endif()
+
+if(CMAKE_BUILD_TYPE MATCHES "^Rel(ease|WithDebInfo)$")
+    set(BOOST_VARIANT "release")
+else()
+    set(BOOST_VARIANT "debug")
+endif()
+
 configure_file(
     boost-config.jam.in
     boost-config.jam
@@ -417,9 +453,9 @@ ExternalProject_Add(boost
         --without-program_options
         --without-wave
         --prefix=<INSTALL_DIR>
-        --threading=multi
-        --link=shared
-        --variant=release
+        threading=multi
+        link=${BOOST_LINK}
+        variant=${BOOST_VARIANT}
         -s NO_BZIP2=1
         -s NO_ZLIB=0
         -s ZLIB_SOURCE=${SDK_INSTALL_DIR}

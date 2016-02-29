@@ -298,7 +298,9 @@ ExternalProject_Add(freetype2
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        # FreeType doesn't provide any exported symbols, so build
+        # it as static library.
+        -DBUILD_SHARED_LIBS=OFF
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )

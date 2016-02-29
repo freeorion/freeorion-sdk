@@ -132,8 +132,11 @@ set(PYTHON_VERSION 2.7.9)
 set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
 
 ExternalProject_Add(python-cmake
+    DEPENDS patch
     URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/master.zip
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/python-cmake.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""

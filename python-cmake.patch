@@ -30,8 +30,34 @@
  
  # Directories specific to 'libpython'
  set(LIBPYTHON_LIBDIR ${LIBDIR})
+@@ -409,11 +406,11 @@ write_basic_package_version_file(
+ )
+ 
+ # Install 'PythonTargets.cmake', 'PythonConfig.cmake' and 'PythonConfigVersion.cmake
+-install(EXPORT PythonTargets FILE PythonTargets.cmake DESTINATION ${CONFIG_INSTALL_DIR})
++#install(EXPORT PythonTargets FILE PythonTargets.cmake DESTINATION ${CONFIG_INSTALL_DIR})
+ 
+-install(
+-    FILES ${python_install_config} ${python_config_version}
+-    DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development
+-)
++#install(
++#    FILES ${python_install_config} ${python_config_version}
++#    DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development
++#)
+ 
+ endif(HAVE_CONFIGURE_PACKAGE_CONFIG_FILE AND HAVE_WRITE_BASIC_PACKAGE_VERSION_FILE)
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
+@@ -290,7 +290,7 @@ function(add_libpython name type)
+     # Export target
+     set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS ${name})
+ 
+-    install(TARGETS ${name} EXPORT PythonTargets
++    install(TARGETS ${name}
+         ARCHIVE DESTINATION ${LIBPYTHON_ARCHIVEDIR}
+         LIBRARY DESTINATION ${LIBPYTHON_LIBDIR}
+         RUNTIME DESTINATION ${LIBPYTHON_LIBDIR}
 @@ -311,6 +311,13 @@ if(BUILD_SHARED)
              SOURCE ${SRC_DIR}/Modules/posixmodule.c
              APPEND PROPERTY COMPILE_DEFINITIONS WITH_NEXT_FRAMEWORK)
@@ -46,3 +72,14 @@
  endif(BUILD_SHARED)
  
  if(BUILD_STATIC)
+--- a/cmake/python/CMakeLists.txt
++++ b/cmake/python/CMakeLists.txt
+@@ -20,7 +20,7 @@ endif(BUILD_SHARED)
+ # Export target
+ set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS python)
+ 
+-install(TARGETS python EXPORT PythonTargets RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
++install(TARGETS python RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
+ 
+ # See "is_python_build()" in sysconfig.py
+ add_custom_command(TARGET python PRE_BUILD

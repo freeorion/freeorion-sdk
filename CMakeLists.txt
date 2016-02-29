@@ -352,17 +352,6 @@ ExternalProject_Add(libogg
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
-# This circumvents a missing option to prevent installing the executables
-# pkgconfig files
-ExternalProject_Add_Step(libogg
-    removeExtraFiles
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/lib/pkgconfig/ogg.pc
-    COMMENT "Remove libogg additional files"
-)
-
 ExternalProject_Add(libvorbis
     DEPENDS libogg
     URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz

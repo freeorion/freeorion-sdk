@@ -30,3 +30,19 @@
  
  # Directories specific to 'libpython'
  set(LIBPYTHON_LIBDIR ${LIBDIR})
+--- a/cmake/libpython/CMakeLists.txt
++++ b/cmake/libpython/CMakeLists.txt
+@@ -311,6 +311,13 @@ if(BUILD_SHARED)
+             SOURCE ${SRC_DIR}/Modules/posixmodule.c
+             APPEND PROPERTY COMPILE_DEFINITIONS WITH_NEXT_FRAMEWORK)
+     endif(APPLE)
++    if(MSVC)
++        install(
++            FILES ${BIN_BUILD_DIR}/${LIBPYTHON}.pdb
++            DESTINATION ${LIBPYTHON_ARCHIVEDIR}
++            CONFIGURATIONS Debug RelWithDebInfo
++        )
++    endif(MSVC)
+ endif(BUILD_SHARED)
+ 
+ if(BUILD_STATIC)

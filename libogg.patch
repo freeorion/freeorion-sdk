@@ -1,6 +1,6 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -0,0 +1,105 @@
+@@ -0,0 +1,108 @@
 +cmake_minimum_required(VERSION 2.8.7)
 +project(libogg)
 +
@@ -106,3 +106,6 @@
 +install(FILES include/ogg/ogg.h include/ogg/os_types.h include/ogg/config_types.h DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/ogg)
 +install(TARGETS ogg RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
 +install(FILES ogg.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
++if(MSVC)
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ogg.pdb DESTINATION ${CMAKE_INSTALL_LIBDIR} CONFIGURATIONS Debug RelWithDebInfo)
++endif()

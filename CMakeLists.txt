@@ -53,9 +53,12 @@ else()
 endif()
 
 ExternalProject_Add(zlib
+    DEPENDS patch
     URL http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download
     URL_MD5 44d667c142d7cda120332623eab69f40
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/zlib.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

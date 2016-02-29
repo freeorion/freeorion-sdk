@@ -322,6 +322,8 @@ ExternalProject_Add(sdl
     URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/sdl.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -330,19 +332,6 @@ ExternalProject_Add(sdl
         -DDIRECTX=OFF
         -DRENDER_D3D=OFF
     INSTALL_DIR ${SDK_INSTALL_DIR}
-)
-
-# This circumvents a missing option to prevent installing the executables
-# pkgconfig files
-ExternalProject_Add_Step(sdl
-    removeExtraFiles
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/bin/sdl2-config
-        <INSTALL_DIR>/share/aclocal/sdl2.m4
-        <INSTALL_DIR>/lib/pkgconfig/sdl2.pc
-    COMMENT "Remove sdl additional files"
 )
 
 ExternalProject_Add(libogg

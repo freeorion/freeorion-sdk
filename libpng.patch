@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt.orig b/CMakeLists.txt
+index f062a23..d93b156 100644
+--- a/CMakeLists.txt.orig
++++ b/CMakeLists.txt
+@@ -310,6 +310,12 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
+       install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libpng${CMAKE_SHARED_LIBRARY_SUFFIX}
+          DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     endif(NOT WIN32)
++
++    if(MSVC AND PNG_SHARED AND NOT SKIP_INSTALL_DEBUG_SYMBOLS)
++      install(FILES "${CMAKE_CURRENT_BINARY_DIR}/lib${PNG_LIB_NAME}.pdb"
++        DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++        CONFIGURATIONS Debug RelWithDebInfo)
++    endif()
+   endif(PNG_SHARED)
+ 
+   if(PNG_STATIC)

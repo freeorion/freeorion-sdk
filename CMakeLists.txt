@@ -135,10 +135,12 @@ else()
 endif()
 
 ExternalProject_Add(libpng
-    DEPENDS zlib
+    DEPENDS patch zlib
     URL https://sourceforge.net/projects/libpng/files/libpng16/older-releases/1.6.17/libpng-1.6.17.tar.gz/download
     URL_MD5 134282f1752dcf4cd81a37b8ff421cef
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/libpng.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

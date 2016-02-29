@@ -427,23 +427,17 @@ ExternalProject_Add(openal-soft
 )
 
 ExternalProject_Add(glew
-    URL http://sourceforge.net/projects/glew/files/glew/1.12.0/glew-1.12.0.tgz/download
-    URL_MD5 01246c7ecd135d99be031aa63f86dca1
+    URL http://sourceforge.net/projects/glew/files/glew/1.13.0/glew-1.13.0.tgz/download
+    URL_MD5 7cbada3166d2aadfc4169c4283701066
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    CMAKE_ARGS
+    CONFIGURE_COMMAND ${CMAKE_COMMAND}
+        -G "${CMAKE_GENERATOR}"
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DBUILD_UTILS=OFF
+        <SOURCE_DIR>/build/cmake/
     INSTALL_DIR ${SDK_INSTALL_DIR}
-)
-
-# This circumvents a bug in the upstream CMakeLists.txt file
-ExternalProject_Add_Step(glew
-    installHEADER
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
-    COMMENT "Copy glew header files to SDK"
 )
 
 # This circumvents a missing option to prevent installing the executables
@@ -453,8 +447,6 @@ ExternalProject_Add_Step(glew
     DEPENDEES install
     WORKING_DIRECTORY <INSTALL_DIR>
     COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/bin/glewinfo
-        <INSTALL_DIR>/bin/visualinfo
         <INSTALL_DIR>/lib/pkgconfig/glew.pc
         <INSTALL_DIR>/lib/pkgconfig/glewmx.pc
     COMMENT "Remove glew additional files"

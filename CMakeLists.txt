@@ -359,9 +359,12 @@ ExternalProject_Add_Step(libvorbis
 )
 
 ExternalProject_Add(openal-soft
+    DEPENDS patch
     URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.16.0.tar.bz2
     URL_MD5 14db4b0d12f07252070b4fe5eb5911f6
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/openal-soft.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -371,18 +374,23 @@ ExternalProject_Add(openal-soft
         -DALSOFT_EXAMPLES=OFF
         -DALSOFT_CONFIG=OFF
         -DALSOFT_HRTF_DEFS=OFF
+        -DALSOFT_PKGCONFIG=OFF
+        -DALSOFT_REQUIRE_MMDEVAPI=${WIN32}
+        -DALSOFT_REQUIRE_COREAUDIO=${APPLE}
+        -DALSOFT_CPUEXT_NEON=OFF
+        -DALSOFT_MIDI_FLUIDSYNTH=OFF
+        -DALSOFT_BACKEND_ALSA=OFF
+        -DALSOFT_BACKEND_OSS=OFF
+        -DALSOFT_BACKEND_SOLARIS=OFF
+        -DALSOFT_BACKEND_SNDIO=OFF
+        -DALSOFT_BACKEND_QSA=OFF
+        -DALSOFT_BACKEND_WINMM=OFF
+        -DALSOFT_BACKEND_DSOUND=OFF
+        -DALSOFT_BACKEND_PORTAUDIO=OFF
+        -DALSOFT_BACKEND_PULSEAUDIO=OFF
+        -DALSOFT_BACKEND_OPENSL=OFF
+        -DALSOFT_BACKEND_WAVE=OFF
     INSTALL_DIR ${SDK_INSTALL_DIR}
-)
-
-# This circumvents a missing option to prevent installing the executables
-# pkgconfig files
-ExternalProject_Add_Step(openal-soft
-    removeExtraFiles
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/lib/pkgconfig/openal.pc
-    COMMENT "Remove openal additional files"
 )
 
 ExternalProject_Add(glew

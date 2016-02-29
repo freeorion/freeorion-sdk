@@ -430,6 +430,8 @@ ExternalProject_Add(glew
     URL http://sourceforge.net/projects/glew/files/glew/1.13.0/glew-1.13.0.tgz/download
     URL_MD5 7cbada3166d2aadfc4169c4283701066
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/glew.patch
     CONFIGURE_COMMAND ${CMAKE_COMMAND}
         -G "${CMAKE_GENERATOR}"
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>

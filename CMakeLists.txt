@@ -519,6 +519,15 @@ ExternalProject_Add_Step(boost
     COMMENT "Copy boost dll files into SDK bin directory"
 )
 
+ExternalProject_Add_Step(boost
+    removeExtraPDB
+    DEPENDEES install
+    COMMAND ${CMAKE_COMMAND} -E remove
+        <INSTALL_DIR>/lib/accepts_shared_option.pdb
+        <INSTALL_DIR>/lib/has_atomic_flag_lockfree.pdb
+    COMMENT "Remove extra PDB files"
+)
+
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES

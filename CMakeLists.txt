@@ -171,7 +171,6 @@ if(WIN32)
 endif()
 
 set(PYTHON_VERSION 2.7.9)
-set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
 
 ExternalProject_Add(python-cmake
     DEPENDS patch

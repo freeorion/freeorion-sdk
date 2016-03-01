@@ -94,9 +94,11 @@ else()
     endif()
 endif()
 
+set(ZLIB_VERSION 1.2.8)
+
 ExternalProject_Add(zlib
     DEPENDS patch
-    URL http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download
+    URL http://sourceforge.net/projects/libpng/files/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz/download
     URL_MD5 44d667c142d7cda120332623eab69f40
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
@@ -516,8 +518,6 @@ ExternalProject_Add(boost
         link=${BOOST_LINK}
         variant=${BOOST_VARIANT}
         -s NO_BZIP2=1
-        -s NO_ZLIB=0
-        -s ZLIB_SOURCE=${SDK_INSTALL_DIR}
         -d0 # Please, shut up
     INSTALL_COMMAND ""
     INSTALL_DIR ${SDK_INSTALL_DIR}/Boost

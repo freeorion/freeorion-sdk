@@ -195,7 +195,7 @@ else()
 endif()
 
 ExternalProject_Add(python
-    DEPENDS python-cmake zlib
+    DEPENDS zip python-cmake zlib
     URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
     URL_MD5 5eebcaa0030dc4061156d3429657fb83
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -263,6 +263,31 @@ ExternalProject_Add(python
         #DENABLE_ZLIB=OFF
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+
+if(WIN32)
+    # FreeOrion packages the python standard library in a zip file for
+    # distribution.
+    ExternalProject_Add_Step(python
+        zipPythonSTDlib
+        DEPENDEES install
+        WORKING_DIRECTORY
+            <INSTALL_DIR>/lib/python27
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/lib/python27/lib-dynload
+        COMMAND ${ZIP_EXECUTABLE} -r -9
+            <INSTALL_DIR>/bin/python27.zip
+            .
+        COMMENT "Zip python standard library"
+    )
+
+    ExternalProject_Add_Step(python
+        removePythonSTDlib
+        DEPENDEES zipPythonSTDlib
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/lib/python27
+        COMMENT "Remove python standard library from install"
+    )
+endif()
 
 # This circumvents a missing option to prevent installing the executables
 # pkgconfig files

@@ -169,6 +169,7 @@ ExternalProject_Add(python
         -DPY_VERSION=${PYTHON_VERSION}
         -DDOWNLOAD_SOURCES=OFF
         -DBUILD_TESTING=OFF
+        -DBUILD_WININST=OFF
         -DENABLE_AUDIOOP=OFF
         -DENABLE_BSDDB=OFF
         #DENABLE_BZ2=OFF

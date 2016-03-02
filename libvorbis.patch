@@ -1,6 +1,6 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,71 @@
 +cmake_minimum_required(VERSION 2.8.7)
 +project(vorbis)
 +
@@ -69,7 +69,9 @@
 +configure_pkg_config_file(vorbisenc.pc.in)
 +configure_pkg_config_file(vorbisfile.pc.in)
 +
-+install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
++if(NOT WIN32)
++    install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
++endif(NOT WIN32)
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -0,0 +1,116 @@

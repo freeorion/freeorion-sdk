@@ -1,0 +1,19 @@
+--- a/boostcpp.jam
++++ b/boostcpp.jam
+@@ -214,15 +214,7 @@ rule declare_install_and_stage_proper_targets ( libraries * : headers * )
+ {
+     install-requirements = <install-source-root>$(BOOST_ROOT)/boost ;
+ 
+-    if $(layout-versioned)
+-    {
+-        install-requirements +=
+-            <install-header-subdir>boost-$(BOOST_VERSION_TAG)/boost ;
+-    }
+-    else
+-    {
+-        install-requirements += <install-header-subdir>boost ;
+-    }
++    install-requirements += <install-header-subdir>boost ;
+ 
+     if [ os.name ] = NT
+     {

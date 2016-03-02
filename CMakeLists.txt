@@ -501,11 +501,13 @@ configure_file(
 )
 
 ExternalProject_Add(boost
-    DEPENDS zlib python
+    DEPENDS patch zlib python
     URL http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz/download
     URL_MD5 5a5d5614d9a07672e1ab2a250b5defc5
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/boost.patch
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam

@@ -373,21 +373,13 @@ ExternalProject_Add(libvorbis
     URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
     URL_MD5 7220e089f3be3412a2317d6fde9e3944
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    CONFIGURE_COMMAND <SOURCE_DIR>/configure
-        --prefix=<INSTALL_DIR>
-        --disable-docs
-        --disable-examples
-        --disable-oggtest
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/libvorbis.patch
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
-)
-
-# This circumvents a bug in the upstream configure.ac file
-ExternalProject_Add_Step(libvorbis
-    deleteDocumentation
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove_directory <INSTALL_DIR>/share/doc/libvorbis-1.3.5
-    COMMENT "Remove documentation for libvorbis from SDK"
 )
 
 # This circumvents a missing option to prevent installing the executables

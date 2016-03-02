@@ -307,6 +307,8 @@ if(WIN32)
         moveHeader
         DEPENDEES install
         WORKING_DIRECTORY <INSTALL_DIR>
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/include/freetype
         COMMAND ${CMAKE_COMMAND} -E rename
             <INSTALL_DIR>/include/freetype2
             <INSTALL_DIR>/include/freetype

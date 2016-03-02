@@ -481,6 +481,7 @@ if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
 else()
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
+    string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
 endif()
 
 if(BUILD_SHARED_LIBS)

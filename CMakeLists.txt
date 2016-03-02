@@ -502,9 +502,7 @@ ExternalProject_Add(boost
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
-        --without-coroutine
         --without-mpi
-        --without-program_options
         --without-wave
         --prefix=<INSTALL_DIR>
         threading=multi

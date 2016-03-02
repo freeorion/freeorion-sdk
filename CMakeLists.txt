@@ -510,6 +510,9 @@ ExternalProject_Add(boost
         threading=multi
         link=${BOOST_LINK}
         variant=${BOOST_VARIANT}
+        debug-symbols=on
+        debug-store=database
+        pch=off
         -s NO_BZIP2=1
         -d0 # Please, shut up
     INSTALL_COMMAND ""

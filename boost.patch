@@ -17,3 +17,14 @@
  
      if [ os.name ] = NT
      {
+--- a/tools/build/src/tools/package.jam
++++ b/tools/build/src/tools/package.jam
+@@ -99,7 +99,7 @@ rule install ( name package-name ? : req
+     # For shared libraries, we install both explicitly specified one and the
+     # shared libraries that the installed executables depend on.
+     stage.install $(name)-lib-shared-universe : $(binaries) $(libraries) : $(requirements)
+-      <location>$(lib-locate) <install-dependencies>on <install-type>SHARED_LIB ;
++      <location>$(lib-locate) <install-dependencies>on <install-type>PDB ;
+     stage.install $(name)-lib-shared-cygwin : $(binaries) $(libraries) : $(requirements)
+       <location>$(bin-locate) <install-dependencies>on <install-type>SHARED_LIB ;
+ 

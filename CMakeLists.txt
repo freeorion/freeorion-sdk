@@ -345,19 +345,16 @@ ExternalProject_Add(libogg
     URL http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
     URL_MD5 b72e1a1dbadff3248e4ed62a4177e937
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    CONFIGURE_COMMAND <SOURCE_DIR>/configure
-        --prefix=<INSTALL_DIR>
-        --disable-oggtest
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/libogg.patch
+    COMMAND ${CMAKE_COMMAND} -E rename
+        <SOURCE_DIR>/configure.in
+        <SOURCE_DIR>/configure.ac
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
-)
-
-# This circumvents a missing option in the upstream configure.ac file
-ExternalProject_Add_Step(libogg
-    deleteDocumentation
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove_directory <INSTALL_DIR>/share/doc/libogg
-    COMMENT "Remove documentation for libogg from SDK"
 )
 
 # This circumvents a missing option to prevent installing the executables
@@ -368,7 +365,6 @@ ExternalProject_Add_Step(libogg
     WORKING_DIRECTORY <INSTALL_DIR>
     COMMAND ${CMAKE_COMMAND} -E remove
         <INSTALL_DIR>/lib/pkgconfig/ogg.pc
-        <INSTALL_DIR>/share/aclocal/ogg.m4
     COMMENT "Remove libogg additional files"
 )
 

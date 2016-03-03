@@ -24,7 +24,7 @@
      # shared libraries that the installed executables depend on.
      stage.install $(name)-lib-shared-universe : $(binaries) $(libraries) : $(requirements)
 -      <location>$(lib-locate) <install-dependencies>on <install-type>SHARED_LIB ;
-+      <location>$(lib-locate) <install-dependencies>on <install-type>PDB ;
++      <location>$(lib-locate) <install-dependencies>on <install-type>SHARED_LIB <install-type>PDB ;
      stage.install $(name)-lib-shared-cygwin : $(binaries) $(libraries) : $(requirements)
        <location>$(bin-locate) <install-dependencies>on <install-type>SHARED_LIB ;
  

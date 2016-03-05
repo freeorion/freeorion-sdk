@@ -487,6 +487,18 @@ ExternalProject_Add_Step(boost
     COMMENT "Remove extra PDB files"
 )
 
+configure_file(
+    ${CMAKE_SOURCE_DIR}/bootstrap.bat
+    ${SDK_INSTALL_DIR}/bootstrap.bat
+    COPYONLY
+)
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/README-WIN32.txt
+    ${SDK_INSTALL_DIR}/README.txt
+    COPYONLY
+)
+
 set_directory_properties(
     PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES

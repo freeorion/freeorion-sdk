@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.11)
 
 option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 if(NOT CMAKE_BUILD_TYPE)
@@ -497,6 +497,19 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/README-WIN32.txt
     ${SDK_INSTALL_DIR}/README.txt
     COPYONLY
+)
+
+string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
+
+add_custom_target(dist ALL
+    DEPENDS
+        zip zlib libpng python-cmake python freetype2 sdl
+        libogg libvorbis openal-soft glew boost
+    WORKING_DIRECTORY
+        ${SDK_INSTALL_DIR}
+    COMMAND ${ZIP_EXECUTABLE} -r -9
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.zip
+        .
 )
 
 set_directory_properties(

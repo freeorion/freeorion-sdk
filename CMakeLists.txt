@@ -366,20 +366,6 @@ ExternalProject_Add(libvorbis
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
-# This circumvents a missing option to prevent installing the executables
-# pkgconfig files
-ExternalProject_Add_Step(libvorbis
-    removeExtraFiles
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/lib/pkgconfig/vorbis.pc
-        <INSTALL_DIR>/lib/pkgconfig/vorbisenc.pc
-        <INSTALL_DIR>/lib/pkgconfig/vorbisfile.pc
-        <INSTALL_DIR>/share/aclocal/vorbis.m4
-    COMMENT "Remove libvorbis additional files"
-)
-
 ExternalProject_Add(openal-soft
     DEPENDS patch
     URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.16.0.tar.bz2

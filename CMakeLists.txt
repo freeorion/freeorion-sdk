@@ -417,18 +417,6 @@ ExternalProject_Add(glew
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
-# This circumvents a missing option to prevent installing the executables
-# pkgconfig files
-ExternalProject_Add_Step(glew
-    removeExtraFiles
-    DEPENDEES install
-    WORKING_DIRECTORY <INSTALL_DIR>
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/lib/pkgconfig/glew.pc
-        <INSTALL_DIR>/lib/pkgconfig/glewmx.pc
-    COMMENT "Remove glew additional files"
-)
-
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
 else()

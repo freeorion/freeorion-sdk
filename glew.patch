@@ -36,7 +36,7 @@
  endif()
  
  install ( TARGETS ${targets_to_install}
-@@ -106,25 +97,15 @@ set (libname ${GLEW_LIB_NAME})
+@@ -106,25 +97,22 @@ set (libname ${GLEW_LIB_NAME})
  set (cflags)
  set (requireslib glu)
  configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
@@ -50,6 +50,13 @@
 +if(NOT WIN32 AND CYGWIN)
 +    install(FILES ${GLEW_DIR}/glew.pc
 +            DESTINATION lib/pkgconfig
++    )
++endif()
++
++if(MSVC)
++    install(FILES ${CMAKE_BINARY_DIR}/bin/${GLEW_LIB_NAME}.pdb
++        DESTINATION lib
++        CONFIGURATIONS Debug RelWithDebInfo
 +    )
 +endif()
  

@@ -296,6 +296,8 @@ ExternalProject_Add(freetype2
     URL http://sourceforge.net/projects/freetype/files/freetype2/2.5.5/freetype-2.5.5.tar.gz/download
     URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    PATCH_COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/freetype2.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build

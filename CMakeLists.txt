@@ -476,10 +476,10 @@ ExternalProject_Add(boost
 ExternalProject_Add_Step(boost
     copyDLL
     DEPENDEES install
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/CopyFiles.cmake --
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/CopyFiles.cmake --
         <INSTALL_DIR>/lib/*.dll
         ${SDK_INSTALL_DIR}/bin/
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/DeleteFiles.cmake --
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/DeleteFiles.cmake --
         <INSTALL_DIR>/lib/*.dll
     COMMENT "Copy boost dll files into SDK bin directory"
 )

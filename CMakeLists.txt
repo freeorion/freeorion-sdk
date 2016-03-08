@@ -102,7 +102,9 @@ ExternalProject_Add(zlib
     URL_MD5 44d667c142d7cda120332623eab69f40
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib-1-replace_zlibstatic_target_with_build_shared_libs.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

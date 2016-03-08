@@ -293,6 +293,7 @@ if(WIN32)
 endif()
 
 ExternalProject_Add(freetype2
+    DEPENDS patch
     URL http://sourceforge.net/projects/freetype/files/freetype2/2.5.5/freetype-2.5.5.tar.gz/download
     URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -323,6 +324,7 @@ if(WIN32)
 endif(WIN32)
 
 ExternalProject_Add(sdl
+    DEPENDS patch
     URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -339,6 +341,7 @@ ExternalProject_Add(sdl
 )
 
 ExternalProject_Add(libogg
+    DEPENDS patch
     URL http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
     URL_MD5 b72e1a1dbadff3248e4ed62a4177e937
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -355,7 +358,7 @@ ExternalProject_Add(libogg
 )
 
 ExternalProject_Add(libvorbis
-    DEPENDS libogg
+    DEPENDS patch libogg
     URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
     URL_MD5 7220e089f3be3412a2317d6fde9e3944
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -404,6 +407,7 @@ ExternalProject_Add(openal-soft
 )
 
 ExternalProject_Add(glew
+    DEPENDS patch
     URL http://sourceforge.net/projects/glew/files/glew/1.13.0/glew-1.13.0.tgz/download
     URL_MD5 7cbada3166d2aadfc4169c4283701066
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}

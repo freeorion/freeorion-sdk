@@ -1,6 +1,9 @@
---- a/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..fdd5d88
+--- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,110 @@
+@@ -0,0 +1,105 @@
 +cmake_minimum_required(VERSION 2.8.7)
 +project(libogg)
 +
@@ -86,7 +89,7 @@
 +add_library(ogg ${OGG_HEADERS} ${OGG_SOURCES})
 +
 +get_version_info(OGG_VERSION_INFO "LIB_CURRENT" "LIB_AGE" "LIB_REVISION")
-+set_target_properties(ogg PROPERTIES IMPORT_PREFIX "lib" PREFIX "lib" SOVERSION ${OGG_VERSION_INFO})
++set_target_properties(ogg PROPERTIES SOVERSION ${OGG_VERSION_INFO})
 +
 +if(BUILD_FRAMEWORK)
 +    set_target_properties(ogg PROPERTIES
@@ -105,9 +108,4 @@
 +
 +install(FILES include/ogg/ogg.h include/ogg/os_types.h include/ogg/config_types.h DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/ogg)
 +install(TARGETS ogg RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-+if(NOT WIN32 OR CYGWIN)
-+    install(FILES ogg.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-+endif()
-+if(MSVC AND (CMAKE_VERSION VERSION_EQUAL "3.1" OR CMAKE_VERSION VERSION_GREATER "3.1"))
-+    install(FILES $<TARGET_PDB_FILE:ogg> DESTINATION ${CMAKE_INSTALL_LIBDIR} CONFIGURATIONS Debug RelWithDebInfo)
-+endif()
++install(FILES ogg.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

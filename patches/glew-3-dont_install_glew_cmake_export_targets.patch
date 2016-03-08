@@ -1,0 +1,17 @@
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index ff7b7f9..5f8d22f 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -119,12 +119,3 @@ install (FILES
+     ${GLEW_DIR}/include/GL/glew.h
+     ${GLEW_DIR}/include/GL/glxew.h
+     DESTINATION include/GL)
+-
+-if(MAYBE_EXPORT)
+-  install(EXPORT glew-targets DESTINATION lib/cmake/glew
+-    NAMESPACE GLEW::)
+-  install(FILES
+-      ${CMAKE_CURRENT_SOURCE_DIR}/glew-config.cmake
+-      ${CMAKE_CURRENT_SOURCE_DIR}/CopyImportedTargetProperties.cmake
+-    DESTINATION lib/cmake/glew)
+-endif()

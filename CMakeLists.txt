@@ -406,7 +406,13 @@ ExternalProject_Add(glew
     URL_MD5 7cbada3166d2aadfc4169c4283701066
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew-0-dont_install_pkgconfig_on_windows.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew-1-remove_glewmx_related_targets.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew-2-install_pdb_for_debug_and_relwithdebinfo.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew-3-dont_install_glew_cmake_export_targets.patch
     CONFIGURE_COMMAND ${CMAKE_COMMAND}
         -G "${CMAKE_GENERATOR}"
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>

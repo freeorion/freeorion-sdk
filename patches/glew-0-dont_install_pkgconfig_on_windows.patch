@@ -1,0 +1,50 @@
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index 1563f9f..900c397 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -96,23 +96,29 @@ if (BUILD_UTILS)
+             DESTINATION bin)
+ endif ()
+ 
+-set (prefix ${CMAKE_INSTALL_PREFIX})
+-set (exec_prefix \${prefix})
+-set (libdir \${prefix}/lib)
+-set (includedir \${prefix}/include)
+-set (includedir \${prefix}/include)
+-set (version ${GLEW_VERSION})
+-set (libname ${GLEW_LIB_NAME})
+-set (cflags)
+-set (requireslib glu)
+-configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
+-set (cflags "-DGLEW_MX")
+-set (libname ${GLEW_LIB_NAME}mx)
+-configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glewmx.pc @ONLY)
+-
+-install(FILES ${GLEW_DIR}/glew.pc ${GLEW_DIR}/glewmx.pc
++if(NOT WIN32 AND CYGWIN)
++    set (prefix ${CMAKE_INSTALL_PREFIX})
++    set (exec_prefix \${prefix})
++    set (libdir \${prefix}/lib)
++    set (includedir \${prefix}/include)
++    set (includedir \${prefix}/include)
++    set (version ${GLEW_VERSION})
++    set (libname ${GLEW_LIB_NAME})
++    set (cflags)
++    set (requireslib glu)
++    configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
++
++    set (cflags "-DGLEW_MX")
++    set (libname ${GLEW_LIB_NAME}mx)
++    configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glewmx.pc @ONLY)
++
++    install(
++        FILES
++            ${GLEW_DIR}/glew.pc
++            ${GLEW_DIR}/glewmx.pc
+         DESTINATION lib/pkgconfig
+-)
++    )
++endif()
+ 
+ install (FILES
+     ${GLEW_DIR}/include/GL/wglew.h

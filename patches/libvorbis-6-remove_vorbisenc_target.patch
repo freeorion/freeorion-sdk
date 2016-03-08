@@ -1,0 +1,54 @@
+From 622b9946f65f67f7eb4088fa5f4dc7d4aa72bbb6 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 9 Mar 2016 16:24:16 +0100
+Subject: [PATCH 6/6] CMake: Remove vorbisenc target
+
+---
+ lib/CMakeLists.txt | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index d454337..9e532ff 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -73,36 +73,30 @@ include_directories(${OGG_INCLUDE_DIRS})
+ 
+ if (NOT BUILD_FRAMEWORK)
+     add_library(vorbis ${VORBIS_HEADERS} ${VORBIS_SOURCES})
+-    add_library(vorbisenc ${VORBISENC_SOURCES})
+     add_library(vorbisfile ${VORBISFILE_SOURCES})
+ 
+     set_target_properties(
+-        vorbis vorbisenc vorbisfile PROPERTIES
++        vorbis vorbisfile PROPERTIES
+         IMPORT_PREFIX "lib"
+         PREFIX "lib"
+     )
+ 
+     get_version_info(VORBIS_VERSION_INFO "V_LIB_CURRENT" "V_LIB_AGE" "V_LIB_REVISION")
+     set_target_properties(vorbis PROPERTIES SOVERSION ${VORBIS_VERSION_INFO})
+-    get_version_info(VORBISENC_VERSION_INFO "VE_LIB_CURRENT" "VE_LIB_AGE" "VE_LIB_REVISION")
+-    set_target_properties(vorbisenc PROPERTIES SOVERSION ${VORBISENC_VERSION_INFO})
+     get_version_info(VORBISFILE_VERSION_INFO "VF_LIB_CURRENT" "VF_LIB_AGE" "VF_LIB_REVISION")
+     set_target_properties(vorbisfile PROPERTIES SOVERSION ${VORBISFILE_VERSION_INFO})
+ 
+     target_link_libraries(vorbis ${OGG_LIBRARIES})
+-    target_link_libraries(vorbisenc ${OGG_LIBRARIES})
+     target_link_libraries(vorbisfile ${OGG_LIBRARIES})
+ 
+     install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/vorbis)
+ 
+     install(TARGETS vorbis     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+-    install(TARGETS vorbisenc  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     install(TARGETS vorbisfile RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     if(BUILD_SHARED_LIBS AND MSVC_VERSION GREATER 1500 AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
+         install(
+             FILES
+                 $<TARGET_PDB_FILE:vorbis>
+-                $<TARGET_PDB_FILE:vorbisenc>
+                 $<TARGET_PDB_FILE:vorbisfile>
+             DESTINATION ${CMAKE_INSTALL_LIBDIR}
+             CONFIGURATIONS Debug RelWithDebInfo
+-- 
+2.5.0
+

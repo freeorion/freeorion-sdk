@@ -1,0 +1,31 @@
+From 46734f780962968043a77fabdd3f5116ece9ca98 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 9 Mar 2016 14:07:23 +0100
+Subject: [PATCH 3/6] CMake: Add 'lib' prefix to output files on Windows
+
+This mimics the current shared library naming configuration of the MSVC
+project files.
+---
+ lib/CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index feaa65d..ce6d96c 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -76,6 +76,12 @@ if (NOT BUILD_FRAMEWORK)
+     add_library(vorbisenc ${VORBISENC_SOURCES})
+     add_library(vorbisfile ${VORBISFILE_SOURCES})
+ 
++    set_target_properties(
++        vorbis vorbisenc vorbisfile PROPERTIES
++        IMPORT_PREFIX "lib"
++        PREFIX "lib"
++    )
++
+     get_version_info(VORBIS_VERSION_INFO "V_LIB_CURRENT" "V_LIB_AGE" "V_LIB_REVISION")
+     set_target_properties(vorbis PROPERTIES SOVERSION ${VORBIS_VERSION_INFO})
+     get_version_info(VORBISENC_VERSION_INFO "VE_LIB_CURRENT" "VE_LIB_AGE" "VE_LIB_REVISION")
+-- 
+2.5.0
+

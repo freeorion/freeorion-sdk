@@ -299,6 +299,8 @@ ExternalProject_Add(freetype2
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-0-add_version_and_runtime_to_output_name_on_windows.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-1-remove_2_suffix_from_freetype_header_install_path.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build
@@ -307,21 +309,6 @@ ExternalProject_Add(freetype2
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
-
-if(WIN32)
-    # This circumvents a wrongly installed include dir in the WIN32 SDK
-    ExternalProject_Add_Step(freetype2
-        moveHeader
-        DEPENDEES install
-        WORKING_DIRECTORY <INSTALL_DIR>
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/include/freetype
-        COMMAND ${CMAKE_COMMAND} -E rename
-            <INSTALL_DIR>/include/freetype2
-            <INSTALL_DIR>/include/freetype
-        COMMENT "Move FreeType headers to broken WIN32 SDK location"
-    )
-endif(WIN32)
 
 ExternalProject_Add(sdl
     DEPENDS patch

@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 80e6e71..a7a173d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -226,7 +226,7 @@ endif ()
+ # Installations
+ # Note the trailing slash in the argument to the `DIRECTORY' directive
+ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+-  DESTINATION include/freetype2
++  DESTINATION include/freetype
+   PATTERN "internal" EXCLUDE
+ )
+ install(TARGETS freetype

@@ -96,6 +96,13 @@ endif()
 
 set(ZLIB_VERSION 1.2.8)
 
+if(WIN32)
+    # Move the installed include dir for the WIN32 SDK
+    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include/zlib)
+else()
+    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include)
+endif()
+
 ExternalProject_Add(zlib
     DEPENDS patch
     URL http://sourceforge.net/projects/libpng/files/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz/download
@@ -110,31 +117,9 @@ ExternalProject_Add(zlib
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DSKIP_INSTALL_FILES=ON
+        -DINSTALL_INC_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
-
-if(WIN32)
-    # This circumvents a wrongly installed include dir in the WIN32 SDK
-    ExternalProject_Add_Step(zlib
-        moveHeader
-        DEPENDEES install
-        WORKING_DIRECTORY <INSTALL_DIR>
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/include/zlib
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-            <INSTALL_DIR>/include/zlib
-        COMMAND ${CMAKE_COMMAND} -E rename
-            <INSTALL_DIR>/include/zlib.h
-            <INSTALL_DIR>/include/zlib/zlib.h
-        COMMAND ${CMAKE_COMMAND} -E rename
-            <INSTALL_DIR>/include/zconf.h
-            <INSTALL_DIR>/include/zlib/zconf.h
-        COMMENT "Move zlib headers to broken WIN32 SDK location"
-    )
-    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include/zlib)
-else()
-    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include)
-endif()
 
 ExternalProject_Add(libpng
     DEPENDS patch zlib

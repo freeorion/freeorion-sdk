@@ -26,7 +26,7 @@
  
  # Build a common library with reusable helpers
  ADD_LIBRARY(common STATIC ${COMMON_OBJS})
-@@ -1107,9 +1111,15 @@ INSTALL(FILES include/AL/al.h
+@@ -1107,9 +1111,10 @@ INSTALL(FILES include/AL/al.h
                include/AL/efx-presets.h
          DESTINATION include/AL
  )
@@ -36,11 +36,6 @@
 +IF(ALSOFT_PKGCONFIG)
 +    INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
 +            DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
-+ENDIF()
-+IF(LIBTYPE STREQUAL "SHARED")
-+    INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${LIBNAME}.pdb"
-+            DESTINATION "lib${LIB_SUFFIX}"
-+            CONFIGURATIONS Debug RelWithDebInfo)
 +ENDIF()
  
  MESSAGE(STATUS "")

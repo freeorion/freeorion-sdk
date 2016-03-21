@@ -1,0 +1,14 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1115,6 +1115,11 @@ INSTALL(FILES include/AL/al.h
+     INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
+             DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
+ ENDIF()
++IF((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1") AND LIBTYPE STREQUAL "SHARED")
++    INSTALL(FILES $<TARGET_PDB_FILE:${LIBNAME}>
++            DESTINATION "lib${LIB_SUFFIX}"
++            CONFIGURATIONS Debug RelWithDebInfo)
++ENDIF()
+ 
+ MESSAGE(STATUS "")
+ MESSAGE(STATUS "Building OpenAL with support for the following backends:")

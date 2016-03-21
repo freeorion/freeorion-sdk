@@ -377,7 +377,9 @@ ExternalProject_Add(openal-soft
     URL_MD5 14db4b0d12f07252070b4fe5eb5911f6
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft-0-add_install_option_for_pkgconfig_files.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft-1-install_pdb_file_for_debug_and_relwithdebinfo.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

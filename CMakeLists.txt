@@ -307,7 +307,9 @@ ExternalProject_Add(sdl
     URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2-1-dont_install_sdlmain.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

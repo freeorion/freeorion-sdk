@@ -1,6 +1,6 @@
-diff --git a/CMakeLists.txt.orig b/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 75a8937..6ce1695 100644
---- a/CMakeLists.txt.orig
+--- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1236,9 +1236,9 @@ endif()
  # Ensure that the extra cflags are used at compile time
@@ -15,13 +15,3 @@ index 75a8937..6ce1695 100644
  
  if(SDL_SHARED)
    add_library(SDL2 SHARED ${SOURCE_FILES})
-@@ -1307,3 +1307,9 @@ else()
-   install(TARGETS SDL2 RUNTIME DESTINATION bin)
- endif()
- 
-+if(MSVC AND SDL_SHARED)
-+  install(FILES
-+      "${SDL2_BINARY_DIR}/SDL2.pdb"
-+    DESTINATION "lib"
-+    CONFIGURATIONS Debug RelWithDebInfo)
-+endif()

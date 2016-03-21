@@ -1,14 +1,14 @@
-From e08ff4faf6fb27367f1fd4a6b50d1a3e36b78d91 Mon Sep 17 00:00:00 2001
+From e244b4096b06f3fe71a1c057efc9c3301652f8ae Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 15:40:28 +0100
-Subject: [PATCH 4/6] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
+Subject: [PATCH 5/7] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
 
 ---
  lib/CMakeLists.txt | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index ce6d96c..d454337 100644
+index 5d9863e..4930caf 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -98,6 +98,16 @@ if (NOT BUILD_FRAMEWORK)

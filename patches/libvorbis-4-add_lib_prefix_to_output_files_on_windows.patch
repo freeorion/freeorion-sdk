@@ -1,7 +1,7 @@
-From 46734f780962968043a77fabdd3f5116ece9ca98 Mon Sep 17 00:00:00 2001
+From 5bc544b215182365c0e86f51650ea122e434af2d Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 14:07:23 +0100
-Subject: [PATCH 3/6] CMake: Add 'lib' prefix to output files on Windows
+Subject: [PATCH 4/7] CMake: Add 'lib' prefix to output files on Windows
 
 This mimics the current shared library naming configuration of the MSVC
 project files.
@@ -10,7 +10,7 @@ project files.
  1 file changed, 6 insertions(+)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index feaa65d..ce6d96c 100644
+index a49e33b..5d9863e 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -76,6 +76,12 @@ if (NOT BUILD_FRAMEWORK)

@@ -1,7 +1,7 @@
-From 1aa8bdd99ccdca944f5a3262b96334131a4a9071 Mon Sep 17 00:00:00 2001
+From 195b7fa7c1ee880edb5672c59f549321a046baa7 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 15:42:39 +0100
-Subject: [PATCH 5/6] CMake: Add `libogg` as additional name to ogg library
+Subject: [PATCH 6/7] CMake: Add `libogg` as additional name to ogg library
  search
 
 ---

@@ -1,7 +1,7 @@
-From 5ed7564078be66ffea6c907390da4f5a5cac0aaa Mon Sep 17 00:00:00 2001
+From ba395822b2ab081dfea47f9f37e185bd9aa81a06 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 7 Mar 2016 21:20:21 +0100
-Subject: [PATCH 2/6] CMake: Don't install pkg-config files on Windows
+Subject: [PATCH 3/7] CMake: Don't install pkg-config files on Windows
 
 Except if the build system is Cygwin.
 ---

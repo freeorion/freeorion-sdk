@@ -2,7 +2,7 @@ version: ci-{build}
 branches:
     only:
         - master
-build:
+build_script:
     - mkdir build
     - cd build
     - cmake ..

@@ -1,0 +1,9 @@
+version: {build}
+branches:
+    only:
+        - master
+build:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - cmake --build .

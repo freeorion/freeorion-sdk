@@ -127,7 +127,7 @@ ExternalProject_Add(libpng
     URL_MD5 134282f1752dcf4cd81a37b8ff421cef
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

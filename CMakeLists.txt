@@ -457,8 +457,8 @@ configure_file(
 
 ExternalProject_Add(boost
     DEPENDS patch zlib python
-    URL http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz/download
-    URL_MD5 5a5d5614d9a07672e1ab2a250b5defc5
+    URL http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz/download
+    URL_MD5 51528a0e3b33d9e10aaa311d9eb451e3
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1
     PATCH_COMMAND

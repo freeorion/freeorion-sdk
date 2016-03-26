@@ -478,7 +478,6 @@ ExternalProject_Add(boost
         debug-store=database
         pch=off
         -s NO_BZIP2=1
-        -d0 # Please, shut up
     INSTALL_COMMAND ""
     INSTALL_DIR ${SDK_INSTALL_DIR}/Boost
 )

@@ -2,6 +2,9 @@ version: ci-{build}
 branches:
   only:
     - master
+init:
+  - git config --global core.eol native
+  - git config --global core.autocrlf true
 build_script:
   - mkdir build
   - cd build

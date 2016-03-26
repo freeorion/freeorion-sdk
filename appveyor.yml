@@ -1,9 +1,9 @@
 version: ci-{build}
 branches:
-    only:
-        - master
+  only:
+    - master
 build_script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - cmake --build .
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .

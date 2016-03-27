@@ -13,12 +13,15 @@ build_script:
   - cd build
   - cmake -G "Visual Studio 12" ..
   - cmake --build . --config RelWithDebInfo
+artifacts:
+  - name: FreeOrionSDK_Package
+    path: build\FreeOrionSDK_MSVC_*.zip
 deploy:
   provider: GitHub
   auth_token:
     secure: mqkOnTRfVVRNofBa9tTEb2jdIjmJNhH7G8DPc05rxIy6/hkOl9y/h9FzB2MJD4rS
   description: 'Release of the FreeOrionSDK'
-  artifact: /FreeOrionSDK_MSVC_\d{4}-\d{2}-\d{2}.zip/
+  artifact: FreeOrionSDK_Package
   draft: true
   force_update: true
   on:

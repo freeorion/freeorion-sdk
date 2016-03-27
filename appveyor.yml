@@ -2,7 +2,7 @@ version: ci-{build}
 branches:
   only:
     - master
-    - /FreeOrionSDK_[0-9]{4}-[0-9]{2}-[0-9]{2}/
+    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
 init:
   - git config --global core.eol native
   - git config --global core.autocrlf true
@@ -14,12 +14,12 @@ build_script:
   - cmake -G "Visual Studio 12" ..
   - cmake --build . --config RelWithDebInfo
 deploy:
-  release: $(APPVEYOR_REPO_TAG_NAME)
   provider: GitHub
   auth_token:
     secure: mqkOnTRfVVRNofBa9tTEb2jdIjmJNhH7G8DPc05rxIy6/hkOl9y/h9FzB2MJD4rS
   description: 'Release of the FreeOrionSDK'
-  artifact: /FreeOrionSDK_MSVC_[0-9]{4}-[0-9]{2}-[0-9]{2}.zip/
+  artifact: /FreeOrionSDK_MSVC_\d{4}-\d{2}-\d{2}.zip/
   draft: true
+  force_update: true
   on:
     appveyor_repo_tag: true

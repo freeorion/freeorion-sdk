@@ -6,7 +6,7 @@ endif()
 
 cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
-option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
+option(BUILD_SHARED_LIBS "Build external projects as shared libraries." WIN32)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Set the default build configuration for this build" FORCE)
 endif()
@@ -18,6 +18,10 @@ include(ExternalProject)
 # Root directory of the SDK release.  This directory should contain
 # everything a user needs to build FreeOrion from source.
 set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
+
+if(APPLE)
+    set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
+endif()
 
 # Common download directory for all dependency source releases.  Storing
 # those in a separate directory from the standard *-prefix directories
@@ -519,17 +523,28 @@ ExternalProject_Add_Step(boost
     COMMENT "Remove extra PDB files"
 )
 
-configure_file(
-    ${CMAKE_SOURCE_DIR}/bootstrap.bat
-    ${SDK_INSTALL_DIR}/bootstrap.bat
-    COPYONLY
-)
+if(WIN32)
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/bootstrap.bat
+        ${SDK_INSTALL_DIR}/bootstrap.bat
+        COPYONLY
+    )
 
-configure_file(
-    ${CMAKE_SOURCE_DIR}/README-WIN32.txt
-    ${SDK_INSTALL_DIR}/README.txt
-    COPYONLY
-)
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/README-WIN32.txt
+        ${SDK_INSTALL_DIR}/README.txt
+        COPYONLY
+    )
+elseif(APPLE)
+    # SDK_INSTALL_DIR points to the `dep` subdirectory
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/bootstrap.command
+        ${SDK_INSTALL_DIR}/../bootstrap.command
+        COPYONLY
+    )
+else()
+    message(FATAL "Target system not yet supported")
+endif()
 
 string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
 

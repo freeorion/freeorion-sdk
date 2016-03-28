@@ -526,7 +526,7 @@ elseif(APPLE)
         COPYONLY
     )
 else()
-    message(FATAL "Target system not yet supported"
+    message(FATAL "Target system not yet supported")
 endif()
 
 string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)

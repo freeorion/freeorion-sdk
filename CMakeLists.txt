@@ -165,7 +165,7 @@ set(PYTHON_VERSION 2.7.9)
 
 ExternalProject_Add(python-cmake
     DEPENDS patch
-    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/master.zip
+    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/7381d004886d6ed5f21c561fc8c1a9a2e376b7bb.zip
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake-0-install_pdb_file_for_debug_and_relwithdebinfo.patch

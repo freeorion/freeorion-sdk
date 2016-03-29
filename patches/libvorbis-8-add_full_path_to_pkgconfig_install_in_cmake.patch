@@ -1,0 +1,35 @@
+From 2eb297ac7947b09e4da5e3df49ca8124126c94e8 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Tue, 29 Mar 2016 11:41:47 +0200
+Subject: [PATCH] Add full path to generated pkg-config file in CMake install
+ step
+
+When building out of source CMake generates files in the build
+directory.  In case generated files should be installed, the `install`
+command needs to know the full path as it searches by default in the
+project source directory.
+---
+ CMakeLists.txt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aedf5e8..5148d2b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -67,5 +67,12 @@ configure_pkg_config_file(vorbisenc.pc.in)
+ configure_pkg_config_file(vorbisfile.pc.in)
+ 
+ if(NOT WIN32 OR CYGWIN)
+-    install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
++    install(
++        FILES
++            ${CMAKE_CURRENT_BINARY_DIR}/vorbis.pc
++            ${CMAKE_CURRENT_BINARY_DIR}/vorbisenc.pc
++            ${CMAKE_CURRENT_BINARY_DIR}/vorbisfile.pc
++        DESTINATION
++            ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++    )
+ endif()
+-- 
+2.5.0
+

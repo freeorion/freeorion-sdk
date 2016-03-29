@@ -378,6 +378,8 @@ ExternalProject_Add(libvorbis
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0008-CMake-Remove-vorbisenc-target.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0009-Disable-MSVC-specific-compiler-warnings.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0010-Add-full-path-to-generated-pkg-config-file-in-CMake-.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

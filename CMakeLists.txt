@@ -14,7 +14,7 @@ include(ExternalProject)
 set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
 
 if(APPLE)
-    set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep"
+    set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
 endif()
 
 # Common download directory for all dependency source releases.  Storing

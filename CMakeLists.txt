@@ -338,6 +338,14 @@ ExternalProject_Add(sdl
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+if(WIN32)
+    set(LIBOGG_CONFIGURE_FLAGS "")
+    set(LIBOGG_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
+else()
+    set(LIBOGG_CONFIGURE_FLAGS "-DBUILD_FRAMEWORK=ON")
+    set(LIBOGG_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
+endif()
+
 ExternalProject_Add(libogg
     DEPENDS patch
     URL http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
@@ -351,6 +359,8 @@ ExternalProject_Add(libogg
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0003-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0004-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0005-Don-t-install-pkg-config-files-when-building-a-MacOS.patch
     COMMAND ${CMAKE_COMMAND} -E rename
         <SOURCE_DIR>/configure.in
         <SOURCE_DIR>/configure.ac
@@ -358,7 +368,8 @@ ExternalProject_Add(libogg
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-    INSTALL_DIR ${SDK_INSTALL_DIR}
+        ${LIBOGG_CONFIGURE_FLAGS}
+    INSTALL_DIR ${LIBOGG_CONFIGURE_INSTALL_DIR}
 )
 
 ExternalProject_Add(libvorbis

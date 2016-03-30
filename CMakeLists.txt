@@ -453,9 +453,11 @@ ExternalProject_Add(glew
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
     set(BOOST_CONFIGURE_FLAGS "")
+    set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
 else()
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
     set(BOOST_CONFIGURE_FLAGS "debug-store=database")
+    set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Boost)
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
 
@@ -502,7 +504,7 @@ ExternalProject_Add(boost
         pch=off
         -s NO_BZIP2=1
     INSTALL_COMMAND ""
-    INSTALL_DIR ${SDK_INSTALL_DIR}/Boost
+    INSTALL_DIR ${BOOST_CONFIGURE_INSTALL_DIR}
 )
 
 if(WIN32)

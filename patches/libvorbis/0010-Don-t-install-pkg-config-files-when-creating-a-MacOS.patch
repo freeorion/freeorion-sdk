@@ -1,0 +1,26 @@
+From 13a2a296c2adc36678c0bdaf46f7381a2f368d96 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 6 Oct 2016 20:11:19 +0200
+Subject: [PATCH] Don't install pkg-config files when creating a MacOSX
+ framework
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dbfbcab..499b4c7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,7 +71,7 @@ configure_pkg_config_file(vorbis.pc.in)
+ configure_pkg_config_file(vorbisenc.pc.in)
+ configure_pkg_config_file(vorbisfile.pc.in)
+ 
+-if(NOT WIN32 OR CYGWIN)
++if(NOT BUILD_FRAMEWORK AND (NOT WIN32 OR CYGWIN))
+     install(
+         FILES
+         ${CMAKE_CURRENT_BINARY_DIR}/vorbis.pc
+-- 
+2.7.4
+

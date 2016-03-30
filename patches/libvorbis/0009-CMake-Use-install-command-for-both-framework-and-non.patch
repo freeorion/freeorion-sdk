@@ -1,4 +1,4 @@
-From 45343f3901d8421f9e0d73a19572e5641509d25a Mon Sep 17 00:00:00 2001
+From 1afdb58263f97ccb899e4211aaadc9cbbf9b5474 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 31 Mar 2016 17:03:28 +0200
 Subject: [PATCH] CMake: Use install command for both framework and
@@ -9,7 +9,7 @@ Subject: [PATCH] CMake: Use install command for both framework and
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index 16fa575..442997e 100644
+index 16fa575..6f64087 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -90,7 +90,6 @@ if (NOT BUILD_FRAMEWORK)
@@ -29,7 +29,7 @@ index 16fa575..442997e 100644
 +    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 +    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 +    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-+    FRAMEWORK DESTINATION "Frameworks"
++    FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
 +)
 -- 
 2.7.4

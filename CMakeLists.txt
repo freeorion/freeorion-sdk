@@ -550,16 +550,18 @@ endif()
 
 string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
 
-add_custom_target(dist ALL
-    DEPENDS
-        zip zlib libpng python-cmake python freetype2 sdl
-        libogg libvorbis openal-soft glew boost
-    WORKING_DIRECTORY
-        ${SDK_INSTALL_DIR}
-    COMMAND ${ZIP_EXECUTABLE} -r -9
-        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.zip
-        .
-)
+if(WIN32)
+    add_custom_target(dist ALL
+        DEPENDS
+            zip zlib libpng python-cmake python freetype2 sdl
+            libogg libvorbis openal-soft glew boost
+        WORKING_DIRECTORY
+            ${SDK_INSTALL_DIR}
+        COMMAND ${ZIP_EXECUTABLE} -r -9
+            ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.zip
+            .
+    )
+endif()
 
 set_directory_properties(
     PROPERTIES

@@ -1,5 +1,14 @@
+From 2af7e1c4cf02ceabcb048490373edefd56497b4d Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 6 Oct 2016 23:31:52 +0200
+Subject: [PATCH] Don't install glew CMake export targets
+
+---
+ build/cmake/CMakeLists.txt | 9 ---------
+ 1 file changed, 9 deletions(-)
+
 diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
-index ff7b7f9..5f8d22f 100644
+index 530a665..98faee7 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
 @@ -119,12 +119,3 @@ install (FILES
@@ -15,3 +24,6 @@ index ff7b7f9..5f8d22f 100644
 -      ${CMAKE_CURRENT_SOURCE_DIR}/CopyImportedTargetProperties.cmake
 -    DESTINATION lib/cmake/glew)
 -endif()
+-- 
+2.7.4
+

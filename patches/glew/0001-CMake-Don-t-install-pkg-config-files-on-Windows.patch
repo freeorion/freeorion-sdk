@@ -1,5 +1,15 @@
+From 639186d69ea9057ff622087ec9e72865e175c587 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 6 Oct 2016 23:26:35 +0200
+Subject: [PATCH] CMake: Don't install pkg-config files on Windows
+
+Except if the build system is Cygwin.
+---
+ build/cmake/CMakeLists.txt | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
+
 diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
-index 1563f9f..900c397 100644
+index 1563f9f..d3fcbc2 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
 @@ -96,23 +96,29 @@ if (BUILD_UTILS)
@@ -21,7 +31,7 @@ index 1563f9f..900c397 100644
 -configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glewmx.pc @ONLY)
 -
 -install(FILES ${GLEW_DIR}/glew.pc ${GLEW_DIR}/glewmx.pc
-+if(NOT WIN32 AND CYGWIN)
++if (NOT WIN32 AND CYGWIN)
 +    set (prefix ${CMAKE_INSTALL_PREFIX})
 +    set (exec_prefix \${prefix})
 +    set (libdir \${prefix}/lib)
@@ -44,7 +54,10 @@ index 1563f9f..900c397 100644
          DESTINATION lib/pkgconfig
 -)
 +    )
-+endif()
++endif ()
  
  install (FILES
      ${GLEW_DIR}/include/GL/wglew.h
+-- 
+2.7.4
+

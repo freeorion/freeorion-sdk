@@ -1,3 +1,14 @@
+From 36fa309ebe55dce615a2d00b983c418f69cb18e2 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 9 Mar 2016 17:35:42 +0100
+Subject: [PATCH] [cmake] Add version and c runtime type to output name
+
+This mimics the currently used naming policy from the MSVC project
+files.
+---
+ CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8b859a5..80e6e71 100644
 --- a/CMakeLists.txt
@@ -18,3 +29,6 @@ index 8b859a5..80e6e71 100644
  # Compiler definitions for building the library
  add_definitions(-DFT2_BUILD_LIBRARY)
  
+-- 
+2.7.4
+

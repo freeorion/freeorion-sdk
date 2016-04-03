@@ -1,3 +1,12 @@
+From 3d4d7d87cc7fd6cca876582359fa607724b28745 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 9 Mar 2016 23:32:30 +0100
+Subject: [PATCH] Remove 2 suffix from freetype header install path
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 80e6e71..a7a173d 100644
 --- a/CMakeLists.txt
@@ -11,3 +20,6 @@ index 80e6e71..a7a173d 100644
    PATTERN "internal" EXCLUDE
  )
  install(TARGETS freetype
+-- 
+2.7.4
+

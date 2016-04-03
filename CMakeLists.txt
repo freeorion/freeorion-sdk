@@ -301,11 +301,11 @@ ExternalProject_Add(freetype2
     URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-0-add_version_and_runtime_to_output_name_on_windows.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0001-cmake-Add-version-and-c-runtime-type-to-output-name.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-1-remove_2_suffix_from_freetype_header_install_path.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0002-Remove-2-suffix-from-freetype-header-install-path.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-2-disable_deprecated_crt_warning_in_msvc.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0003-Disable-MSVC-deprecation-warnings-in-CMake.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build

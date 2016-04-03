@@ -161,7 +161,7 @@ if(WIN32)
     )
 endif()
 
-set(PYTHON_VERSION 2.7.9)
+set(PYTHON_VERSION 2.7.12)
 
 ExternalProject_Add(python-cmake
     DEPENDS patch
@@ -193,7 +193,7 @@ endif()
 ExternalProject_Add(python
     DEPENDS zip python-cmake zlib
     URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
-    URL_MD5 5eebcaa0030dc4061156d3429657fb83
+    URL_MD5 88d61f82e3616a4be952828b3694109d
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CMakeLists.txt <SOURCE_DIR>
     COMMAND ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CTestConfig.cmake <SOURCE_DIR>

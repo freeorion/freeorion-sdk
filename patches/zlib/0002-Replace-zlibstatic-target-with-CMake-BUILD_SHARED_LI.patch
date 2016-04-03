@@ -1,3 +1,12 @@
+From c8c8eb83a307d11909aff6a57aaf4452ca724932 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 10 Mar 2016 09:33:12 +0100
+Subject: [PATCH 2/2] Replace `zlibstatic` target with CMake BUILD_SHARED_LIBS
+
+---
+ CMakeLists.txt | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 54f03f5..d8b36cb 100644
 --- a/CMakeLists.txt
@@ -43,3 +52,6 @@ index 54f03f5..d8b36cb 100644
      install(
          FILES $<TARGET_PDB_FILE:zlib>
          DESTINATION "${INSTALL_LIB_DIR}"
+-- 
+2.5.0
+

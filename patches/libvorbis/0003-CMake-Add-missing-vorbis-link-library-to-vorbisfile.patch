@@ -1,17 +1,17 @@
-From c269b86d61babf8ea4f402a02983f27779dd6c17 Mon Sep 17 00:00:00 2001
+From 8e72d1fa449354fcc1aa3f5d23f295355d6fb50e Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 16:15:01 +0100
-Subject: [PATCH 2/7] CMake: Add missing vorbis link library to vorbisfile
+Subject: [PATCH] CMake: Add missing vorbis link library to vorbisfile
 
 ---
  lib/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index feaa65d..a49e33b 100644
+index 9dc41e9..eba59c9 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
-@@ -85,7 +85,7 @@ if (NOT BUILD_FRAMEWORK)
+@@ -82,7 +82,7 @@ if (NOT BUILD_FRAMEWORK)
  
      target_link_libraries(vorbis ${OGG_LIBRARIES})
      target_link_libraries(vorbisenc ${OGG_LIBRARIES})
@@ -21,5 +21,5 @@ index feaa65d..a49e33b 100644
      install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/vorbis)
  
 -- 
-2.5.0
+2.7.4
 

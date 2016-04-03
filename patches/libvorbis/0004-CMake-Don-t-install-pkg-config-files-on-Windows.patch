@@ -1,7 +1,7 @@
-From ba395822b2ab081dfea47f9f37e185bd9aa81a06 Mon Sep 17 00:00:00 2001
+From 01189c48dc25e9638b97d7a2000c44a10b4ecc08 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 7 Mar 2016 21:20:21 +0100
-Subject: [PATCH 3/7] CMake: Don't install pkg-config files on Windows
+Subject: [PATCH] CMake: Don't install pkg-config files on Windows
 
 Except if the build system is Cygwin.
 ---
@@ -21,5 +21,5 @@ index f3f0a95..d7d3b0a 100644
 +    install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 +endif()
 -- 
-2.5.0
+2.7.4
 

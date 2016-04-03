@@ -1,17 +1,17 @@
-From e244b4096b06f3fe71a1c057efc9c3301652f8ae Mon Sep 17 00:00:00 2001
+From 4a29f2aff9f8edf8ca64c6f12d56cb029e1233c4 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 15:40:28 +0100
-Subject: [PATCH 5/7] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
+Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
 
 ---
  lib/CMakeLists.txt | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index 5d9863e..4930caf 100644
+index c0ed621..193276f 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
-@@ -98,6 +98,16 @@ if (NOT BUILD_FRAMEWORK)
+@@ -95,6 +95,16 @@ if (NOT BUILD_FRAMEWORK)
      install(TARGETS vorbis     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
      install(TARGETS vorbisenc  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
      install(TARGETS vorbisfile RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -29,5 +29,5 @@ index 5d9863e..4930caf 100644
      add_library(vorbis ${VORBIS_PUBLIC_HEADERS} ${VORBIS_HEADERS} ${VORBIS_SOURCES} ${VORBISFILE_SOURCES} ${VORBISENC_SOURCES})
      set_target_properties(vorbis PROPERTIES
 -- 
-2.5.0
+2.7.4
 

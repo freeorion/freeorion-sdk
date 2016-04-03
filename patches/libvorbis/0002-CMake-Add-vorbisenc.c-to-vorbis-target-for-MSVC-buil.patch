@@ -1,28 +1,25 @@
-From 47101932541bc43479f71d18b6d8c64608b0e162 Mon Sep 17 00:00:00 2001
+From e2a1c04624f8bfc6f73ad5bd64876a3599620a7d Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 7 Mar 2016 21:20:21 +0100
-Subject: [PATCH 1/7] CMake: Add vorbisenc.c to vorbis target for WIN32 builds
+Subject: [PATCH] CMake: Add vorbisenc.c to vorbis target for MSVC builds
 
 This exports the ABI described by the .def MSVC project files.
 ---
- lib/CMakeLists.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ lib/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index c660004..feaa65d 100644
+index c660004..9dc41e9 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
-@@ -57,6 +57,10 @@ set(VORBISENC_SOURCES
-     vorbisenc.c
+@@ -58,6 +58,7 @@ set(VORBISENC_SOURCES
  )
  
-+if(WIN32)
-+    list(APPEND VORBIS_SOURCES vorbisenc.c)
-+endif()
-+
  if(MSVC)
++    list(APPEND VORBIS_SOURCES vorbisenc.c)
      list(APPEND VORBIS_SOURCES ../win32/vorbis.def)
      list(APPEND VORBISENC_SOURCES ../win32/vorbisenc.def)
+     list(APPEND VORBISFILE_SOURCES ../win32/vorbisfile.def)
 -- 
-2.5.0
+2.7.4
 

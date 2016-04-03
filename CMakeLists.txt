@@ -165,16 +165,16 @@ set(PYTHON_VERSION 2.7.9)
 
 ExternalProject_Add(python-cmake
     DEPENDS patch
-    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/7381d004886d6ed5f21c561fc8c1a9a2e376b7bb.zip
+    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/7d29e584a02e863030a7897f8bd9245aed3abf97.zip
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0001-Install-libpython-pdb-file-when-building-shared-libr.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake-1-dont_install_python_cmake_export_targets.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0002-Don-t-export-python-cmake-targets.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake-2-change_pathes_to_match_current_win32_sdk_layout.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0003-Change-pathes-to-match-current-SDK-layout.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake-3_disable_msvc_compiler_warnings.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0004-Disable-MSVC-specific-compiler-warnings.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""

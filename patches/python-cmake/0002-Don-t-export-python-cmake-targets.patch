@@ -1,7 +1,7 @@
-From 87f36b86732489a4eff8982667d85097d75424d0 Mon Sep 17 00:00:00 2001
+From 569af88461fa28f54b28c2bcd5d37dc27b85c7b4 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:08 +0100
-Subject: [PATCH 2/3] Don't export python cmake targets
+Subject: [PATCH] Don't export python cmake targets
 
 ---
  CMakeLists.txt                 | 6 ------
@@ -10,10 +10,10 @@ Subject: [PATCH 2/3] Don't export python cmake targets
  3 files changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4b2cec8..3b640a7 100644
+index f561804..2f395c1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -409,11 +409,5 @@ write_basic_package_version_file(
+@@ -555,12 +555,6 @@ write_basic_package_version_file(
  )
  
  # Install 'PythonTargets.cmake', 'PythonConfig.cmake' and 'PythonConfigVersion.cmake
@@ -24,12 +24,13 @@ index 4b2cec8..3b640a7 100644
 -    DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development
 -)
  
- endif(HAVE_CONFIGURE_PACKAGE_CONFIG_FILE AND HAVE_WRITE_BASIC_PACKAGE_VERSION_FILE)
+ # Install License
+ set(license_destination ${PYTHONHOME})
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index e3a66c2..aa37f67 100644
+index ca4e0b5..5896d93 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -290,7 +290,7 @@ function(add_libpython name type)
+@@ -461,7 +461,7 @@ function(add_libpython name type)
      # Export target
      set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS ${name})
  
@@ -39,10 +40,10 @@ index e3a66c2..aa37f67 100644
          LIBRARY DESTINATION ${LIBPYTHON_LIBDIR}
          RUNTIME DESTINATION ${LIBPYTHON_LIBDIR}
 diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
-index be43967..577db90 100644
+index 8f9df41..2031eda 100644
 --- a/cmake/python/CMakeLists.txt
 +++ b/cmake/python/CMakeLists.txt
-@@ -20,7 +20,7 @@ endif(BUILD_SHARED)
+@@ -27,7 +27,7 @@ endif()
  # Export target
  set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS python)
  
@@ -52,5 +53,5 @@ index be43967..577db90 100644
  # See "is_python_build()" in sysconfig.py
  add_custom_command(TARGET python PRE_BUILD
 -- 
-2.5.0
+2.7.4
 

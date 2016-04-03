@@ -307,13 +307,13 @@ ExternalProject_Add(freetype2
 
 ExternalProject_Add(sdl
     DEPENDS patch
-    URL https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
-    URL_MD5 fe6c61d2e9df9ef570e7e80c6e822537
+    URL https://www.libsdl.org/release/SDL2-2.0.4.tar.gz
+    URL_MD5 44fc4a023349933e7f5d7a582f7b886e
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2-1-dont_install_sdlmain.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0002-Never-build-and-install-SDL2main-library.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

@@ -1,8 +1,17 @@
+From 02f63a0a09c449697ee3a9156467b6b8ae7bb516 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Tue, 8 Mar 2016 10:56:04 +0100
+Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
+
+---
+ CMakeLists.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f989049..a6d6c1b 100644
+index 385697a..bf4d7ed 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -110,3 +110,10 @@ install(TARGETS ogg RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINAT
+@@ -116,3 +116,10 @@ install(TARGETS ogg
  if(NOT WIN32 OR CYGWIN)
      install(FILES ogg.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
  endif()
@@ -13,3 +22,6 @@ index f989049..a6d6c1b 100644
 +        CONFIGURATIONS Debug RelWithDebInfo
 +    )
 +endif()
+-- 
+2.7.4
+

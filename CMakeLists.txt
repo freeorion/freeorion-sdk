@@ -330,13 +330,13 @@ ExternalProject_Add(libogg
     URL_MD5 b72e1a1dbadff3248e4ed62a4177e937
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg-0-upstream_cmake-v1.3.2..9b2ba41.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0001-Upstream-changes-since-v1.3.2.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg-1-dont_install_pkgconfig_on_windows.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0002-CMake-Don-t-install-pkg-config-files-on-Windows.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg-2-add_lib_prefix_to_output_files_on_windows.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0003-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg-3-install_pdb_file_for_debug_and_relwithdebinfo.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0004-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
     COMMAND ${CMAKE_COMMAND} -E rename
         <SOURCE_DIR>/configure.in
         <SOURCE_DIR>/configure.ac

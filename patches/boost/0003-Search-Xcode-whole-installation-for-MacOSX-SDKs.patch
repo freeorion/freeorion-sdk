@@ -1,15 +1,16 @@
-From 5f947d820ad99e124337112ee1ff5cf836fcd865 Mon Sep 17 00:00:00 2001
+From 4be252e510e403036674d0c48f3813115124eee2 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
-Date: Sun, 16 Oct 2016 16:51:09 +0200
-Subject: [PATCH] Remove SDK subdirectory, it doesn't exist in the new XCode
- layout anymore
+Date: Mon, 6 Feb 2017 21:39:01 +0100
+Subject: [PATCH] Search Xcode whole installation for MacOSX SDKs
 
+With more recent installations of Xcode the platform SDKs are not
+located within the SDK subdirectory anymore.
 ---
- src/tools/darwin.jam | 5 ++---
+ tools/build/src/tools/darwin.jam | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
-index a17e40f..2a0494e 100644
+index 2701de3..3b5a0ee 100644
 --- a/tools/build/src/tools/darwin.jam
 +++ b/tools/build/src/tools/darwin.jam
 @@ -15,7 +15,7 @@ import toolset : flags ;
@@ -21,7 +22,7 @@ index a17e40f..2a0494e 100644
  import version ;
  import property-set ;
  import regex ;
-@@ -332,8 +332,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
+@@ -333,8 +333,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
  local rule init-available-sdk-versions ( condition * : root ? )
  {
      root ?= /Developer ;
@@ -32,5 +33,5 @@ index a17e40f..2a0494e 100644
      for local sdk in $(sdks)
      {
 -- 
-2.7.4
+2.9.3
 

@@ -1,15 +1,15 @@
-From b9cb61416e1972d7490d91da91df549703fb0fef Mon Sep 17 00:00:00 2001
+From 1e5c2c5e4ada705cbb0f1ff318f272ac598202e1 Mon Sep 17 00:00:00 2001
 From: Christopher Kohlhoff <chris@kohlhoff.com>
 Date: Thu, 10 Dec 2015 22:29:38 +1100
 Subject: [PATCH] Prevent multiple definition of
  BOOST_ASIO_ERROR_CATEGORY_NOEXCEPT with newest MSVC.
 
 ---
- include/boost/asio/detail/config.hpp | 3 +--
+ boost/asio/detail/config.hpp | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/boost/asio/detail/config.hpp b/boost/asio/detail/config.hpp
-index d960e5a..a39d85d 100644
+index 0f9e52d..cc01e8e 100644
 --- a/boost/asio/detail/config.hpp
 +++ b/boost/asio/detail/config.hpp
 @@ -221,8 +221,7 @@
@@ -22,3 +22,6 @@ index d960e5a..a39d85d 100644
  #  if (_MSC_VER >= 1900)
  #   define BOOST_ASIO_ERROR_CATEGORY_NOEXCEPT noexcept(true)
  #  endif // (_MSC_VER >= 1900)
+-- 
+2.9.3
+

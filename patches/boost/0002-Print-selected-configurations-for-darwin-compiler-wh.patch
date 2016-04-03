@@ -1,3 +1,13 @@
+From 07086c515f51b765d135b5a73dee154723c42686 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Mon, 6 Feb 2017 21:37:25 +0100
+Subject: [PATCH] Print selected configurations for darwin compiler when
+ debugging
+
+---
+ tools/build/src/tools/darwin.jam | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
 diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
 index edd6b7a..2701de3 100644
 --- a/tools/build/src/tools/darwin.jam
@@ -40,5 +50,5 @@ index edd6b7a..2701de3 100644
  
  # Add and set options for a discovered SDK version.
 -- 
-2.7.4
+2.9.3
 

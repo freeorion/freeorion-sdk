@@ -1,6 +1,17 @@
+From 9c71bd73a86cd2a59afe68b4f3828a18b9089c38 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Mon, 6 Feb 2017 21:34:51 +0100
+Subject: [PATCH] Install pdb files for Debug and RelWithDebInfo builds
+
+---
+ tools/build/src/tools/package.jam | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/build/src/tools/package.jam b/tools/build/src/tools/package.jam
+index c703580..8daa43d 100644
 --- a/tools/build/src/tools/package.jam
 +++ b/tools/build/src/tools/package.jam
-@@ -99,7 +99,7 @@ rule install ( name package-name ? : req
+@@ -99,7 +99,7 @@ rule install ( name package-name ? : requirements * : binaries * : libraries * :
      # For shared libraries, we install both explicitly specified one and the
      # shared libraries that the installed executables depend on.
      stage.install $(name)-lib-shared-universe : $(binaries) $(libraries) : $(requirements)
@@ -9,3 +20,6 @@
      stage.install $(name)-lib-shared-cygwin : $(binaries) $(libraries) : $(requirements)
        <location>$(bin-locate) <install-dependencies>on <install-type>SHARED_LIB ;
  
+-- 
+2.9.3
+

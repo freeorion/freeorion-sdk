@@ -1,4 +1,4 @@
-From 1ab20cf32aeadbdd253445aafde1dd9c05ab4d37 Mon Sep 17 00:00:00 2001
+From e782f5db965fc991f5bac5d1deafedf4b7f17b78 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:55 +0100
 Subject: [PATCH] Change pathes to match current SDK layout
@@ -8,10 +8,10 @@ Subject: [PATCH] Change pathes to match current SDK layout
  1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2f395c1..05aafee 100644
+index 76150fa..7550599 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -242,10 +242,7 @@ if(USE_LIB64)
+@@ -310,10 +310,7 @@ if(USE_LIB64)
      set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
      set(LIBDIR "lib64")
  endif()
@@ -23,7 +23,7 @@ index 2f395c1..05aafee 100644
  
  # Install tree directory
  set(BIN_INSTALL_DIR bin)                         # Contains the python executable
-@@ -259,7 +256,7 @@ if(INSTALL_WINDOWS_TRADITIONAL)
+@@ -327,7 +324,7 @@ if(INSTALL_WINDOWS_TRADITIONAL)
  endif()
  set(INCLUDE_INSTALL_DIR include/${LIBPYTHON})
  if(MSVC)
@@ -31,9 +31,9 @@ index 2f395c1..05aafee 100644
 +    set(INCLUDE_INSTALL_DIR include/python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR})
  endif()
  # Build tree directory
- set(BIN_BUILD_DIR ${CMAKE_BINARY_DIR}/bin)
-@@ -267,7 +264,7 @@ set(CONFIG_BUILD_DIR ${CMAKE_BINARY_DIR}/${CONFIG_INSTALL_DIR})
- set(EXTENSION_BUILD_DIR ${CMAKE_BINARY_DIR}/${PYTHONHOME}/lib-dynload)
+ set(BIN_BUILD_DIR ${PROJECT_BINARY_DIR}/bin)
+@@ -335,7 +332,7 @@ set(CONFIG_BUILD_DIR ${PROJECT_BINARY_DIR}/${CONFIG_INSTALL_DIR})
+ set(EXTENSION_BUILD_DIR ${PROJECT_BINARY_DIR}/${PYTHONHOME}/lib-dynload)
  set(INCLUDE_BUILD_DIR ${SRC_DIR}/Include)
  
 -set(ARCHIVEDIR "libs")      # Contains the static (*.a) and import libraries (*.lib)

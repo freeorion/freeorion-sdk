@@ -165,7 +165,7 @@ set(PYTHON_VERSION 2.7.9)
 
 ExternalProject_Add(python-cmake
     DEPENDS patch
-    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/7d29e584a02e863030a7897f8bd9245aed3abf97.zip
+    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/8af559448be1576bb0bb1ffd7afbfbb649b2d9dc.zip
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0001-Install-libpython-pdb-file-when-building-shared-libr.patch

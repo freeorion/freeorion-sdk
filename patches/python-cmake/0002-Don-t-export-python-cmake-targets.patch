@@ -1,49 +1,55 @@
-From 569af88461fa28f54b28c2bcd5d37dc27b85c7b4 Mon Sep 17 00:00:00 2001
+From ec8a7506cf2855b2e4ec972d1745439a5f45d4fb Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:08 +0100
 Subject: [PATCH] Don't export python cmake targets
 
 ---
- CMakeLists.txt                 | 6 ------
- cmake/libpython/CMakeLists.txt | 2 +-
- cmake/python/CMakeLists.txt    | 2 +-
- 3 files changed, 2 insertions(+), 8 deletions(-)
+ CMakeLists.txt                 | 12 ------------
+ cmake/libpython/CMakeLists.txt |  2 +-
+ cmake/python/CMakeLists.txt    |  2 +-
+ 3 files changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f561804..2f395c1 100644
+index c897e5f..76150fa 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -555,12 +555,6 @@ write_basic_package_version_file(
+@@ -640,18 +640,6 @@ write_basic_package_version_file(
+     COMPATIBILITY SameMajorVersion
  )
  
- # Install 'PythonTargets.cmake', 'PythonConfig.cmake' and 'PythonConfigVersion.cmake
--install(EXPORT PythonTargets FILE PythonTargets.cmake DESTINATION ${CONFIG_INSTALL_DIR})
+-if(INSTALL_DEVELOPMENT)
+-    # Install 'PythonTargets.cmake', 'PythonConfig.cmake' and 'PythonConfigVersion.cmake
+-    install(EXPORT PythonTargets
+-        FILE PythonTargets.cmake
+-        DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development)
 -
--install(
--    FILES ${python_install_config} ${python_config_version}
--    DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development
--)
+-    install(
+-        FILES ${python_install_config} ${python_config_version}
+-        DESTINATION ${CONFIG_INSTALL_DIR} COMPONENT Development
+-    )
+-endif()
+-
+ endif()
  
  # Install License
- set(license_destination ${PYTHONHOME})
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index ca4e0b5..5896d93 100644
+index 12961fb..50f7389 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -461,7 +461,7 @@ function(add_libpython name type)
-     # Export target
+@@ -463,7 +463,7 @@ function(add_libpython name type install component)
      set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS ${name})
  
--    install(TARGETS ${name} EXPORT PythonTargets
-+    install(TARGETS ${name}
-         ARCHIVE DESTINATION ${LIBPYTHON_ARCHIVEDIR}
-         LIBRARY DESTINATION ${LIBPYTHON_LIBDIR}
-         RUNTIME DESTINATION ${LIBPYTHON_LIBDIR}
+     if(install)
+-        install(TARGETS ${name} EXPORT PythonTargets
++        install(TARGETS ${name}
+             ARCHIVE DESTINATION ${LIBPYTHON_ARCHIVEDIR}
+             LIBRARY DESTINATION ${LIBPYTHON_LIBDIR}
+             RUNTIME DESTINATION ${LIBPYTHON_LIBDIR}
 diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
-index 8f9df41..2031eda 100644
+index 9094509..1dae0b2 100644
 --- a/cmake/python/CMakeLists.txt
 +++ b/cmake/python/CMakeLists.txt
-@@ -27,7 +27,7 @@ endif()
+@@ -30,7 +30,7 @@ endif()
  # Export target
  set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS python)
  

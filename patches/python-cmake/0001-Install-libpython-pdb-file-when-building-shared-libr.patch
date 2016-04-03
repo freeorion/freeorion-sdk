@@ -1,4 +1,4 @@
-From 80b56d5d07990c2776f6d33c8f444fb3ab426059 Mon Sep 17 00:00:00 2001
+From 2cad267dfc9bfb16be2c56f00104812866db1450 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:32:22 +0100
 Subject: [PATCH] Install libpython pdb file when building shared libraries
@@ -8,12 +8,12 @@ Subject: [PATCH] Install libpython pdb file when building shared libraries
  1 file changed, 17 insertions(+)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index d24eace..ca4e0b5 100644
+index 9854fe4..12961fb 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -473,6 +473,15 @@ if(BUILD_SHARED)
+@@ -477,6 +477,15 @@ if(BUILD_SHARED)
      set_target_properties(libpython-shared PROPERTIES
-         ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBPYTHON_ARCHIVEDIR}
+         ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${LIBPYTHON_ARCHIVEDIR}
      )
 +
 +    if((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
@@ -27,7 +27,7 @@ index d24eace..ca4e0b5 100644
      if(APPLE)
          # HACK For python <= 2.7.3, this fix link error related to undefined _environ symbol and
          #      is equivalent to solution implemented in commit http://hg.python.org/cpython/rev/864b983
-@@ -526,6 +535,14 @@ if(BUILD_SHARED)
+@@ -530,6 +539,14 @@ if(BUILD_SHARED)
          )
  
          target_link_libraries(${targetname} ${python3stub_lib})

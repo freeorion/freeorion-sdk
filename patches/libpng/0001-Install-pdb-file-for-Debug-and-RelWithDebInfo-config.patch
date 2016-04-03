@@ -1,0 +1,29 @@
+From 27ce1a727c8967a3ec4fb258c81c74686a17fd7a Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 14 Sep 2016 10:41:37 +0200
+Subject: [PATCH] Install pdb file for Debug and RelWithDebInfo configurations
+
+---
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index eb63b2b..fbbef2f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -735,6 +735,12 @@ if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
+       install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libpng${CMAKE_SHARED_LIBRARY_SUFFIX}
+          DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     endif(NOT WIN32)
++
++    if((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1") AND PNG_SHARED AND NOT SKIP_INSTALL_DEBUG_SYMBOLS)
++      install(FILES $<TARGET_PDB_FILE:png>
++        DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++        CONFIGURATIONS Debug RelWithDebInfo)
++    endif()
+   endif(PNG_SHARED)
+ 
+   if(PNG_STATIC)
+-- 
+2.7.4
+

@@ -123,11 +123,11 @@ ExternalProject_Add(zlib
 
 ExternalProject_Add(libpng
     DEPENDS patch zlib
-    URL https://sourceforge.net/projects/libpng/files/libpng16/older-releases/1.6.17/libpng-1.6.17.tar.gz/download
-    URL_MD5 134282f1752dcf4cd81a37b8ff421cef
+    URL https://sourceforge.net/projects/libpng/files/libpng16/1.6.25/libpng-1.6.25.tar.gz/download
+    URL_MD5 87cbd0f69e4bff0215de3994a149df77
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng-0-install_pdb_file_for_debug_and_relwithdebinfo.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

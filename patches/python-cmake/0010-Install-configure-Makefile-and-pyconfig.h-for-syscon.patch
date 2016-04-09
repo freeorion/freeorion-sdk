@@ -1,0 +1,43 @@
+From a18d4bce893c38a17c5ed422141ca8be416d5cdd Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 29 Sep 2016 22:36:31 +0200
+Subject: [PATCH] Install configure Makefile and pyconfig.h for sysconfig into
+ INT dir
+
+This is required when using multi-config cmake generators.
+---
+ CMakeLists.txt | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b9bba4c..124846a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -377,6 +377,9 @@ if(UNIX)
+     set(PYCONFIG_BUILD_DIR ${BIN_BUILD_DIR})
+     configure_file(cmake/config-unix/pyconfig.h.in
+                    ${PYCONFIG_BUILD_DIR}/pyconfig.h)
++    file(GENERATE
++         OUTPUT $<TARGET_FILE_DIR:python>/pyconfig.h
++         INPUT ${PYCONFIG_BUILD_DIR}/pyconfig.h)
+ elseif(WIN32)
+     set(PYCONFIG_BUILD_DIR ${SRC_DIR}/PC) # In a windows build tree, 'pyconfig.h' is NOT required to
+                                           # live along side the python executable.
+@@ -573,9 +576,12 @@ if(UNIX)
+         set(MAKEFILE_LDSHARED_FLAGS "-dynamiclib -headerpad_max_install_names -undefined dynamic_lookup")
+     endif()
+     configure_file(cmake/makefile-variables.in
+-                   ${BIN_BUILD_DIR}/Makefile @ONLY)
++                   ${BIN_BUILD_DIR}/Makefile.in @ONLY)
++    file(GENERATE
++         OUTPUT $<TARGET_FILE_DIR:python>/Makefile
++         INPUT ${BIN_BUILD_DIR}/Makefile.in)
+     if(INSTALL_DEVELOPMENT)
+-        install(FILES ${BIN_BUILD_DIR}/Makefile
++        install(FILES $<TARGET_FILE_DIR:python>/Makefile
+                 DESTINATION ${PYTHONHOME}/config/
+                 RENAME Makefile
+                 COMPONENT Development)
+-- 
+2.7.4
+

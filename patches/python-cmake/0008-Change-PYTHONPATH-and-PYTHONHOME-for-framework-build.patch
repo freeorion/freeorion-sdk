@@ -1,0 +1,59 @@
+From 9f760aab211a79212ee81be18da5e136ff78d568 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sun, 18 Sep 2016 23:18:14 +0200
+Subject: [PATCH] Change PYTHONPATH and PYTHONHOME for framework builds
+
+---
+ CMakeLists.txt              | 6 +++++-
+ cmake/ConfigureChecks.cmake | 4 +++-
+ cmake/python/CMakeLists.txt | 2 +-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b7681ca..b9bba4c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -444,7 +444,11 @@ if(BUILD_SHARED AND UNIX)
+     if(APPLE)
+         set(_envvar DYLD_LIBRARY_PATH)
+     endif()
+-    set(PYTHON_WRAPPER_COMMAND env ${_envvar}=${PROJECT_BINARY_DIR}/${LIBPYTHON_LIBDIR})
++    set(PYTHON_HOME_PATH )
++    if(BUILD_FRAMEWORK)
++        set(PYTHON_HOME_PATH PYTHONHOME=${PROJECT_BINARY_DIR}/${PYTHONHOME} PYTHONPATH=${PROJECT_BINARY_DIR}/${PYTHONHOME})
++    endif()
++    set(PYTHON_WRAPPER_COMMAND env ${_envvar}=${PROJECT_BINARY_DIR}/${LIBPYTHON_LIBDIR} ${PYTHON_HOME_PATH})
+ endif()
+ 
+ # Add extension modules
+diff --git a/cmake/ConfigureChecks.cmake b/cmake/ConfigureChecks.cmake
+index 863213f..16f7d93 100644
+--- a/cmake/ConfigureChecks.cmake
++++ b/cmake/ConfigureChecks.cmake
+@@ -614,7 +614,9 @@ set(WITH_DYLD 0)
+ set(WITH_NEXT_FRAMEWORK 0)
+ if(APPLE)
+   set(WITH_DYLD 1)
+-  set(WITH_NEXT_FRAMEWORK 0) # TODO: See --enable-framework option.
++  if(BUILD_FRAMEWORK)
++      set(WITH_NEXT_FRAMEWORK 1) # TODO: See --enable-framework option.
++  endif()
+ endif()
+ 
+ if(HAVE_LONG_LONG)
+diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
+index 1dae0b2..610338e 100644
+--- a/cmake/python/CMakeLists.txt
++++ b/cmake/python/CMakeLists.txt
+@@ -53,7 +53,7 @@ if(UNIX AND PY_VERSION VERSION_GREATER "2.7.4")
+     add_custom_command(
+         OUTPUT ${BIN_BUILD_DIR}/pybuilddir.txt ${EXTENSION_BUILD_DIR}/_sysconfigdata.py
+         COMMAND ${PYTHON_WRAPPER_COMMAND}
+-          ${CMAKE_CROSSCOMPILING_EMULATOR} $<TARGET_FILE:python> -E -S -m sysconfig --generate-posix-vars
++          ${CMAKE_CROSSCOMPILING_EMULATOR} $<TARGET_FILE:python> -S -m sysconfig --generate-posix-vars
+         COMMAND ${CMAKE_COMMAND}
+           -DBIN_BUILD_DIR:PATH=${BIN_BUILD_DIR}
+           -DPYTHON_BINARY_DIR:PATH=${PROJECT_BINARY_DIR}
+-- 
+2.7.4
+

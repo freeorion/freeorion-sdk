@@ -1,4 +1,4 @@
-From 2ec0a2e63de18123f695481a51dc5fdac4f2565f Mon Sep 17 00:00:00 2001
+From d54a73f7b3081f2de0796c0cea20ec1f43e9cd99 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 13 Sep 2016 17:10:25 +0200
 Subject: [PATCH] Include backported Visual Studio 2015 patch into build
@@ -8,7 +8,7 @@ Subject: [PATCH] Include backported Visual Studio 2015 patch into build
  1 file changed, 3 insertions(+)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 2fb30a1..b8e9a74 100644
+index 2fe04e7..2a2ec4a 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
 @@ -92,6 +92,9 @@ set(OBJECT3_SOURCES

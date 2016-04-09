@@ -198,6 +198,16 @@ ExternalProject_Add(python-cmake
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0004-Disable-MSVC-specific-compiler-warnings.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0005-Include-backported-Visual-Studio-2015-patch-into-bui.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0006-Add-Mac-OSX-framework-support.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0007-Install-binaries-libraries-headers-files-and-auxilli.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0008-Change-PYTHONPATH-and-PYTHONHOME-for-framework-build.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0009-Install-platform-library-files-on-MacOSX.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0010-Install-configure-Makefile-and-pyconfig.h-for-syscon.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -206,6 +216,15 @@ ExternalProject_Add(python-cmake
 ExternalProject_Get_Property(python-cmake SOURCE_DIR)
 set(PYTHON_CMAKE_SOURCE_DIR ${SOURCE_DIR})
 unset(SOURCE_DIR)
+
+
+if(WIN32)
+    set(PYTHON_CONFIGURE_FLAGS "")
+    set(PYTHON_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
+else()
+    set(PYTHON_CONFIGURE_FLAGS "-DBUILD_FRAMEWORK=ON")
+    set(PYTHON_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
+endif()
 
 ExternalProject_Add(python
     DEPENDS zip python-cmake zlib
@@ -229,6 +248,7 @@ ExternalProject_Add(python
         -DBUILD_LIBPYTHON_SHARED=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DPYTHON_VERSION=${PYTHON_VERSION}
+        ${PYTHON_CONFIGURE_FLAGS}
         -DDOWNLOAD_SOURCES=OFF
         -DBUILD_TESTING=OFF
         -DBUILD_WININST=OFF
@@ -280,7 +300,7 @@ ExternalProject_Add(python
         #DENABLE_TKINTER=OFF
         -DENABLE_UNICODEDATA=OFF
         #DENABLE_ZLIB=OFF
-    INSTALL_DIR ${SDK_INSTALL_DIR}
+    INSTALL_DIR ${PYTHON_CONFIGURE_INSTALL_DIR}
 )
 
 if(WIN32)

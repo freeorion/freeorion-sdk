@@ -1,0 +1,61 @@
+From de3fbf7c1fa98afcf768ff5173250cea827c365e Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sat, 9 Apr 2016 20:16:24 +0200
+Subject: [PATCH] Add Mac OSX framework support
+
+---
+ CMakeLists.txt                 |  8 ++++++++
+ cmake/libpython/CMakeLists.txt | 13 +++++++++++++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7550599..19eba46 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -79,6 +79,14 @@ else()
+   set(BUILD_WININST OFF)
+   set(BUILD_WININST_ALWAYS OFF)
+ endif()
++if(APPLE)
++  option(BUILD_FRAMEWORK "Build a Mac OSX Framework" OFF)
++  if(BUILD_FRAMEWORK)
++      set(BUILD_LIBPYTHON_SHARED ON CACHE BOOL "Forced to ON because of BUILD_FRAMEWORK=ON" FORCE)
++  endif()
++else()
++  set(BUILD_FRAMEWORK OFF)
++endif()
+ option(INSTALL_DEVELOPMENT "Install files required to develop C extensions" ON)
+ option(INSTALL_MANUAL "Install man files" ON)
+ option(INSTALL_TEST "Install test files" ON)
+diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
+index 2a2ec4a..9218051 100644
+--- a/cmake/libpython/CMakeLists.txt
++++ b/cmake/libpython/CMakeLists.txt
+@@ -468,11 +468,24 @@ function(add_libpython name type install component)
+     # Export target
+     set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS ${name})
+ 
++    if(BUILD_FRAMEWORK)
++        set_target_properties(${name} PROPERTIES
++            FRAMEWORK TRUE
++            FRAMEWORK_VERSION "${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}"
++            MACOSX_FRAMEWORK_IDENTIFIER org.python.python
++            MACOSX_FRAMEWORK_SHORT_VERSION_STRING "${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}"
++            MACOSX_FRAMEWORK_BUNDLE_VERSION "${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}"
++            XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
++            OUTPUT_NAME Python
++        )
++    endif()
++
+     if(install)
+         install(TARGETS ${name}
+             ARCHIVE DESTINATION ${LIBPYTHON_ARCHIVEDIR}
+             LIBRARY DESTINATION ${LIBPYTHON_LIBDIR}
+             RUNTIME DESTINATION ${LIBPYTHON_LIBDIR}
++            FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
+             COMPONENT ${component}
+         )
+     endif()
+-- 
+2.7.4
+

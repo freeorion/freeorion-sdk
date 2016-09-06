@@ -294,6 +294,8 @@ ExternalProject_Add(freetype2
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-0-add_version_and_runtime_to_output_name_on_windows.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-1-remove_2_suffix_from_freetype_header_install_path.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2-2-disable_deprecated_crt_warning_in_msvc.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build

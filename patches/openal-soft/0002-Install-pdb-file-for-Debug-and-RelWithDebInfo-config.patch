@@ -1,0 +1,28 @@
+From 2d353fb7302f2cddc52ea8b28f6830b0dc4a3c5a Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sat, 2 Apr 2016 12:18:44 +0200
+Subject: [PATCH] Install pdb file for Debug and RelWithDebInfo configurations
+
+---
+ CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5001028..b329c3c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1191,6 +1191,11 @@ IF(ALSOFT_INSTALL)
+                 DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
+     ENDIF()
+ ENDIF()
++IF(LIBTYPE STREQUAL "SHARED" AND (MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
++    INSTALL(FILES $<TARGET_PDB_FILE:${LIBNAME}>
++            DESTINATION "lib${LIB_SUFFIX}"
++            CONFIGURATIONS Debug RelWithDebInfo)
++ENDIF()
+ 
+ 
+ MESSAGE(STATUS "")
+-- 
+2.7.4
+

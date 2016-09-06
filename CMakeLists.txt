@@ -270,7 +270,7 @@ if(WIN32)
             <INSTALL_DIR>/lib/python27
         COMMAND ${CMAKE_COMMAND} -E remove_directory
             <INSTALL_DIR>/lib/python27/lib-dynload
-        COMMAND ${ZIP_EXECUTABLE} -r -9
+        COMMAND ${ZIP_EXECUTABLE} -r -9 -q
             <INSTALL_DIR>/bin/python27.zip
             .
         COMMENT "Zip python standard library"

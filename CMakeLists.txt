@@ -186,12 +186,6 @@ ExternalProject_Get_Property(python-cmake SOURCE_DIR)
 set(PYTHON_CMAKE_SOURCE_DIR ${SOURCE_DIR})
 unset(SOURCE_DIR)
 
-if(BUILD_SHARED_LIBS)
-    set(PYTHON_BUILD_STATIC OFF)
-else()
-    set(PYTHON_BUILD_STATIC ON)
-endif()
-
 ExternalProject_Add(python
     DEPENDS zip python-cmake zlib
     URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
@@ -211,8 +205,7 @@ ExternalProject_Add(python
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python/0002-Handle-file-descriptor-verification-for-VS-2015.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DBUILD_SHARED=${BUILD_SHARED_LIBS}
-        -DBUILD_STATIC=${PYTHON_BUILD_STATIC}
+        -DBUILD_LIBPYTHON_SHARED=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DPYTHON_VERSION=${PYTHON_VERSION}
         -DDOWNLOAD_SOURCES=OFF

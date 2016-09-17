@@ -41,15 +41,13 @@ The FreeOrion MSVC 2013 contains precompiled software dependencies so you don't 
 
 Dependency Versions Included:
 
-Boost 1.58          - http://www.boost.org/users/history/version_1_58_0.html
-freealut 1.1.0      - http://slackbuilds.org/repository/12.2/libraries/freealut/
-FreeImage 3.17.0    - http://freeimage.sourceforge.net/download.html
-FreeType 2.5.5      - http://www.freetype.org/download.html
-GLEW 1.12.0         - http://glew.sourceforge.net/
-libogg 1.3.2        - https://xiph.org/downloads/
-libvorbis 1.3.5     - https://xiph.org/downloads/
-OpenAL-Soft 1.15.1  - http://sourceforge.net/projects/openal-soft/files/openal-soft/
-libpng 1.6.17       - http://www.libpng.org/pub/png/libpng.html
-zlib 1.2.8          - http://www.zlib.net/
-Python 2.7.9        - https://www.python.org/downloads/release/python-279/
-SDL2 2.0.3          - https://www.libsdl.org/download-2.0.php
+* Boost 1.59          <http://www.boost.org/>
+* FreeType 2.5.5      <https://www.freetype.org/>
+* GLEW 1.13.0         <http://glew.sourceforge.net/>
+* libogg 1.3.2        <https://xiph.org/ogg/>
+* libvorbis 1.3.5     <https://xiph.org/vorbis/>
+* OpenAL Soft 1.17.2  <http://kcat.strangesoft.net/openal.html>
+* libpng 1.6.25       <http://www.libpng.org/pub/png/libpng.html>
+* zlib 1.2.8          <http://www.zlib.net/>
+* Python 2.7.12       <https://www.python.org/>
+* SDL2 2.0.4          <https://www.libsdl.org/>

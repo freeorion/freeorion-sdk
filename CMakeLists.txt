@@ -1,4 +1,10 @@
-cmake_minimum_required(VERSION 2.8.11)
+set(REQUIRED_CMAKE_VERSION 2.8.11)
+
+if(WIN32)
+    set(REQUIRED_CMAKE_VERSION 3.4)
+endif()
+
+cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
 option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 if(NOT CMAKE_BUILD_TYPE)

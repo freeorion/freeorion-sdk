@@ -16,11 +16,11 @@ limited to):
  * Windows Platform SDK
  * XCode
 
-Beside an installation of [CMake] (version 2.8 or later) must be available
-and the cmake executables pathes must have been added to the `PATH`
-environment variable.
+Beside an installation of [CMake] *version 2.8.11 or later, version 3.4 or later
+on Windows* must be available and the cmake executables pathes must have been
+added to the `PATH` environment variable.
 
-Also an installation of [Git] (version 1.9 or later) must be available and
+Also an installation of [Git] *version 1.9 or later* must be available and
 the git executable pathes must have been added to the `PATH` environment
 variable.
 

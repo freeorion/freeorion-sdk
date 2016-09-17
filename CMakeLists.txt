@@ -223,7 +223,6 @@ ExternalProject_Add(python
         #DENABLE_CODECS_TW=OFF
         #DENABLE_CRYPT=OFF
         -DENABLE_CSV=OFF
-        -DENABLE_CTYPES=OFF
         -DENABLE_CTYPES_TEST=OFF
         #DENABLE_CURSES=OFF
         #DENABLE_CURSES_PANEL=OFF

@@ -572,6 +572,12 @@ else()
     set(BOOST_VARIANT "debug")
 endif()
 
+if(APPLE)
+    set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks/Python.framework/Versions/${PYTHON_VERSION})
+else()
+    set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
+endif()
+
 configure_file(
     boost-config.jam.in
     boost-config.jam

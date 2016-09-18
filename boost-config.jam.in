@@ -5,8 +5,8 @@ using zlib
     ;
 using python
     : @PYTHON_VERSION@  # version
-    : @SDK_INSTALL_DIR@/bin/python@PYTHON_VERSION@  # cmd-or-prefix
-    : @SDK_INSTALL_DIR@/include/python@PYTHON_VERSION@ # includes
-    : @SDK_INSTALL_DIR@/lib # libraries
+    : @PYTHON_INSTALL_DIR@/bin/python@PYTHON_VERSION@  # cmd-or-prefix
+    : @PYTHON_INSTALL_DIR@/include/python@PYTHON_VERSION@ # includes
+    : @PYTHON_INSTALL_DIR@/lib # libraries
     : <address-model>32 # condition
     ;

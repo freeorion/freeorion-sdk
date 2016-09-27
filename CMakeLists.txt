@@ -480,6 +480,7 @@ ExternalProject_Add(boost
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/boost-1-remove_version_suffix_from_include_directory.patch
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
+        -d
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-mpi
         --without-wave

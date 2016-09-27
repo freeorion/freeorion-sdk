@@ -111,7 +111,7 @@ endif()
 
 ExternalProject_Add(zlib
     DEPENDS patch
-    URL http://sourceforge.net/projects/libpng/files/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz/download
+    URL http://downloads.sourceforge.net/project/libpng/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz
     URL_MD5 44d667c142d7cda120332623eab69f40
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
@@ -129,7 +129,7 @@ ExternalProject_Add(zlib
 
 ExternalProject_Add(libpng
     DEPENDS patch zlib
-    URL https://sourceforge.net/projects/libpng/files/libpng16/1.6.25/libpng-1.6.25.tar.gz/download
+    URL https://downloads.sourceforge.net/project/libpng/libpng16/1.6.25/libpng-1.6.25.tar.gz
     URL_MD5 87cbd0f69e4bff0215de3994a149df77
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
@@ -295,7 +295,7 @@ endif()
 
 ExternalProject_Add(freetype2
     DEPENDS patch
-    URL http://sourceforge.net/projects/freetype/files/freetype2/2.5.5/freetype-2.5.5.tar.gz/download
+    URL http://downloads.sourceforge.net/project/freetype/freetype2/2.5.5/freetype-2.5.5.tar.gz
     URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
@@ -423,7 +423,7 @@ ExternalProject_Add(openal-soft
 
 ExternalProject_Add(glew
     DEPENDS patch
-    URL http://sourceforge.net/projects/glew/files/glew/1.13.0/glew-1.13.0.tgz/download
+    URL http://downloads.sourceforge.net/project/glew/glew/1.13.0/glew-1.13.0.tgz
     URL_MD5 7cbada3166d2aadfc4169c4283701066
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
@@ -470,7 +470,7 @@ configure_file(
 
 ExternalProject_Add(boost
     DEPENDS patch zlib python
-    URL http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz/download
+    URL http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz
     URL_MD5 51528a0e3b33d9e10aaa311d9eb451e3
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1

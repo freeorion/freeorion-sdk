@@ -482,6 +482,7 @@ ExternalProject_Add(boost
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         -d
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
+        --without-graph_parallel
         --without-mpi
         --without-wave
         --prefix=<INSTALL_DIR>

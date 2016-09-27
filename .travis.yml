@@ -1,0 +1,9 @@
+os:
+  - osx
+language: c++
+before_script:
+  - mkdir build
+  - cd build
+script:
+  - cmake -G "Xcode" ..
+  - cmake --build . --config RelWithDebInfo

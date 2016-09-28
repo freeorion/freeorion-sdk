@@ -1,8 +1,8 @@
 version: ci-{build}
-branches:
-  only:
-    - master
-    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
+#branches:
+#  only:
+#    - master
+#    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
 init:
   - git config --global core.eol native
   - git config --global core.autocrlf true

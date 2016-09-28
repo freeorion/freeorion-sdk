@@ -133,6 +133,14 @@ ExternalProject_Add(zlib
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
+if(BUILD_SHARED_LIBS)
+    set(PNG_SHARED ON)
+    set(PNG_STATIC OFF)
+else()
+    set(PNG_SHARED OFF)
+    set(PNG_STATIC ON)
+endif()
+
 ExternalProject_Add(libpng
     DEPENDS patch zlib
     URL https://downloads.sourceforge.net/project/libpng/libpng16/1.6.25/libpng-1.6.25.tar.gz
@@ -142,9 +150,9 @@ ExternalProject_Add(libpng
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DPNG_STATIC=OFF
+        -DPNG_SHARED=${PNG_SHARED}
+        -DPNG_STATIC=${PNG_STATIC}
         -DPNG_TESTS=OFF
         -DSKIP_INSTALL_EXECUTABLES=ON
         -DSKIP_INSTALL_PROGRAMS=ON

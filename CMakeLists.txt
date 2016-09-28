@@ -6,7 +6,8 @@ endif()
 
 cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
-option(BUILD_SHARED_LIBS "Build external projects as shared libraries." WIN32)
+option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Set the default build configuration for this build" FORCE)
 endif()
@@ -20,6 +21,7 @@ include(ExternalProject)
 set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
 
 if(APPLE)
+    set(BUILD_SHARED_LIBS OFF)
     set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
 endif()
 

@@ -337,6 +337,8 @@ ExternalProject_Add(sdl2
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0002-Never-build-and-install-SDL2main-library.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0003-Remove-Wl-no-undefined-linker-flag.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

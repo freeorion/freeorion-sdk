@@ -328,7 +328,7 @@ ExternalProject_Add(freetype2
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 
-ExternalProject_Add(sdl
+ExternalProject_Add(sdl2
     DEPENDS patch
     URL https://www.libsdl.org/release/SDL2-2.0.4.tar.gz
     URL_MD5 44fc4a023349933e7f5d7a582f7b886e
@@ -579,7 +579,7 @@ string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
 if(WIN32)
     add_custom_target(dist ALL
         DEPENDS
-            zip zlib libpng python-cmake python freetype2 sdl
+            zip zlib libpng python-cmake python freetype2 sdl2
             libogg libvorbis openal-soft glew boost
         WORKING_DIRECTORY
             ${SDK_INSTALL_DIR}

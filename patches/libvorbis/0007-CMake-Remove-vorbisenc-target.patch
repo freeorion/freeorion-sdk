@@ -1,4 +1,4 @@
-From e34161219d8752b0c28cffc7cdd88a98efff81f7 Mon Sep 17 00:00:00 2001
+From 66637bdb6014e10b58499f13a62870ef533551f6 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 16:24:16 +0100
 Subject: [PATCH] CMake: Remove vorbisenc target
@@ -8,7 +8,7 @@ Subject: [PATCH] CMake: Remove vorbisenc target
  1 file changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index 193276f..e07d415 100644
+index f51e1f0..f203b85 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -70,36 +70,30 @@ include_directories(${OGG_INCLUDE_DIRS})
@@ -33,8 +33,8 @@ index 193276f..e07d415 100644
      set_target_properties(vorbisfile PROPERTIES SOVERSION ${VORBISFILE_VERSION_INFO})
  
      target_link_libraries(vorbis ${OGG_LIBRARIES})
--    target_link_libraries(vorbisenc ${OGG_LIBRARIES})
-     target_link_libraries(vorbisfile vorbis ${OGG_LIBRARIES})
+-    target_link_libraries(vorbisenc ${OGG_LIBRARIES} vorbis)
+     target_link_libraries(vorbisfile ${OGG_LIBRARIES} vorbis)
  
      install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/vorbis)
  

@@ -1,4 +1,4 @@
-From f53b7938457f2e08bac09d71c507b5043abe3bba Mon Sep 17 00:00:00 2001
+From 7f473da6c5098315073821d9b6fe430d5a77501b Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 14:07:23 +0100
 Subject: [PATCH] CMake: Add 'lib' prefix to output files on Windows
@@ -10,7 +10,7 @@ project files.
  1 file changed, 6 insertions(+)
 
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
-index eba59c9..c0ed621 100644
+index ad55c85..af19aa1 100644
 --- a/lib/CMakeLists.txt
 +++ b/lib/CMakeLists.txt
 @@ -73,6 +73,12 @@ if (NOT BUILD_FRAMEWORK)

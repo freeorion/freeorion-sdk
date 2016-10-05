@@ -1,22 +1,28 @@
-From 06590a48fb40072d605c0ee333309911c47977d0 Mon Sep 17 00:00:00 2001
+From d14c3a5971abe66d0b506071181827c52e52d46a Mon Sep 17 00:00:00 2001
 From: stopiccot <alexey.petruchik@gmail.com>
 Date: Sun, 7 Jun 2015 17:15:41 +0300
-Subject: [PATCH] Add CMake script to build vorbis.
+Subject: [PATCH] Upstream changes since v1.3.5
 
-Signed-off-by: Ralph Giles <giles@thaumas.net>
+This commit conglomerates all freeorion-sdk relevant changes since the
+last libvorbis release.  When bumping to the next release this patch can be
+dropped.
+
+* 5a263ec9: Add CMake script to build vorbis.
+* 92a6c7a0: Fix install of pkgconfig files and allow use of OGG_ROOT variable
+* 0b8da3a6: Include vorbis library when linking vorbisfile and vorbisenc.
 ---
- CMakeLists.txt     |  69 +++++++++++++++++++++++++++++++++++
+ CMakeLists.txt     |  81 +++++++++++++++++++++++++++++++++++++++++
  lib/CMakeLists.txt | 104 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 173 insertions(+)
+ 2 files changed, 185 insertions(+)
  create mode 100644 CMakeLists.txt
  create mode 100644 lib/CMakeLists.txt
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 0000000..f3f0a95
+index 0000000..bbc045b
 --- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,81 @@
 +cmake_minimum_required(VERSION 2.8.7)
 +project(vorbis)
 +
@@ -72,10 +78,15 @@ index 0000000..f3f0a95
 +message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")
 +
 +# Find ogg dependency
-+find_package(PkgConfig QUIET)
-+pkg_check_modules(PC_OGG QUIET ogg)
-+find_path(OGG_INCLUDE_DIRS NAMES ogg/ogg.h HINTS ${PC_OGG_INCLUDE_DIRS} PATH_SUFFIXES ogg)
-+find_library(OGG_LIBRARIES NAMES ogg HINTS ${PC_OGG_LIBRARY_DIRS})
++if(NOT OGG_ROOT)
++    find_package(PkgConfig QUIET)
++    pkg_check_modules(PC_OGG QUIET ogg)
++    find_path(OGG_INCLUDE_DIRS NAMES ogg/ogg.h HINTS ${PC_OGG_INCLUDE_DIRS} PATH_SUFFIXES ogg)
++    find_library(OGG_LIBRARIES NAMES ogg HINTS ${PC_OGG_LIBRARY_DIRS})
++else()
++    find_path(OGG_INCLUDE_DIRS NAMES ogg/ogg.h HINTS ${OGG_ROOT}/include PATH_SUFFIXES ogg)
++    find_library(OGG_LIBRARIES NAMES ogg HINTS ${OGG_ROOT}/lib ${OGG_ROOT}/lib64)
++endif()
 +include(FindPackageHandleStandardArgs)
 +find_package_handle_standard_args(OGG DEFAULT_MSG OGG_INCLUDE_DIRS OGG_LIBRARIES)
 +
@@ -85,10 +96,17 @@ index 0000000..f3f0a95
 +configure_pkg_config_file(vorbisenc.pc.in)
 +configure_pkg_config_file(vorbisfile.pc.in)
 +
-+install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
++install(
++    FILES
++    ${CMAKE_CURRENT_BINARY_DIR}/vorbis.pc
++    ${CMAKE_CURRENT_BINARY_DIR}/vorbisenc.pc
++    ${CMAKE_CURRENT_BINARY_DIR}/vorbisfile.pc
++    DESTINATION
++    ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++)
 diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
 new file mode 100644
-index 0000000..c660004
+index 0000000..a682ed4
 --- /dev/null
 +++ b/lib/CMakeLists.txt
 @@ -0,0 +1,104 @@
@@ -174,8 +192,8 @@ index 0000000..c660004
 +    set_target_properties(vorbisfile PROPERTIES SOVERSION ${VORBISFILE_VERSION_INFO})
 +
 +    target_link_libraries(vorbis ${OGG_LIBRARIES})
-+    target_link_libraries(vorbisenc ${OGG_LIBRARIES})
-+    target_link_libraries(vorbisfile ${OGG_LIBRARIES})
++    target_link_libraries(vorbisenc ${OGG_LIBRARIES} vorbis)
++    target_link_libraries(vorbisfile ${OGG_LIBRARIES} vorbis)
 +
 +    install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/vorbis)
 +

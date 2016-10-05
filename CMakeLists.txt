@@ -406,25 +406,23 @@ ExternalProject_Add(libvorbis
     URL_MD5 7220e089f3be3412a2317d6fde9e3944
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0001-Add-CMake-script-to-build-vorbis.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0001-Upstream-changes-since-v1.3.5.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0002-CMake-Add-vorbisenc.c-to-vorbis-target-for-MSVC-buil.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0003-CMake-Add-missing-vorbis-link-library-to-vorbisfile.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0003-CMake-Don-t-install-pkg-config-files-on-Windows.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0004-CMake-Don-t-install-pkg-config-files-on-Windows.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0004-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0005-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0005-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0006-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0006-CMake-Add-libogg-as-additional-name-to-ogg-library-s.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0007-CMake-Add-libogg-as-additional-name-to-ogg-library-s.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0007-CMake-Remove-vorbisenc-target.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0008-CMake-Remove-vorbisenc-target.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0008-Disable-MSVC-specific-compiler-warnings.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0009-Disable-MSVC-specific-compiler-warnings.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0010-Add-full-path-to-generated-pkg-config-file-in-CMake-.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0009-CMake-Use-install-command-for-both-framework-and-non.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

@@ -1,0 +1,39 @@
+From 83a0c98768d04a4038febf03e01dde5e7bb6e16a Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Mon, 7 Mar 2016 21:20:21 +0100
+Subject: [PATCH] CMake: Don't install pkg-config files on Windows
+
+Except if the build system is Cygwin.
+---
+ CMakeLists.txt | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bbc045b..0fc91b9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,11 +71,13 @@ configure_pkg_config_file(vorbis.pc.in)
+ configure_pkg_config_file(vorbisenc.pc.in)
+ configure_pkg_config_file(vorbisfile.pc.in)
+ 
+-install(
+-    FILES
+-    ${CMAKE_CURRENT_BINARY_DIR}/vorbis.pc
+-    ${CMAKE_CURRENT_BINARY_DIR}/vorbisenc.pc
+-    ${CMAKE_CURRENT_BINARY_DIR}/vorbisfile.pc
+-    DESTINATION
+-    ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+-)
++if(NOT WIN32 OR CYGWIN)
++    install(
++        FILES
++        ${CMAKE_CURRENT_BINARY_DIR}/vorbis.pc
++        ${CMAKE_CURRENT_BINARY_DIR}/vorbisenc.pc
++        ${CMAKE_CURRENT_BINARY_DIR}/vorbisfile.pc
++        DESTINATION
++        ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++    )
++endif()
+-- 
+2.7.4
+

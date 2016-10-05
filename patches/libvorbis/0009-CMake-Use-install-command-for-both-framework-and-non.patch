@@ -1,0 +1,36 @@
+From 45343f3901d8421f9e0d73a19572e5641509d25a Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 31 Mar 2016 17:03:28 +0200
+Subject: [PATCH] CMake: Use install command for both framework and
+ non-framework
+
+---
+ lib/CMakeLists.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 16fa575..442997e 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -90,7 +90,6 @@ if (NOT BUILD_FRAMEWORK)
+ 
+     install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/vorbis)
+ 
+-    install(TARGETS vorbis     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     install(TARGETS vorbisfile RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+     if(BUILD_SHARED_LIBS AND MSVC_VERSION GREATER 1500 AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
+         install(
+@@ -115,3 +114,10 @@ else()
+     )
+     target_link_libraries(vorbis ${OGG_LIBRARIES})
+ endif()
++
++install(TARGETS vorbis
++    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    FRAMEWORK DESTINATION "Frameworks"
++)
+-- 
+2.7.4
+

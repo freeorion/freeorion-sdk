@@ -1,9 +1,7 @@
 os:
   - osx
-osx_image:
-  - xcode6.4
-language:
-  - c++
+osx_image: xcode6.4
+language: cpp
 before_script:
   - mkdir build
   - cd build

@@ -444,41 +444,46 @@ ExternalProject_Add(libvorbis
     INSTALL_DIR ${LIBVORBIS_CONFIGURE_INSTALL_DIR}
 )
 
-ExternalProject_Add(openal-soft
-    DEPENDS patch
-    URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.17.2.tar.bz2
-    URL_MD5 1764e0d8fec499589b47ebc724e0913d
-    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0001-Don-t-install-pkg-config-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0002-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
-    CMAKE_ARGS
-        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DALSOFT_UTILS=OFF
-        -DALSOFT_NO_CONFIG_UTIL=ON
-        -DALSOFT_EXAMPLES=OFF
-        -DALSOFT_CONFIG=OFF
-        -DALSOFT_HRTF_DEFS=OFF
-        -DALSOFT_REQUIRE_MMDEVAPI=${WIN32}
-        -DALSOFT_REQUIRE_COREAUDIO=${APPLE}
-        -DALSOFT_CPUEXT_NEON=OFF
-        -DALSOFT_MIDI_FLUIDSYNTH=OFF
-        -DALSOFT_BACKEND_ALSA=OFF
-        -DALSOFT_BACKEND_OSS=OFF
-        -DALSOFT_BACKEND_SOLARIS=OFF
-        -DALSOFT_BACKEND_SNDIO=OFF
-        -DALSOFT_BACKEND_QSA=OFF
-        -DALSOFT_BACKEND_WINMM=OFF
-        -DALSOFT_BACKEND_DSOUND=OFF
-        -DALSOFT_BACKEND_PORTAUDIO=OFF
-        -DALSOFT_BACKEND_PULSEAUDIO=OFF
-        -DALSOFT_BACKEND_OPENSL=OFF
-        -DALSOFT_BACKEND_WAVE=OFF
-    INSTALL_DIR ${SDK_INSTALL_DIR}
-)
+if(NOT APPLE)
+    ExternalProject_Add(openal-soft
+        DEPENDS patch
+        URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.17.2.tar.bz2
+        URL_MD5 1764e0d8fec499589b47ebc724e0913d
+        DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+        PATCH_COMMAND
+            ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0001-Don-t-install-pkg-config-files-on-Windows.patch
+        COMMAND
+            ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0002-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
+        CMAKE_ARGS
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+            -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DALSOFT_UTILS=OFF
+            -DALSOFT_NO_CONFIG_UTIL=ON
+            -DALSOFT_EXAMPLES=OFF
+            -DALSOFT_CONFIG=OFF
+            -DALSOFT_HRTF_DEFS=OFF
+            -DALSOFT_REQUIRE_MMDEVAPI=${WIN32}
+            -DALSOFT_REQUIRE_COREAUDIO=${APPLE}
+            -DALSOFT_CPUEXT_NEON=OFF
+            -DALSOFT_MIDI_FLUIDSYNTH=OFF
+            -DALSOFT_BACKEND_ALSA=OFF
+            -DALSOFT_BACKEND_OSS=OFF
+            -DALSOFT_BACKEND_SOLARIS=OFF
+            -DALSOFT_BACKEND_SNDIO=OFF
+            -DALSOFT_BACKEND_QSA=OFF
+            -DALSOFT_BACKEND_WINMM=OFF
+            -DALSOFT_BACKEND_DSOUND=OFF
+            -DALSOFT_BACKEND_PORTAUDIO=OFF
+            -DALSOFT_BACKEND_PULSEAUDIO=OFF
+            -DALSOFT_BACKEND_OPENSL=OFF
+            -DALSOFT_BACKEND_WAVE=OFF
+        INSTALL_DIR ${SDK_INSTALL_DIR}
+    )
+else()
+    # The MacOSX SDK doesn't contain OpenAL-soft, so add an empty target
+    add_custom_target(openal-soft)
+endif()
 
 ExternalProject_Add(glew
     DEPENDS patch

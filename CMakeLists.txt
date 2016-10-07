@@ -107,6 +107,16 @@ else()
     endif()
 endif()
 
+if(WIN32)
+    add_custom_target(tar)
+else()
+    add_custom_target(tar)
+    find_program(TAR_EXECUTABLE tar)
+    if(NOT TAR_EXECUTABLE)
+        message(FATAL_ERROR "Unable to locate `tar` executable.")
+    endif()
+endif()
+
 set(ZLIB_VERSION 1.2.8)
 
 if(WIN32)
@@ -644,17 +654,24 @@ endif()
 string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
 
 if(WIN32)
-    add_custom_target(dist ALL
-        DEPENDS
-            zip zlib libpng python-cmake python freetype2 sdl2
-            libogg libvorbis openal-soft glew boost
-        WORKING_DIRECTORY
-            ${SDK_INSTALL_DIR}
-        COMMAND ${ZIP_EXECUTABLE} -r -9
-            ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.zip
-            .
-    )
+    set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -9)
+    set(DIST_PACK_EXT zip)
+else()
+    set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjvf)
+    set(DIST_PACK_EXT tar.bz2)
 endif()
+
+add_custom_target(pack ALL
+    DEPENDS
+        zip tar zlib libpng python-cmake python freetype2 sdl2
+        libogg libvorbis openal-soft glew boost
+    WORKING_DIRECTORY
+        ${SDK_INSTALL_DIR}
+    COMMAND
+        ${DIST_PACK_COMMAND}
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.${DIST_PACK_EXT}
+        .
+)
 
 set_directory_properties(
     PROPERTIES

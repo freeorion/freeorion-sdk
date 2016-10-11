@@ -1,0 +1,30 @@
+From 1624a1d58d20282c4ecf437e45c7f2133adbb1c0 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Tue, 11 Oct 2016 22:17:03 +0200
+Subject: [PATCH] Exclude pyc files from installation
+
+---
+ cmake/lib/CMakeLists.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/cmake/lib/CMakeLists.txt b/cmake/lib/CMakeLists.txt
+index a6eef10..8324db2 100644
+--- a/cmake/lib/CMakeLists.txt
++++ b/cmake/lib/CMakeLists.txt
+@@ -26,6 +26,13 @@ foreach(file ${libfiles})
+         set(include_file 0)
+     endif()
+ 
++    # Exclude pyc files
++    string(REGEX MATCH "\\.pyc$" is_bytecode "${file}")
++
++    if(is_bytecode)
++        set(include_file 0)
++    endif()
++
+     if(include_file AND (NOT is_platform_file OR is_matching_platform_file))
+         get_filename_component(path ${file} PATH)
+ 
+-- 
+2.7.4
+

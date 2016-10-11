@@ -224,6 +224,8 @@ ExternalProject_Add(python-cmake
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0009-Install-platform-library-files-on-MacOSX.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0010-Install-configure-Makefile-and-pyconfig.h-for-syscon.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0011-Exclude-pyc-files-from-installation.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -331,7 +333,7 @@ if(WIN32)
             <INSTALL_DIR>/lib/python27
         COMMAND ${CMAKE_COMMAND} -E remove_directory
             <INSTALL_DIR>/lib/python27/lib-dynload
-        COMMAND ${ZIP_EXECUTABLE} -r -9 -q
+        COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
             <INSTALL_DIR>/bin/python27.zip
             .
         COMMENT "Zip python standard library"

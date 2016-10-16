@@ -7,4 +7,4 @@ before_script:
   - cd build
 script:
   - cmake -G "Xcode" ..
-  - travis_wait 40 cmake --build . --config RelWithDebInfo
+  - travis_wait 60 cmake --build . --config RelWithDebInfo

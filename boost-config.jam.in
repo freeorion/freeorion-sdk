@@ -10,3 +10,10 @@ using python
     : @PYTHON_INSTALL_DIR@/lib # libraries
     : <address-model>32 # condition
     ;
+
+# detect the location of the Mac OSX SDK.
+using darwin
+    : # version (not used)
+    : @CMAKE_CXX_COMPILER@ # cmd (compiler)
+    : <root>@BOOST_OSX_SYSROOT@
+    ;

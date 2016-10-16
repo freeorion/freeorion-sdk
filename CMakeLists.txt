@@ -562,10 +562,16 @@ if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
     set(BOOST_CONFIGURE_FLAGS "macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}")
     set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
+    set(BOOST_OSX_SYSROOT ${CMAKE_OSX_SYSROOT})
+    # strip concrete mac osx directory to allow boost build the detection of
+    # available SDKs.
+    get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
+    get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
 else()
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
     set(BOOST_CONFIGURE_FLAGS "debug-store=database")
     set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Boost)
+    set(BOOST_OSX_SYSROOT "")
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
 

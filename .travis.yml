@@ -3,6 +3,8 @@ os:
 osx_image: xcode6.4
 language: cpp
 before_script:
+  # Workaround for travis-ci/travis-ci#6700
+  - rvm reinstall 1.9.3 --disable-binary
   - mkdir build
   - cd build
 script:

@@ -1,5 +1,8 @@
 # FreeOrion SDK
 
+[![Windows build status badge]](https://ci.appveyor.com/project/freeorion/freeorion-sdk)
+[![MacOSX build status badge]](https://travis-ci.org/freeorion/freeorion-sdk)
+
 Build script used to build the FreeOrion SDK for the Windows and Mac OSX
 operating systems.
 
@@ -72,3 +75,5 @@ http://freeorion.org
 [CMake]: https://cmake.org/
 [Git]: https://git-scm.com/
 [issue]: https://github.com/freeorion/freeorion-sdk/issues
+[Windows build status badge]: https://ci.appveyor.com/api/projects/status/github/freeorion/freeorion-sdk?branch=master&svg=true
+[MacOSX build status badge]: https://travis-ci.org/freeorion/freeorion-sdk.svg?branch=master

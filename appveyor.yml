@@ -19,7 +19,7 @@ build_script:
   - cmake --build . --config RelWithDebInfo -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 artifacts:
   - name: FreeOrionSDK_Package
-    path: build\FreeOrionSDK_MSVC-??.??_????.??.??.zip
+    path: build\FreeOrionSDK_*.zip
 deploy:
   provider: GitHub
   auth_token:

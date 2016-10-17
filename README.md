@@ -65,7 +65,7 @@ directory and a prepackaged version called
 
 can be found in the `build` directory.
 
-If you have any questions or problems please feel free to create an [issue].
+If you have any questions or problems please feel free to create an [Issue].
 
 
 ## Homepage
@@ -74,6 +74,6 @@ http://freeorion.org
 
 [CMake]: https://cmake.org/
 [Git]: https://git-scm.com/
-[issue]: https://github.com/freeorion/freeorion-sdk/issues
+[Issue]: https://github.com/freeorion/freeorion-sdk/issues
 [Windows build status badge]: https://ci.appveyor.com/api/projects/status/github/freeorion/freeorion-sdk?branch=master&svg=true
 [MacOSX build status badge]: https://travis-ci.org/freeorion/freeorion-sdk.svg?branch=master

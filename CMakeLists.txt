@@ -653,6 +653,14 @@ endif()
 
 string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
 
+set(DIST_TOOLSET ${CMAKE_CXX_COMPILER_ID})
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    string(REPLACE "." ";" _VERSION ${CMAKE_CXX_COMPILER_VERSION})
+    list(GET ${_VERSION} 0 1 _VERSION})
+    string(REPLACE ";" "." _VERSION "${_VERSION}")
+    set(DIST_TOOLSET ${DIST_TOOLSET}-${_VERSION})
+endif()
+
 if(WIN32)
     set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -9)
     set(DIST_PACK_EXT zip)
@@ -669,7 +677,7 @@ add_custom_target(pack ALL
         ${SDK_INSTALL_DIR}
     COMMAND
         ${DIST_PACK_COMMAND}
-        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${CMAKE_CXX_COMPILER_ID}_${DIST_TS}.${DIST_PACK_EXT}
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_TOOLSET}_${DIST_TS}.${DIST_PACK_EXT}
         .
 )
 

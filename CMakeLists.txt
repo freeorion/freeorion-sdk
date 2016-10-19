@@ -226,6 +226,10 @@ ExternalProject_Add(python-cmake
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0010-Install-configure-Makefile-and-pyconfig.h-for-syscon.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0011-Exclude-pyc-files-from-installation.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0012-Disable-generation-of-python-compiled-bytecode-when-.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0013-Populate-Makefile-variable-with-MacOSX-framework-var.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""

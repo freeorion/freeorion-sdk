@@ -3,6 +3,8 @@ version: ci-{build}
 #  only:
 #    - master
 #    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
+cache:
+  - build\downloads -> CMakeLists.txt
 init:
   - git config --global core.eol native
   - git config --global core.autocrlf true

@@ -16,6 +16,24 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Set the default build configuration for this build" FORCE)
 endif()
 
+function(ExternalProject_PatchSet TARGET_NAME RESULT)
+    if(NOT PATCH_EXECUTABLE)
+        message(FATAL "No PATCH_EXECUTABLE set, unable to create patch sets")
+    endif()
+    file(GLOB _PATCHES ${CMAKE_SOURCE_DIR}/patches/${TARGET_NAME}/*.patch)
+    list(SORT _PATCHES)
+    set(${RESULT} "")
+    foreach(_PATCH ${_PATCHES})
+        if(NOT ${RESULT})
+            set(${RESULT} PATCH_COMMAND)
+        else()
+            set(${RESULT} ${${RESULT}} COMMAND)
+        endif()
+        set(${RESULT} ${${RESULT}} ${PATCH_EXECUTABLE} -p1 < ${_PATCH})
+    endforeach()
+    set(${RESULT} ${${RESULT}} PARENT_SCOPE)
+endfunction()
+
 project(FreeOrionSDK)
 
 include(ExternalProject)
@@ -130,15 +148,13 @@ else()
     set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include)
 endif()
 
+ExternalProject_PatchSet(zlib ZLIB_PATCHSET)
 ExternalProject_Add(zlib
     DEPENDS patch
     URL ${ZLIB_URL}
     URL_MD5 ${ZLIB_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib/0002-Replace-zlibstatic-target-with-CMake-BUILD_SHARED_LI.patch
+    ${ZLIB_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -160,13 +176,13 @@ else()
     set(PNG_STATIC ON)
 endif()
 
+ExternalProject_PatchSet(libpng LIBPNG_PATCHSET)
 ExternalProject_Add(libpng
     DEPENDS patch zlib
     URL ${LIBPNG_URL}
     URL_MD5 ${LIBPNG_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
+    ${LIBPNG_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -205,37 +221,13 @@ if(WIN32)
     )
 endif()
 
+ExternalProject_PatchSet(python-cmake PYTHON_CMAKE_PATCHSET)
 ExternalProject_Add(python-cmake
     DEPENDS patch
     URL ${PYTHON_CMAKE_URL}
     URL_MD5 ${PYTHON_CMAKE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0001-Install-libpython-pdb-file-when-building-shared-libr.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0002-Don-t-export-python-cmake-targets.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0003-Change-pathes-to-match-current-SDK-layout.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0004-Disable-MSVC-specific-compiler-warnings.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0005-Include-backported-Visual-Studio-2015-patch-into-bui.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0006-Add-Mac-OSX-framework-support.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0007-Install-binaries-libraries-headers-files-and-auxilli.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0008-Change-PYTHONPATH-and-PYTHONHOME-for-framework-build.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0009-Install-platform-library-files-on-MacOSX.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0010-Install-configure-Makefile-and-pyconfig.h-for-syscon.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0011-Exclude-pyc-files-from-installation.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0012-Disable-generation-of-python-compiled-bytecode-when-.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0013-Populate-Makefile-variable-with-MacOSX-framework-var.patch
+    ${PYTHON_CMAKE_PATCHSET}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -256,12 +248,14 @@ else()
     set(PYTHON_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
 endif()
 
+ExternalProject_PatchSet(python PYTHON_PATCHSET)
 ExternalProject_Add(python
     DEPENDS zip python-cmake zlib
     URL ${PYTHON_URL}
     URL_MD5 ${PYTHON_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
+    ${PYTHON_PATCHSET}
+    COMMAND
         ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CMakeLists.txt <SOURCE_DIR>
     COMMAND
         ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CTestConfig.cmake <SOURCE_DIR>
@@ -269,10 +263,6 @@ ExternalProject_Add(python
         ${CMAKE_COMMAND} -E make_directory <SOURCE_DIR>/cmake
     COMMAND
         ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python/0001-Add-defines-for-missing-globals-in-VS-2015.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python/0002-Handle-file-descriptor-verification-for-VS-2015.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_LIBPYTHON_SHARED=${BUILD_SHARED_LIBS}
@@ -362,17 +352,13 @@ if(WIN32)
     )
 endif()
 
+ExternalProject_PatchSet(freetype FREETYPE_PATCHSET)
 ExternalProject_Add(freetype
     DEPENDS patch
     URL ${FREETYPE_URL}
     URL_MD5 ${FREETYPE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0001-cmake-Add-version-and-c-runtime-type-to-output-name.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0002-Remove-2-suffix-from-freetype-header-install-path.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0003-Disable-MSVC-deprecation-warnings-in-CMake.patch
+    ${FREETYPE_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build
@@ -396,23 +382,13 @@ else()
     set(SDL_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
 endif()
 
+ExternalProject_PatchSet(sdl SDL_PATCHSET)
 ExternalProject_Add(sdl
     DEPENDS patch
     URL ${SDL_URL}
     URL_MD5 ${SDL_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0002-Never-build-and-install-SDL2main-library.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0003-Remove-Wl-no-undefined-linker-flag.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0004-CMake-Use-PUBLIC_HEADER-property-to-install-headers.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0005-CMake-Add-MacOSX-Framework-support.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0006-CMake-Set-framework-install-directory.patch
+    ${SDL_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -436,21 +412,13 @@ else()
     set(LIBOGG_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
 endif()
 
+ExternalProject_PatchSet(libogg LIBOGG_PATCHSET)
 ExternalProject_Add(libogg
     DEPENDS patch
     URL ${LIBOGG_URL}
     URL_MD5 ${LIBOGG_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0001-Upstream-changes-since-v1.3.2.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0002-CMake-Don-t-install-pkg-config-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0003-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0004-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0005-Don-t-install-pkg-config-files-when-building-a-MacOS.patch
+    ${LIBOGG_PATCHSET}
     COMMAND ${CMAKE_COMMAND} -E rename
         <SOURCE_DIR>/configure.in
         <SOURCE_DIR>/configure.ac
@@ -477,31 +445,13 @@ else()
     set(LIBVORBIS_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
 endif()
 
+ExternalProject_PatchSet(libvorbis LIBVORBIS_PATCHSET)
 ExternalProject_Add(libvorbis
     DEPENDS patch libogg
     URL ${LIBVORBIS_URL}
     URL_MD5 ${LIBVORBIS_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0001-Upstream-changes-since-v1.3.5.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0002-CMake-Add-vorbisenc.c-to-vorbis-target-for-MSVC-buil.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0003-CMake-Don-t-install-pkg-config-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0004-CMake-Add-lib-prefix-to-output-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0005-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0006-CMake-Add-libogg-as-additional-name-to-ogg-library-s.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0007-CMake-Remove-vorbisenc-target.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0008-Disable-MSVC-specific-compiler-warnings.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0009-CMake-Use-install-command-for-both-framework-and-non.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0010-Don-t-install-pkg-config-files-when-creating-a-MacOS.patch
+    ${LIBVORBIS_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -515,15 +465,13 @@ ExternalProject_Add(libvorbis
 )
 
 if(NOT APPLE)
+    ExternalProject_PatchSet(openal-soft OPENAL_SOFT_PATCHSET)
     ExternalProject_Add(openal-soft
         DEPENDS patch
         URL ${OPENAL_SOFT_URL}
         URL_MD5 ${OPENAL_SOFT_MD5}
         DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-        PATCH_COMMAND
-            ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0001-Don-t-install-pkg-config-files-on-Windows.patch
-        COMMAND
-            ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0002-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
+        ${OPENAL_SOFT_PATCHSET}
         CMAKE_ARGS
             -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
             -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -557,19 +505,13 @@ else()
     add_custom_target(openal-soft)
 endif()
 
+ExternalProject_PatchSet(glew GLEW_PATCHSET)
 ExternalProject_Add(glew
     DEPENDS patch
     URL ${GLEW_URL}
     URL_MD5 ${GLEW_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew/0001-CMake-Don-t-install-pkg-config-files-on-Windows.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew/0002-Remove-glewmx-related-targets.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew/0003-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
-    COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew/0004-Don-t-install-glew-CMake-export-targets.patch
+    ${GLEW_PATCHSET}
     CONFIGURE_COMMAND ${CMAKE_COMMAND}
         -G "${CMAKE_GENERATOR}"
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>

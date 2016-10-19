@@ -4,7 +4,7 @@ version: ci-{build}
 #    - master
 #    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
 cache:
-  - build\downloads -> CMakeLists.txt
+  - build\downloads -> Sources.cmake
 init:
   - git config --global core.eol native
   - git config --global core.autocrlf true

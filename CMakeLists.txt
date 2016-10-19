@@ -37,11 +37,14 @@ set(SDK_DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads)
 # Common directory for all executables to build the SDK.
 set(SDK_BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
 
+# Import dependency source versions, URLs and MD5 checksums.
+include(Sources.cmake)
+
 if(WIN32)
     # Windows doesn't provide a basic patch tool, so we download one from the GNUWIN32 project
     ExternalProject_Add(patch
-        URL http://downloads.sourceforge.net/project/gnuwin32/patch/2.5.9-7/patch-2.5.9-7-bin.zip
-        URL_MD5 b9c8b31d62f4b2e4f1887bbb63e8a905
+        URL ${PATCH_URL}
+        URL_MD5 ${PATCH_MD5}
         DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
         # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
         # privileges.  By installing the manifest we assure that this isn't the case.
@@ -72,8 +75,8 @@ if(WIN32)
     # CMake doesn't allow to pack directories as zip files without adding a prefix to the zip
     # file entries, so we download the zip tool from the GNUWIN32 project
     ExternalProject_Add(zip-deps
-        URL http://downloads.sourceforge.net/project/gnuwin32/zip/3.0/zip-3.0-dep.zip
-        URL_MD5 8bd9a45e1259238c1f6bb277fe6386c0
+        URL ${ZIP_DEPS_URL}
+        URL_MD5 ${ZIP_DEPS_MD5}
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
@@ -83,8 +86,8 @@ if(WIN32)
 
     ExternalProject_Add(zip
         DEPENDS zip-deps
-        URL http://downloads.sourceforge.net/project/gnuwin32/zip/3.0/zip-3.0-bin.zip
-        URL_MD5 5b268fe06ce5f89bc5762805a7a9d7aa
+        URL ${ZIP_URL}
+        URL_MD5 ${ZIP_MD5}
         # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
         # privileges.  By installing the manifest we assure that this isn't the case.
         PATCH_COMMAND ${CMAKE_COMMAND} -E copy
@@ -120,8 +123,6 @@ else()
     endif()
 endif()
 
-set(ZLIB_VERSION 1.2.8)
-
 if(WIN32)
     # Move the installed include dir for the WIN32 SDK
     set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include/zlib)
@@ -131,8 +132,8 @@ endif()
 
 ExternalProject_Add(zlib
     DEPENDS patch
-    URL http://downloads.sourceforge.net/project/libpng/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz
-    URL_MD5 44d667c142d7cda120332623eab69f40
+    URL ${ZLIB_URL}
+    URL_MD5 ${ZLIB_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/zlib/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo.patch
@@ -161,8 +162,8 @@ endif()
 
 ExternalProject_Add(libpng
     DEPENDS patch zlib
-    URL https://downloads.sourceforge.net/project/libpng/libpng16/1.6.25/libpng-1.6.25.tar.gz
-    URL_MD5 87cbd0f69e4bff0215de3994a149df77
+    URL ${LIBPNG_URL}
+    URL_MD5 ${LIBPNG_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libpng/0001-Install-pdb-file-for-Debug-and-RelWithDebInfo-config.patch
@@ -204,11 +205,10 @@ if(WIN32)
     )
 endif()
 
-set(PYTHON_VERSION 2.7.12)
-
 ExternalProject_Add(python-cmake
     DEPENDS patch
-    URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/8af559448be1576bb0bb1ffd7afbfbb649b2d9dc.zip
+    URL ${PYTHON_CMAKE_URL}
+    URL_MD5 ${PYTHON_CMAKE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/python-cmake/0001-Install-libpython-pdb-file-when-building-shared-libr.patch
@@ -258,8 +258,8 @@ endif()
 
 ExternalProject_Add(python
     DEPENDS zip python-cmake zlib
-    URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz
-    URL_MD5 88d61f82e3616a4be952828b3694109d
+    URL ${PYTHON_URL}
+    URL_MD5 ${PYTHON_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CMakeLists.txt <SOURCE_DIR>
@@ -364,8 +364,8 @@ endif()
 
 ExternalProject_Add(freetype2
     DEPENDS patch
-    URL http://downloads.sourceforge.net/project/freetype/freetype2/2.5.5/freetype-2.5.5.tar.gz
-    URL_MD5 7448edfbd40c7aa5088684b0a3edb2b8
+    URL ${FREETYPE_URL}
+    URL_MD5 ${FREETYPE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0001-cmake-Add-version-and-c-runtime-type-to-output-name.patch
@@ -398,8 +398,8 @@ endif()
 
 ExternalProject_Add(sdl2
     DEPENDS patch
-    URL https://www.libsdl.org/release/SDL2-2.0.4.tar.gz
-    URL_MD5 44fc4a023349933e7f5d7a582f7b886e
+    URL ${SDL_URL}
+    URL_MD5 ${SDL_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
@@ -438,8 +438,8 @@ endif()
 
 ExternalProject_Add(libogg
     DEPENDS patch
-    URL http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
-    URL_MD5 b72e1a1dbadff3248e4ed62a4177e937
+    URL ${LIBOGG_URL}
+    URL_MD5 ${LIBOGG_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libogg/0001-Upstream-changes-since-v1.3.2.patch
@@ -479,8 +479,8 @@ endif()
 
 ExternalProject_Add(libvorbis
     DEPENDS patch libogg
-    URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
-    URL_MD5 7220e089f3be3412a2317d6fde9e3944
+    URL ${LIBVORBIS_URL}
+    URL_MD5 ${LIBVORBIS_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/libvorbis/0001-Upstream-changes-since-v1.3.5.patch
@@ -517,8 +517,8 @@ ExternalProject_Add(libvorbis
 if(NOT APPLE)
     ExternalProject_Add(openal-soft
         DEPENDS patch
-        URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.17.2.tar.bz2
-        URL_MD5 1764e0d8fec499589b47ebc724e0913d
+        URL ${OPENAL_SOFT_URL}
+        URL_MD5 ${OPENAL_SOFT_MD5}
         DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
         PATCH_COMMAND
             ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/openal-soft/0001-Don-t-install-pkg-config-files-on-Windows.patch
@@ -559,8 +559,8 @@ endif()
 
 ExternalProject_Add(glew
     DEPENDS patch
-    URL http://downloads.sourceforge.net/project/glew/glew/1.13.0/glew-1.13.0.tgz
-    URL_MD5 7cbada3166d2aadfc4169c4283701066
+    URL ${GLEW_URL}
+    URL_MD5 ${GLEW_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/glew/0001-CMake-Don-t-install-pkg-config-files-on-Windows.patch
@@ -638,8 +638,8 @@ configure_file(
 
 ExternalProject_Add(boost
     DEPENDS patch zlib python
-    URL http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz
-    URL_MD5 51528a0e3b33d9e10aaa311d9eb451e3
+    URL ${BOOST_URL}
+    URL_MD5 ${BOOST_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1
     PATCH_COMMAND

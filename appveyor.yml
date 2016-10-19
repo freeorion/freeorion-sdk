@@ -19,6 +19,7 @@ build_script:
   - cd build
   - cmake -G "Visual Studio 12" ..
   - cmake --build . --config RelWithDebInfo -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
+test: off
 artifacts:
   - name: FreeOrionSDK_Package
     path: build\FreeOrionSDK_*.zip

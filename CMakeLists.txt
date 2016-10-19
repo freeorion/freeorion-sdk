@@ -1,4 +1,8 @@
-set(REQUIRED_CMAKE_VERSION 3.4)
+if(WIN32)
+    set(REQUIRED_CMAKE_VERSION 3.4)
+else()
+    set(REQUIRED_CMAKE_VERSION 3.2)
+endif()
 
 cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 

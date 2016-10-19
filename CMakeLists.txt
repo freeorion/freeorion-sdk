@@ -362,17 +362,17 @@ if(WIN32)
     )
 endif()
 
-ExternalProject_Add(freetype2
+ExternalProject_Add(freetype
     DEPENDS patch
     URL ${FREETYPE_URL}
     URL_MD5 ${FREETYPE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0001-cmake-Add-version-and-c-runtime-type-to-output-name.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0001-cmake-Add-version-and-c-runtime-type-to-output-name.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0002-Remove-2-suffix-from-freetype-header-install-path.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0002-Remove-2-suffix-from-freetype-header-install-path.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype2/0003-Disable-MSVC-deprecation-warnings-in-CMake.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/freetype/0003-Disable-MSVC-deprecation-warnings-in-CMake.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         # FreeType doesn't provide any exported symbols, so build
@@ -732,7 +732,7 @@ endif()
 
 add_custom_target(pack ALL
     DEPENDS
-        zip tar zlib libpng python-cmake python freetype2 sdl2
+        zip tar zlib libpng python-cmake python freetype sdl2
         libogg libvorbis openal-soft glew boost
     WORKING_DIRECTORY
         ${DIST_PACK_WORKING_DIR}

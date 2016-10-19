@@ -387,32 +387,32 @@ ExternalProject_Add(freetype
 )
 
 if(WIN32)
-    set(SDL2_CONFIGURE_FLAGS "")
-    set(SDL2_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
+    set(SDL_CONFIGURE_FLAGS "")
+    set(SDL_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
 else()
-    set(SDL2_CONFIGURE_FLAGS
+    set(SDL_CONFIGURE_FLAGS
         -DBUILD_FRAMEWORK=ON
     )
-    set(SDL2_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
+    set(SDL_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
 endif()
 
-ExternalProject_Add(sdl2
+ExternalProject_Add(sdl
     DEPENDS patch
     URL ${SDL_URL}
     URL_MD5 ${SDL_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     PATCH_COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0001-CMake-Install-pdb-file-for-Debug-and-RelWithDebInfo-.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0002-Never-build-and-install-SDL2main-library.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0002-Never-build-and-install-SDL2main-library.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0003-Remove-Wl-no-undefined-linker-flag.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0003-Remove-Wl-no-undefined-linker-flag.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0004-CMake-Use-PUBLIC_HEADER-property-to-install-headers.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0004-CMake-Use-PUBLIC_HEADER-property-to-install-headers.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0005-CMake-Add-MacOSX-Framework-support.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0005-CMake-Add-MacOSX-Framework-support.patch
     COMMAND
-        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl2/0006-CMake-Set-framework-install-directory.patch
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/sdl/0006-CMake-Set-framework-install-directory.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -424,8 +424,8 @@ ExternalProject_Add(sdl2
         -DSDL_STATIC=OFF
         -DDIRECTX=OFF
         -DRENDER_D3D=OFF
-        ${SDL2_CONFIGURE_FLAGS}
-    INSTALL_DIR ${SDL2_CONFIGURE_INSTALL_DIR}
+        ${SDL_CONFIGURE_FLAGS}
+    INSTALL_DIR ${SDL_CONFIGURE_INSTALL_DIR}
 )
 
 if(WIN32)
@@ -732,7 +732,7 @@ endif()
 
 add_custom_target(pack ALL
     DEPENDS
-        zip tar zlib libpng python-cmake python freetype sdl2
+        zip tar zlib libpng python-cmake python freetype sdl
         libogg libvorbis openal-soft glew boost
     WORKING_DIRECTORY
         ${DIST_PACK_WORKING_DIR}

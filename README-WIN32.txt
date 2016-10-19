@@ -50,4 +50,4 @@ Dependency Versions Included:
 * libpng 1.6.25       <http://www.libpng.org/pub/png/libpng.html>
 * zlib 1.2.8          <http://www.zlib.net/>
 * Python 2.7.12       <https://www.python.org/>
-* SDL2 2.0.4          <https://www.libsdl.org/>
+* SDL 2.0.4           <https://www.libsdl.org/>

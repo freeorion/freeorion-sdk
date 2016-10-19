@@ -49,7 +49,7 @@ if(WIN32)
         # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
         # privileges.  By installing the manifest we assure that this isn't the case.
         PATCH_COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_SOURCE_DIR}/exe.manifest
+            ${CMAKE_SOURCE_DIR}/patches/gnu-utils/exe.manifest
             <SOURCE_DIR>/bin/patch.exe.manifest
         # To let UAC pick up the manifest the executable needs to be more recent than the manifest
         COMMAND ${CMAKE_COMMAND} -E touch <SOURCE_DIR>/bin/patch.exe
@@ -91,7 +91,7 @@ if(WIN32)
         # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
         # privileges.  By installing the manifest we assure that this isn't the case.
         PATCH_COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_SOURCE_DIR}/exe.manifest
+            ${CMAKE_SOURCE_DIR}/patches/gnu-utils/exe.manifest
             <SOURCE_DIR>/bin/zip.exe.manifest
         # To let UAC pick up the manifest the executable needs to be more recent than the manifest
         COMMAND ${CMAKE_COMMAND} -E touch <SOURCE_DIR>/bin/zip.exe

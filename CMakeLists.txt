@@ -701,9 +701,14 @@ endif()
 if(WIN32)
     set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -q -9)
     set(DIST_PACK_EXT zip)
+    set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR})
+    set(DIST_PACK_SOURCE .)
 else()
     set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjf)
     set(DIST_PACK_EXT tar.bz2)
+    # SDK_INSTALL_DIR points to the `dep` subdirectory
+    set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR}/..)
+    set(DIST_PACK_SOURCE dep)
 endif()
 
 add_custom_target(pack ALL
@@ -711,11 +716,11 @@ add_custom_target(pack ALL
         zip tar zlib libpng python-cmake python freetype2 sdl2
         libogg libvorbis openal-soft glew boost
     WORKING_DIRECTORY
-        ${SDK_INSTALL_DIR}
+        ${DIST_PACK_WORKING_DIR}
     COMMAND
         ${DIST_PACK_COMMAND}
         ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_TOOLSET}_${DIST_TS}.${DIST_PACK_EXT}
-        .
+        ${DIST_PACK_SOURCE}
 )
 
 set_directory_properties(

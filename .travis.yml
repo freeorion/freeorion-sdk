@@ -2,12 +2,15 @@ os:
   - osx
 osx_image: xcode6.4
 language: cpp
+cache:
+  directories:
+    - build/downloads
 before_script:
   # Make travis_wait more verbose
   - . .travis_wait_transparent
   # Workaround for travis-ci/travis-ci#6700
   - rvm reinstall 1.9.3 --disable-binary
-  - mkdir build
+  - mkdir -p build
   - cd build
 script:
   - cmake -G "Xcode" ..

@@ -699,10 +699,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif()
 
 if(WIN32)
-    set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -9)
+    set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -q -9)
     set(DIST_PACK_EXT zip)
 else()
-    set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjvf)
+    set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjf)
     set(DIST_PACK_EXT tar.bz2)
 endif()
 

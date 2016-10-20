@@ -14,7 +14,7 @@ before_script:
   - cd build
 script:
   - cmake -G "Xcode" ..
-  - travis_wait_transparent 60 cmake --build . --config RelWithDebInfo
+  - travis_wait_transparent 70 cmake --build . --config RelWithDebInfo
 deploy:
   provider: releases
   api-key:

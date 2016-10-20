@@ -95,6 +95,7 @@ if(WIN32)
     ExternalProject_Add(zip-deps
         URL ${ZIP_DEPS_URL}
         URL_MD5 ${ZIP_DEPS_MD5}
+        DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
@@ -106,6 +107,7 @@ if(WIN32)
         DEPENDS zip-deps
         URL ${ZIP_URL}
         URL_MD5 ${ZIP_MD5}
+        DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
         # Windows Vista+ introduces UAC, which believes that patch.exe does require administrative
         # privileges.  By installing the manifest we assure that this isn't the case.
         PATCH_COMMAND ${CMAKE_COMMAND} -E copy

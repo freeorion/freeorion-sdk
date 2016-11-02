@@ -1,8 +1,3 @@
-using zlib
-    : @ZLIB_VERSION@
-    : <include>@ZLIB_INCLUDE_DIR@
-      <search>@SDK_INSTALL_DIR@/lib
-    ;
 using python
     : @PYTHON_VERSION@  # version
     : @PYTHON_INSTALL_DIR@/bin/python@PYTHON_VERSION@  # cmd-or-prefix

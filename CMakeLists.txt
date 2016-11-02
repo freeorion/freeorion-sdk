@@ -602,6 +602,14 @@ ExternalProject_Add(boost
         ${BOOST_CONFIGURE_FLAGS}
         pch=off
         -s NO_BZIP2=1
+        -s NO_ZLIB=0
+        # Build documentation for boost::iostreams is outdated.
+        # Starting with 1.55 the zlib dependency detection uses the boost.build
+        # zlib tool, not using ZLIB_LIBPATH anymore.  The new parameters are
+        # documented in source here:
+        # https://github.com/boostorg/build/blob/boost-1.59.0/src/tools/zlib.jam#L40
+        -s ZLIB_INCLUDE=${ZLIB_INCLUDE_DIR}
+        -s ZLIB_LIBRARY_PATH=${SDK_INSTALL_DIR}/lib
     INSTALL_COMMAND ""
     INSTALL_DIR ${BOOST_CONFIGURE_INSTALL_DIR}
 )

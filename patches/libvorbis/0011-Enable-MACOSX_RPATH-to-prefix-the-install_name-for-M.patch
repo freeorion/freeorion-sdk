@@ -1,0 +1,26 @@
+From 89cc00948d18d60fc2528269b683c2b5cabf5863 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Fri, 4 Nov 2016 19:09:03 +0100
+Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
+ frameworks with @rpath
+
+---
+ lib/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 6f64087..3165168 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -108,7 +108,7 @@ else()
+         MACOSX_FRAMEWORK_IDENTIFIER org.xiph.vorbis
+         MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
+         MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
+-        XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
++        MACOSX_RPATH ON
+         PUBLIC_HEADER "${VORBIS_PUBLIC_HEADERS}"
+         OUTPUT_NAME Vorbis
+     )
+-- 
+2.7.4
+

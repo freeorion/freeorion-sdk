@@ -1,0 +1,26 @@
+From f12b2348da1b5bac9b89696cf58f0bf22a0d2828 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Wed, 2 Nov 2016 15:55:22 +0100
+Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
+ frameworks with @rpath
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e1b67f2..6537d79 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -99,7 +99,7 @@ if(BUILD_FRAMEWORK)
+         MACOSX_FRAMEWORK_IDENTIFIER org.xiph.ogg
+         MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
+         MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
+-        XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
++        MACOSX_RPATH ON
+         OUTPUT_NAME Ogg
+     )
+ endif()
+-- 
+2.7.4
+

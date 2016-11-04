@@ -8,10 +8,10 @@ Subject: [PATCH] Prevent multiple definition of
  include/boost/asio/detail/config.hpp | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/boost/asio/detail/config.hpp b/include/boost/asio/detail/config.hpp
+diff --git a/boost/asio/detail/config.hpp b/boost/asio/detail/config.hpp
 index d960e5a..a39d85d 100644
---- a/include/boost/asio/detail/config.hpp
-+++ b/include/boost/asio/detail/config.hpp
+--- a/boost/asio/detail/config.hpp
++++ b/boost/asio/detail/config.hpp
 @@ -221,8 +221,7 @@
  #     define BOOST_ASIO_ERROR_CATEGORY_NOEXCEPT noexcept(true)
  #   endif // defined(__GXX_EXPERIMENTAL_CXX0X__)

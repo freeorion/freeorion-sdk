@@ -8,8 +8,9 @@ cache:
 before_script:
   # Make travis_wait more verbose
   - . .travis_wait_transparent
-  # Workaround for travis-ci/travis-ci#6700
-  - rvm reinstall 1.9.3 --disable-binary
+  # Delete the outdated `/C=BE/O=GlobalSign nv-sa/OU=Root CA/CN=GlobalSign Root CA` certificate
+  - sudo security delete-certificate -Z 2F173F7DE99667AFA57AF80AA2D1B12FAC830338 /System/Library/Keychains/SystemRootCertificates.keychain
+  - rvm osx-ssl-certs update $(travis_internal_ruby)
   - mkdir -p build
   - cd build
 script:

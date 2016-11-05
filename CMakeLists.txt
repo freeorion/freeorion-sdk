@@ -605,6 +605,7 @@ ExternalProject_Add(boost
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         -d
+        --debug-configuration
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-context
         --without-coroutine

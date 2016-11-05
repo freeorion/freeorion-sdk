@@ -6,8 +6,8 @@ cache:
   directories:
     - build/downloads
 before_script:
-  # Make travis_wait more verbose
-  - . .travis_wait_transparent
+  # Use a more verbose travis_wait implementation
+  - . .travis_wait
   # Delete the outdated `/C=BE/O=GlobalSign nv-sa/OU=Root CA/CN=GlobalSign Root CA` certificate
   - sudo security delete-certificate -Z 2F173F7DE99667AFA57AF80AA2D1B12FAC830338 /System/Library/Keychains/SystemRootCertificates.keychain
   - rvm osx-ssl-certs update $(travis_internal_ruby)
@@ -15,7 +15,7 @@ before_script:
   - cd build
 script:
   - cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
-  - travis_wait_transparent 70 cmake --build . --config RelWithDebInfo
+  - travis_wait 70 cmake --build . --config RelWithDebInfo
 deploy:
   provider: releases
   api-key:

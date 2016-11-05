@@ -558,8 +558,11 @@ if(NOT WIN32)
     get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
 else()
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
+    string(REGEX REPLACE "^v([1-9][0-9])*$" "\\1" _PLATFORM_TOOLSET "${CMAKE_VS_PLATFORM_TOOLSET}")
+    math(EXPR _PLATFORM_TOOLSET "${_PLATFORM_TOOLSET}/10")
+    set(_PLATFORM_TOOLSET "${_PLATFORM_TOOLSET}.0")
     set(BOOST_CONFIGURE_FLAGS
-        toolset=msvc
+        toolset=msvc-${_PLATFORM_TOOLSET}
         debug-store=database
     )
     set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Boost)

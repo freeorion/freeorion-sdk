@@ -141,6 +141,13 @@ if(APPLE)
         message(FATAL_ERROR "Unable to locate `tar` executable.")
     endif()
     list(APPEND DIST_PACK_TOOLS tar)
+
+    add_custom_target(hdiutil)
+    find_program(HDIUTIL_EXECUTABLE hdiutil)
+    if(NOT HDIUTIL_EXECUTABLE)
+        message(FATAL_ERROR "Unable to locate `hdiutil` executable.")
+    endif()
+    list(APPEND DIST_PACK_TOOLS hdiutil)
 endif()
 
 if(WIN32)
@@ -664,6 +671,20 @@ elseif(APPLE)
         ${SDK_INSTALL_DIR}/../bootstrap.command
         COPYONLY
     )
+
+    add_custom_target(pre-pack
+        DEPENDS
+        ${DIST_PACK_TOOLS}
+        ${DIST_PACK_TARGETS}
+    WORKING_DIRECTORY
+        ${SDK_INSTALL_DIR}/..
+    COMMAND
+        ${TAR_EXECUTABLE} cjf
+        dep.tar.bz2
+        dep
+    )
+    list(APPEND DIST_PACK_TARGETS pre-pack)
+    file(REMOVE_RECURSE ${SDK_INSTALL_DIR})
 else()
     message(FATAL "Target system not yet supported")
 endif()
@@ -681,11 +702,11 @@ if(WIN32)
     set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR})
     set(DIST_PACK_SOURCE .)
 else()
-    set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjf)
-    set(DIST_PACK_EXT tar.bz2)
+    set(DIST_PACK_COMMAND ${HDIUTIL_EXECUTABLE} create -volname ${PROJECT_NAME} -format UDZO -srcfolder .)
+    set(DIST_PACK_EXT dmg)
     # SDK_INSTALL_DIR points to the `dep` subdirectory
     set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR}/..)
-    set(DIST_PACK_SOURCE dep)
+    set(DIST_PACK_SOURCE)
 endif()
 
 add_custom_target(pack ALL

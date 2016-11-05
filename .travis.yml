@@ -23,7 +23,7 @@ deploy:
   # Undocumented flag to create a draft release
   draft: true
   file_glob: true
-  file: FreeOrionSDK_*.tar.bz2
+  file: FreeOrionSDK_*.dmg
   skip_cleanup: true
   on:
     tags: true

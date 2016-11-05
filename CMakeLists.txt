@@ -42,6 +42,12 @@ include(ExternalProject)
 # everything a user needs to build FreeOrion from source.
 set(SDK_INSTALL_DIR ${CMAKE_BINARY_DIR}/INSTALL)
 
+# List of targets that are required to pack the SDK release.
+set(DIST_PACK_TOOLS )
+
+# List of targets that should be packaged for the SDK release.
+set(DIST_PACK_TARGETS )
+
 if(APPLE)
     set(BUILD_SHARED_LIBS OFF)
     set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
@@ -125,22 +131,16 @@ if(WIN32)
             ${SDK_BINARY_DIR}/zip.exe
     )
     set(ZIP_EXECUTABLE ${SDK_BINARY_DIR}/zip.exe)
-else()
-    add_custom_target(zip)
-    find_program(ZIP_EXECUTABLE zip)
-    if(NOT ZIP_EXECUTABLE)
-        message(FATAL_ERROR "Unable to locate `zip` executable.")
-    endif()
+    list(APPEND DIST_PACK_TOOLS zip)
 endif()
 
-if(WIN32)
-    add_custom_target(tar)
-else()
+if(APPLE)
     add_custom_target(tar)
     find_program(TAR_EXECUTABLE tar)
     if(NOT TAR_EXECUTABLE)
         message(FATAL_ERROR "Unable to locate `tar` executable.")
     endif()
+    list(APPEND DIST_PACK_TOOLS tar)
 endif()
 
 if(WIN32)
@@ -169,6 +169,7 @@ ExternalProject_Add(zlib
         -DINSTALL_INC_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS zlib)
 
 if(BUILD_SHARED_LIBS)
     set(PNG_SHARED ON)
@@ -203,6 +204,7 @@ ExternalProject_Add(libpng
         -DZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS libpng)
 
 if(WIN32)
     # This circumvents a wrongly installed include dir in the WIN32 SDK
@@ -252,7 +254,7 @@ endif()
 
 ExternalProject_PatchSet(python PYTHON_PATCHSET)
 ExternalProject_Add(python
-    DEPENDS zip python-cmake zlib
+    DEPENDS ${DIST_PACK_TOOLS} python-cmake zlib
     URL ${PYTHON_URL}
     URL_MD5 ${PYTHON_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -325,6 +327,7 @@ ExternalProject_Add(python
         #DENABLE_ZLIB=OFF
     INSTALL_DIR ${PYTHON_CONFIGURE_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS python)
 
 if(WIN32)
     # FreeOrion packages the python standard library in a zip file for
@@ -370,6 +373,7 @@ ExternalProject_Add(freetype
         -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS freetype)
 
 if(WIN32)
     set(SDL_CONFIGURE_FLAGS "")
@@ -402,6 +406,7 @@ ExternalProject_Add(sdl
         ${SDL_CONFIGURE_FLAGS}
     INSTALL_DIR ${SDL_CONFIGURE_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS sdl)
 
 if(WIN32)
     set(LIBOGG_CONFIGURE_FLAGS "")
@@ -432,6 +437,7 @@ ExternalProject_Add(libogg
         ${LIBOGG_CONFIGURE_FLAGS}
     INSTALL_DIR ${LIBOGG_CONFIGURE_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS libogg)
 
 if(WIN32)
     set(LIBVORBIS_CONFIGURE_FLAGS "")
@@ -462,6 +468,7 @@ ExternalProject_Add(libvorbis
         ${LIBVORBIS_CONFIGURE_FLAGS}
     INSTALL_DIR ${LIBVORBIS_CONFIGURE_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS libvorbis)
 
 if(NOT APPLE)
     ExternalProject_PatchSet(openal-soft OPENAL_SOFT_PATCHSET)
@@ -499,9 +506,7 @@ if(NOT APPLE)
             -DALSOFT_BACKEND_WAVE=OFF
         INSTALL_DIR ${SDK_INSTALL_DIR}
     )
-else()
-    # The MacOSX SDK doesn't contain OpenAL-soft, so add an empty target
-    add_custom_target(openal-soft)
+    list(APPEND DIST_PACK_TARGETS openal-soft)
 endif()
 
 ExternalProject_PatchSet(glew GLEW_PATCHSET)
@@ -524,6 +529,7 @@ ExternalProject_Add(glew
         <SOURCE_DIR>/build/cmake/
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS glew)
 
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
@@ -615,6 +621,7 @@ ExternalProject_Add(boost
     INSTALL_COMMAND ""
     INSTALL_DIR ${BOOST_CONFIGURE_INSTALL_DIR}
 )
+list(APPEND DIST_PACK_TARGETS boost)
 
 if(WIN32)
     ExternalProject_Add_Step(boost
@@ -683,8 +690,8 @@ endif()
 
 add_custom_target(pack ALL
     DEPENDS
-        zip tar zlib libpng python-cmake python freetype sdl
-        libogg libvorbis openal-soft glew boost
+        ${DIST_PACK_TOOLS}
+        ${DIST_PACK_TARGETS}
     WORKING_DIRECTORY
         ${DIST_PACK_WORKING_DIR}
     COMMAND

@@ -6,8 +6,8 @@ using python
     ;
 
 # detect the location of the Mac OSX SDK.
-using darwin
+using clang
     : # version (not used)
-    : @CMAKE_CXX_COMPILER@ # cmd (compiler)
+    : # cmd (compiler; not used)
     : <root>@BOOST_OSX_SYSROOT@
     ;

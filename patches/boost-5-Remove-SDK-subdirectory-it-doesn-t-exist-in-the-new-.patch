@@ -1,0 +1,36 @@
+From 5f947d820ad99e124337112ee1ff5cf836fcd865 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sun, 16 Oct 2016 16:51:09 +0200
+Subject: [PATCH] Remove SDK subdirectory, it doesn't exist in the new XCode
+ layout anymore
+
+---
+ src/tools/darwin.jam | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
+index a17e40f..2a0494e 100644
+--- a/tools/build/src/tools/darwin.jam
++++ b/tools/build/src/tools/darwin.jam
+@@ -15,7 +15,7 @@ import toolset : flags ;
+ import type ;
+ import common ;
+ import generators ;
+-import path : basename ;
++import path : basename glob-tree ;
+ import version ;
+ import property-set ;
+ import regex ;
+@@ -332,8 +332,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
+ local rule init-available-sdk-versions ( condition * : root ? )
+ {
+     root ?= /Developer ;
+-    local sdks-root = $(root)/SDKs ;
+-    local sdks = [ GLOB $(sdks-root) : MacOSX*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
++    local sdks = [ glob-tree $(root) : MacOSX*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
+     local result ;
+     for local sdk in $(sdks)
+     {
+-- 
+2.7.4
+

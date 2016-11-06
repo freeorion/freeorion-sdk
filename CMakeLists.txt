@@ -607,6 +607,8 @@ ExternalProject_Add(boost
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/boost-2-prevent-multiple-definitions-of-BOOST_ASIO_ERROR_CATEGORY_NOEXCEPT.patch
     COMMAND
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/boost-4-Print-selected-configurations-for-darwin-compiler.patch
+    COMMAND
+        ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/boost-5-Remove-SDK-subdirectory-it-doesn-t-exist-in-the-new-.patch
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         -d

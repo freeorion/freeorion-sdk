@@ -1,0 +1,44 @@
+diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
+index edd6b7a..2701de3 100644
+--- a/tools/build/src/tools/darwin.jam
++++ b/tools/build/src/tools/darwin.jam
+@@ -19,6 +19,7 @@ import path : basename ;
+ import version ;
+ import property-set ;
+ import regex ;
++import sequence ;
+ import errors ;
+ 
+ ## Use a framework.
+@@ -196,17 +197,17 @@ rule init ( version ? : command * : options * : requirement * )
+     
+     # - Initialize the SDKs available in the root for this tool.
+     local sdks = [ init-available-sdk-versions $(condition) : $(root) ] ;
+-    
+-    #~ ECHO --- ;
+-    #~ ECHO --- bin :: $(bin) ;
+-    #~ ECHO --- root :: $(root) ;
+-    #~ ECHO --- version :: $(version) ;
+-    #~ ECHO --- condition :: $(condition) ;
+-    #~ ECHO --- strip :: $(strip) ;
+-    #~ ECHO --- archiver :: $(archiver) ;
+-    #~ ECHO --- sdks :: $(sdks) ;
+-    #~ ECHO --- ;
+-    #~ EXIT ;
++
++    if $(.debug-configuration)
++    {
++        ECHO "notice: [darwin]  compiler command: $(bin)" ;
++        ECHO "notice: [darwin]  install root: $(root)" ;
++        ECHO "notice: [darwin]  compiler version: $(version)" ;
++        ECHO "notice: [darwin]  condition: $(condition)" ;
++        ECHO "notice: [darwin]  strip command: $(strip)" ;
++        ECHO "notice: [darwin]  archiver command: $(archiver)" ;
++        ECHO "notice: [darwin]  sdks: " [ sequence.join $(sdks) : ", " ] ;
++    }
+ }
+ 
+ # Add and set options for a discovered SDK version.
+-- 
+2.7.4
+

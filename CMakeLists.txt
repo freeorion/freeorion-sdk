@@ -693,9 +693,11 @@ elseif(APPLE)
         ${TAR_EXECUTABLE} cjf
         dep.tar.bz2
         dep
+    COMMAND
+        ${CMAKE_COMMAND} -E remove_directory
+        ${SDK_INSTALL_DIR}
     )
     list(APPEND DIST_PACK_TARGETS pre-pack)
-    file(REMOVE_RECURSE ${SDK_INSTALL_DIR})
 else()
     message(FATAL "Target system not yet supported")
 endif()

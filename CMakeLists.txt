@@ -550,7 +550,6 @@ list(APPEND DIST_PACK_TARGETS glew)
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
     set(BOOST_CONFIGURE_FLAGS
-        toolset=clang
         macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
     )
     list(LENGTH CMAKE_OSX_ARCHITECTURES _LEN)
@@ -565,6 +564,7 @@ if(NOT WIN32)
             "linkflags=-stdlib=libc++"
         )
     endif()
+    set(BOOST_TOOLSET clang)
     set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
     set(BOOST_OSX_SYSROOT ${CMAKE_OSX_SYSROOT})
     # strip concrete mac osx directory to allow boost build the detection of
@@ -579,12 +579,12 @@ else()
     math(EXPR _VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}/10")
     set(_VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}.0")
     set(BOOST_CONFIGURE_FLAGS
-        toolset=msvc-${_VS_PLATFORM_TOOLSET_VERSION}
         debug-store=database
     )
     if("${_VS_PLATFORM_TOOLSET_TARGET}" STREQUAL "xp")
         list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WINXP)
     endif()
+    set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
     set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Boost)
     set(BOOST_OSX_SYSROOT "")
 endif()
@@ -631,6 +631,7 @@ ExternalProject_Add(boost
         ${PATCH_EXECUTABLE} -p1 < ${CMAKE_SOURCE_DIR}/patches/boost-5-Remove-SDK-subdirectory-it-doesn-t-exist-in-the-new-.patch
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
+        toolset=${BOOST_TOOLSET}
         -d
         --debug-configuration
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam

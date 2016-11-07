@@ -1,3 +1,4 @@
+os: Visual Studio 2015
 version: ci-{build}
 #branches:
 #  only:
@@ -15,7 +16,7 @@ before_build:
   - if not exist build\NUL mkdir build
   - cd build
 build_script:
-  - cmake -G "Visual Studio 14" ..
+  - cmake -G "Visual Studio 14" -T v140_xp ..
   - cmake --build . --config RelWithDebInfo -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
 test: off
 artifacts:

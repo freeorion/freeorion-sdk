@@ -8,8 +8,6 @@ cache:
 init:
   - git config --global core.eol native
   - git config --global core.autocrlf true
-install:
-  - '"C:\Program Files (X86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"'
 before_build:
   # Remove the VS Xamarin targets to reduce AppVeyor specific noise in build
   # logs.  See also http://help.appveyor.com/discussions/problems/4569

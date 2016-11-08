@@ -10,7 +10,7 @@ option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 option(CMAKE_VERBOSE_MAKEFILE "Build with verbose Makefile output." OFF)
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "Set the C++ standard the dependencies should be build with.")
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7 CACHE STRING "Set the minimum OSX deployment target version")
-set(CMAKE_OSX_ARCHITECTURES "i386;x86_64" CACHE STRING "Set the architecture the universal binaries for OSX should be built for")
+set(CMAKE_OSX_ARCHITECTURES i386 CACHE STRING "Set the architecture the universal binaries for OSX should be built for")
 set(CMAKE_INSTALL_MESSAGE NEVER CACHE STRING "Set the verbosity level for the install messages")
 
 if(NOT CMAKE_BUILD_TYPE)

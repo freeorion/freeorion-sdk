@@ -742,6 +742,8 @@ else()
     set(DIST_PACK_SOURCE)
 endif()
 
+set(DIST_ARTIFACT "${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_VERSION}_${DIST_TOOLSET}.${DIST_PACK_EXT}")
+
 add_custom_target(pack ALL
     DEPENDS
         ${DIST_PACK_TOOLS}
@@ -749,11 +751,9 @@ add_custom_target(pack ALL
     WORKING_DIRECTORY
         ${DIST_PACK_WORKING_DIR}
     COMMAND
-        ${DIST_PACK_COMMAND}
-        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_VERSION}_${DIST_TOOLSET}.${DIST_PACK_EXT}
-        ${DIST_PACK_SOURCE}
+        ${DIST_PACK_COMMAND} ${DIST_ARTIFACT} ${DIST_PACK_SOURCE}
     COMMENT
-        "Packaging build artifact"
+        "Packaging build artifact \"${DIST_ARTIFACT}\""
 )
 
 set_directory_properties(

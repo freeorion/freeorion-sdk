@@ -3,7 +3,7 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [next] - TBA
+## [0.4.6-1] - 2016-11-09
 
 Initial changelog for the first automatic created FreeOrionSDK.  It documents
 the differences between the manual maintained old SDK and the new one.
@@ -54,8 +54,8 @@ the differences between the manual maintained old SDK and the new one.
 - [ANY] Updated SDL from 2.0.3 to 2.0.4.
 - [ANY] Dropped unused FreeALUT dependency.
 - [ANY] Dropped unused FreeImage dependency.
-- [ANY] Changed SDK artifact file names to contain compiler, toolset, target
-  platform, and release date.
+- [ANY] Changed SDK artifact file names to contain matching FreeOrion version,
+  compiler, toolset and target platform.
 - [ANY] Moved shared libaries from `temp` into `bin` directory.  Updated
   `bootstrap.bat` and `bootstrap.command` accordingly.
 - [WIN] Updated OpenAL Soft dependency from 1.15.0 to 1.17.2.

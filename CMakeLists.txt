@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
 option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 option(CMAKE_VERBOSE_MAKEFILE "Build with verbose Makefile output." OFF)
+set(DIST_VERSION "0.4.6-1" "FreeOrionSDK release version.")
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "Set the C++ standard the dependencies should be build with.")
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.7 CACHE STRING "Set the minimum OSX deployment target version")
 set(CMAKE_OSX_ARCHITECTURES i386 CACHE STRING "Set the architecture the universal binaries for OSX should be built for")
@@ -717,8 +718,6 @@ else()
     message(FATAL "Target system not yet supported")
 endif()
 
-string(TIMESTAMP DIST_TS "%Y-%m-%d" UTC)
-
 set(DIST_TOOLSET ${CMAKE_CXX_COMPILER_ID})
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     string(REPLACE "_" "-" _VS_PLATFORM_TOOLSET "${CMAKE_VS_PLATFORM_TOOLSET}")
@@ -750,7 +749,7 @@ add_custom_target(pack ALL
         ${DIST_PACK_WORKING_DIR}
     COMMAND
         ${DIST_PACK_COMMAND}
-        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_TOOLSET}_${DIST_TS}.${DIST_PACK_EXT}
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_VERSION}_${DIST_TOOLSET}.${DIST_PACK_EXT}
         ${DIST_PACK_SOURCE}
 )
 

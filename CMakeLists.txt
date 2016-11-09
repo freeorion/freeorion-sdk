@@ -545,17 +545,17 @@ if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
     set(BOOST_CONFIGURE_FLAGS
         macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
+        architecture=x86
     )
-    list(LENGTH CMAKE_OSX_ARCHITECTURES _LEN)
-    if(_LEN GREATER 1)
-        # Lets assume we want only Intel universal binaries for now
-        list(APPEND BOOST_CONFIGURE_FLAGS address-model=32_64)
-    endif()
-    unset(_LEN)
+    set(BOOST_ARCHITECTURES)
+    foreach(_OSX_ARCH IN LISTS CMAKE_OSX_ARCHITECTURES)
+        set(BOOST_ARCHITECTURES "${BOOST_ARCHITECTURES} -arch ${_OSX_ARCH}")
+    endforeach()
     if(CMAKE_CXX_STANDARD GREATER 10)
         list(APPEND BOOST_CONFIGURE_FLAGS
-            "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -stdlib=libc++"
-            "linkflags=-stdlib=libc++"
+            "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -stdlib=libc++ ${BOOST_ARCHITECTURES}"
+            "cflags=${BOOST_ARCHITECTURES}"
+            "linkflags=-stdlib=libc++ ${BOOST_ARCHITECTURES}"
         )
     endif()
     set(BOOST_TOOLSET clang)

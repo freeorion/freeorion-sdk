@@ -693,10 +693,11 @@ if(WIN32)
     )
 elseif(APPLE)
     # SDK_INSTALL_DIR points to the `dep` subdirectory
-    configure_file(
-        ${CMAKE_SOURCE_DIR}/bootstrap.command
-        ${SDK_INSTALL_DIR}/../bootstrap.command
-        COPYONLY
+    file(
+        COPY
+            ${CMAKE_SOURCE_DIR}/bootstrap.command
+        DESTINATION
+            ${SDK_INSTALL_DIR}/../
     )
 
     add_custom_target(pre-pack

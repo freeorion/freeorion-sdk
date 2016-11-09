@@ -752,6 +752,8 @@ add_custom_target(pack ALL
         ${DIST_PACK_COMMAND}
         ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_VERSION}_${DIST_TOOLSET}.${DIST_PACK_EXT}
         ${DIST_PACK_SOURCE}
+    COMMENT
+        "Packaging build artifact"
 )
 
 set_directory_properties(

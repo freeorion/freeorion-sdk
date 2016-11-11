@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s dotglob
 echo '----------------------------------------------------'
 echo '         FreeOrion Mac OSX SDK bootstrapper         '
 echo '----------------------------------------------------'
@@ -10,7 +11,6 @@ echo 'Cloning the FreeOrion repository from GitHub...'
 cd "$(dirname "$0")"
 git clone https://github.com/freeorion/freeorion.git temp
 mv temp/* ./
-mv temp/.git* ./
 rmdir temp
 echo 'Done.'
 echo '------------------------------------------------'

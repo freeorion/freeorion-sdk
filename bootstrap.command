@@ -11,6 +11,7 @@ cd "$(dirname "$0")"
 git clone https://github.com/freeorion/freeorion.git temp
 mv temp/* ./
 mv temp/.git* ./
+mv temp/.travis.yml ./
 rmdir temp
 echo 'Done.'
 echo '------------------------------------------------'

@@ -1,4 +1,4 @@
-From 4cb32882ec995edeef6e99fa61c9516992049b1f Mon Sep 17 00:00:00 2001
+From b3f97b2f352e29eec58b4db471103ecee381e40b Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 4 Nov 2016 19:40:21 +0100
 Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
@@ -9,7 +9,7 @@ Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5a99e1f..dc82959 100755
+index 5a99e1f..aff7f7c 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1492,7 +1492,7 @@ if(SDL_SHARED)
@@ -17,7 +17,7 @@ index 5a99e1f..dc82959 100755
        MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${SDL_VERSION}
        MACOSX_FRAMEWORK_BUNDLE_VERSION ${SDL_VERSION}
 -      XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
-+      MACOSX_PATH ON
++      MACOSX_RPATH ON
        OUTPUT_NAME "SDL2")
    endif()
   target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})

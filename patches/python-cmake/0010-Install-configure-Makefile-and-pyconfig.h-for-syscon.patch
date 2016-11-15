@@ -1,4 +1,4 @@
-From a18d4bce893c38a17c5ed422141ca8be416d5cdd Mon Sep 17 00:00:00 2001
+From 46f0808471eb009cf076c993ead5ab00a204b04c Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 29 Sep 2016 22:36:31 +0200
 Subject: [PATCH] Install configure Makefile and pyconfig.h for sysconfig into

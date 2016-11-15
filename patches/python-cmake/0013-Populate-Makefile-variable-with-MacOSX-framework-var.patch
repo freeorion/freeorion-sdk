@@ -1,4 +1,4 @@
-From d209a745833c3c27c3e3beec735ab8ce1c7709d9 Mon Sep 17 00:00:00 2001
+From 34e3d82ba3eda3b7a81d3bc69833dc5ccc9c2bbc Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 12:09:42 +0200
 Subject: [PATCH] Populate Makefile variable with MacOSX framework variables
@@ -37,13 +37,13 @@ index f3c8672..f03250b 100644
  option(INSTALL_MANUAL "Install man files" ON)
  option(INSTALL_TEST "Install test files" ON)
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 9218051..850f5e9 100644
+index ac42f1c..415d6d7 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
 @@ -476,7 +476,7 @@ function(add_libpython name type install component)
              MACOSX_FRAMEWORK_SHORT_VERSION_STRING "${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}"
              MACOSX_FRAMEWORK_BUNDLE_VERSION "${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}"
-             XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
+             MACOSX_RPATH ON
 -            OUTPUT_NAME Python
 +            OUTPUT_NAME ${FRAMEWORK_NAME}
          )

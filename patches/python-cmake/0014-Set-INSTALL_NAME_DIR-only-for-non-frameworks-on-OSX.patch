@@ -1,0 +1,35 @@
+From f0b32b9d45f42dc9bc59a0d05c34c6f0ce195cca Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Tue, 15 Nov 2016 10:57:52 +0100
+Subject: [PATCH] Set INSTALL_NAME_DIR only for non-frameworks on OSX
+
+---
+ cmake/libpython/CMakeLists.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
+index 415d6d7..2671678 100644
+--- a/cmake/libpython/CMakeLists.txt
++++ b/cmake/libpython/CMakeLists.txt
+@@ -457,7 +457,6 @@ function(add_libpython name type install component)
+         OUTPUT_NAME ${LIBPYTHON}${ABIFLAGS}
+         LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${LIBPYTHON_LIBDIR}
+         RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${LIBPYTHON_LIBDIR}
+-        INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIBPYTHON_LIBDIR}
+     )
+     if(HAVE_POSITION_INDEPENDENT_CODE)
+         set_target_properties(${name} PROPERTIES
+@@ -478,6 +477,10 @@ function(add_libpython name type install component)
+             MACOSX_RPATH ON
+             OUTPUT_NAME ${FRAMEWORK_NAME}
+         )
++    else()
++        set_target_properties(${name} PROPERTIES
++            INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIBPYTHON_LIBDIR}
++        )
+     endif()
+ 
+     if(install)
+-- 
+2.7.4
+

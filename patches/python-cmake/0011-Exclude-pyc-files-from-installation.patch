@@ -1,4 +1,4 @@
-From 1624a1d58d20282c4ecf437e45c7f2133adbb1c0 Mon Sep 17 00:00:00 2001
+From e8ff2075538bd4fd71335c7fcedfdba24143fcc6 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 11 Oct 2016 22:17:03 +0200
 Subject: [PATCH] Exclude pyc files from installation

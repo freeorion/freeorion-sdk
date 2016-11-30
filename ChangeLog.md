@@ -3,7 +3,7 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [0.4.6-2] - TBA
+## [0.4.6-2] - 2016-11-30
 
 - Use dotglob to copy hidden files in MacOSX SDK
 - Fix install name for SDL dependency library on MacOSX

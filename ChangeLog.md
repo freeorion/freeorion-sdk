@@ -6,6 +6,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 ## [3] - TBA
 
 - Change SDK version scheme to simple sequence number
+- Update output of bootstrap scripts to list the minimum required IDE
+  for each platform (Visual Studio 2015 - Windows ; Xcode 6.4 - MacOSX).
 
 
 ## [2] - 2016-11-30

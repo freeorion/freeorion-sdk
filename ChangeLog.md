@@ -3,7 +3,13 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [3] - TBA
+## [4] - TBA
+
+- Don't build python against any potentially installed instance of OpenSSL
+  to avoid missing dependencies on distribution.
+
+
+## [3] - 2016-12-12
 
 - Change SDK version scheme to simple sequence number
 - Update output of bootstrap scripts to list the minimum required IDE

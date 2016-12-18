@@ -292,6 +292,7 @@ ExternalProject_Add(python
         -DDOWNLOAD_SOURCES=OFF
         -DBUILD_TESTING=OFF
         -DBUILD_WININST=OFF
+        -DUSE_SYSTEM_OpenSSL=OFF
         -DENABLE_AUDIOOP=OFF
         -DENABLE_BSDDB=OFF
         #DENABLE_BZ2=OFF
@@ -311,7 +312,7 @@ ExternalProject_Add(python
         -DENABLE_ELEMENTTREE=OFF
         -DENABLE_GDBM=OFF
         -DENABLE_GRP=OFF
-        #DENABLE_HASHLIB=OFF
+        -DENABLE_HASHLIB=OFF
         -DENABLE_HOTSHOT=OFF
         -DENABLE_JSON=OFF
         -DENABLE_LINUXAUDIODEV=OFF

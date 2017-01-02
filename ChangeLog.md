@@ -7,6 +7,9 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 - Don't build python against any potentially installed instance of OpenSSL
   to avoid missing dependencies on distribution.
+- Update libpng version to 1.6.27
+- Fix Visual Studio target platform SDK selection for boost to allow toolsets
+  without `_xp` suffix.
 
 
 ## [3] - 2016-12-12

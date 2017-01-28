@@ -630,6 +630,7 @@ ExternalProject_Add(boost
         toolset=${BOOST_TOOLSET}
         -d
         --debug-configuration
+        --abbreviate-paths
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-context
         --without-coroutine

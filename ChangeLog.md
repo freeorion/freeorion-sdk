@@ -12,6 +12,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
   without `_xp` suffix.
 - Enable abbreviated pathed in boost build to avoid `failed to write output file`
   with Windows build.
+- Add Dockerfile to create TravisCI build environment for Linux.
 
 
 ## [3] - 2016-12-12

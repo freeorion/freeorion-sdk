@@ -1,0 +1,19 @@
+# When building a docker image via Dockerfile the current directory is passed
+# to the docker engine (those files are called `context`).  Files listed within
+# this file are excluded from said context.
+appveyor.yml
+boost-config.jam.in
+bootstrap.bat
+bootstrap.command
+ChangeLog.md
+cmake
+CMakeLists.txt
+.git
+.gitattributes
+.gitignore
+patches
+README.md
+README-WIN32.txt
+Sources.cmake
+.travis_wait
+.travis.yml

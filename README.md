@@ -4,7 +4,10 @@
 [![MacOSX build status badge]](https://travis-ci.org/freeorion/freeorion-sdk)
 
 Build script used to build the FreeOrion SDK for the Windows and Mac OSX
-operating systems.
+operating systems.  For Linux there exists a Dockerfile, which creates a Docker
+container capable of building FreeOrion.  All artifacts (Windows SDK, ḾacOSX SDK
+and Linux Docker container) are used for continuous integration within the
+project.
 
 
 ## Prerequisites

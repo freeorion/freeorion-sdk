@@ -10,6 +10,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update libpng version to 1.6.27
 - Fix Visual Studio target platform SDK selection for boost to allow toolsets
   without `_xp` suffix.
+- Enable abbreviated pathed in boost build to avoid `failed to write output file`
+  with Windows build.
 
 
 ## [3] - 2016-12-12

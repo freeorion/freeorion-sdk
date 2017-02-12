@@ -1,23 +1,29 @@
-os:
-  - osx
-osx_image: xcode6.4
-language: cpp
-compiler:
-  - clang
+matrix:
+  include:
+    - language: cpp
+      os: osx
+      osx_image: xcode6.4
+      compiler: clang
 cache:
   directories:
     - build/downloads
 before_script:
-  # Use a more verbose travis_wait implementation
-  - . .travis_wait
-  # Delete the outdated `/C=BE/O=GlobalSign nv-sa/OU=Root CA/CN=GlobalSign Root CA` certificate
-  - sudo security delete-certificate -Z 2F173F7DE99667AFA57AF80AA2D1B12FAC830338 /System/Library/Keychains/SystemRootCertificates.keychain
-  - rvm osx-ssl-certs update $(travis_internal_ruby)
-  - mkdir -p build
-  - cd build
+  - >
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      # Use a more verbose travis_wait implementation
+      . .travis_wait
+      # Delete the outdated `/C=BE/O=GlobalSign nv-sa/OU=Root CA/CN=GlobalSign Root CA` certificate
+      sudo security delete-certificate -Z 2F173F7DE99667AFA57AF80AA2D1B12FAC830338 /System/Library/Keychains/SystemRootCertificates.keychain
+      rvm osx-ssl-certs update $(travis_internal_ruby)
+      mkdir -p build
+      cd build
+    fi
 script:
-  - cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
-  - travis_wait 70 cmake --build . --config RelWithDebInfo
+  - >
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
+      travis_wait 70 cmake --build . --config RelWithDebInfo
+    fi
 deploy:
   provider: releases
   api-key:

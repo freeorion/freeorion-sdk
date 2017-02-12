@@ -1,0 +1,26 @@
+From 5f4e247589db1e4a35f7b0346994c0c2f689b2f7 Mon Sep 17 00:00:00 2001
+From: Christian Henning <chhenning@gmail.com>
+Date: Sun, 3 Feb 2013 20:04:23 +0000
+Subject: [PATCH] #7970
+
+[SVN r82702]
+---
+ boost/gil/channel_algorithm.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/boost/gil/channel_algorithm.hpp b/boost/gil/channel_algorithm.hpp
+index 1361219..2618d6a 100644
+--- a/boost/gil/channel_algorithm.hpp
++++ b/boost/gil/channel_algorithm.hpp
+@@ -51,7 +51,7 @@ template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst, bool
+ 
+ 
+ template <typename UnsignedIntegralChannel>
+-struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,-1> {};
++struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,std::numeric_limits<UnsignedIntegralChannel>::max()> {};
+ 
+ template <>
+ struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
+-- 
+2.9.3
+

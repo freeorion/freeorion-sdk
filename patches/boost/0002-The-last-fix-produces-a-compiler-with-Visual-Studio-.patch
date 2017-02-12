@@ -1,0 +1,29 @@
+From 807d099d91b8f41a668ab84d75ce5f897c66874d Mon Sep 17 00:00:00 2001
+From: Christian Henning <chhenning@gmail.com>
+Date: Mon, 4 Feb 2013 20:17:39 +0000
+Subject: [PATCH] The last fix produces a compiler with Visual Studio 2010.
+
+See ticket 7970.
+
+[SVN r82745]
+---
+ boost/gil/channel_algorithm.hpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/boost/gil/channel_algorithm.hpp b/boost/gil/channel_algorithm.hpp
+index 2618d6a..8d45239 100644
+--- a/boost/gil/channel_algorithm.hpp
++++ b/boost/gil/channel_algorithm.hpp
+@@ -51,7 +51,8 @@ template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst, bool
+ 
+ 
+ template <typename UnsignedIntegralChannel>
+-struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,std::numeric_limits<UnsignedIntegralChannel>::max()> {};
++//struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,std::numeric_limits<UnsignedIntegralChannel>::max()> {};
++struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,UnsignedIntegralChannel(-1)> {};
+ 
+ template <>
+ struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
+-- 
+2.9.3
+

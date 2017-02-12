@@ -13,6 +13,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Enable abbreviated pathed in boost build to avoid `failed to write output file`
   with Windows build.
 - Add Dockerfile to create TravisCI build environment for Linux.
+- Add patches from Boost.GIL upstream to avoid compiler errors with MacOSX
+  clang.
 
 
 ## [3] - 2016-12-12

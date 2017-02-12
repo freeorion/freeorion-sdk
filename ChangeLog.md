@@ -15,6 +15,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Add Dockerfile to create TravisCI build environment for Linux.
 - Add patches from Boost.GIL upstream to avoid compiler errors with MacOSX
   clang.
+- Set freetype build type to `Release` to avoid PDB related warnings in
+  FreeOrion build.
 
 
 ## [3] - 2016-12-12

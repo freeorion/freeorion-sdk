@@ -2,8 +2,17 @@
 # capable build environment for FreeOrion on TravisCI.  The image is available
 # via `freeorion/freeorion-travis-build`.
 
+# Docker doesn't expose any feature to check if a Dockerfile would result in
+# some tagged image on the docker registry for various reasons (hard to restore
+# Dockerfile from fs-metadata, no return code for an recreated build from cache
+# when using `docker build`, different file timestamps in fs-layers when running
+# `apt-get`, apt-get not pulling consistent packages, …).  To circument this a
+# custom label called `version` is used. Whenever a new image should be deployed
+# the version label value needs to be increased by one.
+
 FROM docker.io/ubuntu:16.04
-MAINTAINER Marcel Metz <mmetz@adrian-broher.net>
+LABEL version="2" \
+      maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 RUN apt-get update --assume-yes \
     && apt-get install --assume-yes --no-install-recommends \
         g++ \

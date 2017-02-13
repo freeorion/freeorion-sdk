@@ -44,6 +44,7 @@ script:
       docker build -f Dockerfile -t ${DOCKER_REPO}:${SHORT_COMMIT} .
       # calculate current tag
       export DOCKER_CTAG=$(docker inspect ${DOCKER_REPO}:${SHORT_COMMIT} | jq '.[]["ContainerConfig"]["Labels"]["version"]?' | sed -n '2s/"//gp')
+      docker inspect ${DOCKER_REPO}:${SHORT_COMMIT}
       if [[ "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
         docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:${DOCKER_NTAG}
         docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:latest

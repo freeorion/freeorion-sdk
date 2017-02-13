@@ -11,10 +11,11 @@
 # the version label value needs to be increased by one.
 
 FROM docker.io/ubuntu:16.04
-LABEL version="2" \
+LABEL version="3" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 RUN apt-get update --assume-yes \
     && apt-get install --assume-yes --no-install-recommends \
+        git \
         g++ \
         cmake \
         python \
@@ -58,8 +59,3 @@ RUN apt-get update --assume-yes \
         /usr/share/doc/libicu-dev/examples \
         /usr/share/doc/libogg-dev/html \
         /usr/share/doc/libvorbis-dev/html
-RUN apt-get update --assume-yes \
-    && apt-get install --assume-yes --no-install-recommends \
-        git \
-    && rm -rf \
-        /var/lib/apt/lists/* \

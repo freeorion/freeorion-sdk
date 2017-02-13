@@ -52,7 +52,7 @@ script:
     fi
 on_success:
   - >
-    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" ]]; then
+    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
       docker login -e "${DOCKER_EMAIL}" -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
       docker push ${DOCKER_REPO}:${DOCKER_NTAG}
       docker push ${DOCKER_REPO}:latest

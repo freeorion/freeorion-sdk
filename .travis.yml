@@ -50,7 +50,7 @@ script:
         docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:latest
       fi
     fi
-on_success:
+after_success:
   - >
     if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
       docker login -e "${DOCKER_EMAIL}" -u "${DOCKER_USER}" -p "${DOCKER_PASS}"

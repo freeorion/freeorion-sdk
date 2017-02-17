@@ -3,7 +3,7 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [4] - TBA
+## [4] - 2016-02-17
 
 - Don't build python against any potentially installed instance of OpenSSL
   to avoid missing dependencies on distribution.
@@ -15,8 +15,6 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Add Dockerfile to create TravisCI build environment for Linux.
 - Add patches from Boost.GIL upstream to avoid compiler errors with MacOSX
   clang.
-- Set freetype build type to `Release` to avoid PDB related warnings in
-  FreeOrion build.
 
 
 ## [3] - 2016-12-12

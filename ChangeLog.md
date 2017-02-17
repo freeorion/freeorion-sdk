@@ -3,6 +3,10 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
+## [5] - TBA
+
+
+
 ## [4] - 2016-02-17
 
 - Don't build python against any potentially installed instance of OpenSSL

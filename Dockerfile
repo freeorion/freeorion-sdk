@@ -42,6 +42,7 @@ RUN apt-get update --assume-yes \
         libboost-locale-dev \
         libboost-filesystem-dev \
         libboost-date-time-dev \
+        libboost-test-dev \
     && rm -rf \
         /var/lib/apt/lists/* \
         /usr/share/cmake-3.5/Help \

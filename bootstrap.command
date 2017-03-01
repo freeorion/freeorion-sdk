@@ -15,7 +15,7 @@ rmdir temp
 echo 'Done.'
 echo '----------------------------------------------------'
 echo 'Unzipping dependencies...'
-tar -xyf dep.tar.bz2 -C Xcode
+tar -xjf dep.tar.bz2 -C Xcode
 echo 'Done.'
 echo 'Removing archive...'
 rm dep.tar.bz2

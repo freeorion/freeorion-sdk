@@ -154,13 +154,6 @@ if(APPLE)
     list(APPEND DIST_PACK_TOOLS hdiutil)
 endif()
 
-if(WIN32)
-    # Move the installed include dir for the WIN32 SDK
-    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include/zlib)
-else()
-    set(ZLIB_INCLUDE_DIR ${SDK_INSTALL_DIR}/include)
-endif()
-
 ExternalProject_PatchSet(zlib ZLIB_PATCHSET)
 ExternalProject_Add(zlib
     DEPENDS patch
@@ -177,7 +170,6 @@ ExternalProject_Add(zlib
         -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES_}
         -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
         -DSKIP_INSTALL_FILES=ON
-        -DINSTALL_INC_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS zlib)
@@ -212,7 +204,6 @@ ExternalProject_Add(libpng
         -DSKIP_INSTALL_FILES=ON
         -DSKIP_INSTALL_EXPORT=ON
         -DZLIB_ROOT=<INSTALL_DIR>
-        -DZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS libpng)
@@ -644,7 +635,7 @@ ExternalProject_Add(boost
         # zlib tool, not using ZLIB_LIBPATH anymore.  The new parameters are
         # documented in source here:
         # https://github.com/boostorg/build/blob/boost-1.59.0/src/tools/zlib.jam#L40
-        -s ZLIB_INCLUDE=${ZLIB_INCLUDE_DIR}
+        -s ZLIB_INCLUDE=${SDK_INSTALL_DIR}/include
         -s ZLIB_LIBRARY_PATH=${SDK_INSTALL_DIR}/lib
     INSTALL_COMMAND ""
     INSTALL_DIR ${BOOST_CONFIGURE_INSTALL_DIR}

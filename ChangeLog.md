@@ -6,6 +6,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 ## [5] - TBA
 
 - Use `j` instead of `y` when unpacking the SDK in MacOSX bootstrap.
+- Install zlib headers in the default location for the Windows SDK.
 
 
 ## [4] - 2016-02-17

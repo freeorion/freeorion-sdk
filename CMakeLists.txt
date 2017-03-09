@@ -208,25 +208,6 @@ ExternalProject_Add(libpng
 )
 list(APPEND DIST_PACK_TARGETS libpng)
 
-if(WIN32)
-    # This circumvents a wrongly installed include dir in the WIN32 SDK
-    ExternalProject_Add_Step(libpng
-        moveHeader
-        DEPENDEES install
-        WORKING_DIRECTORY <INSTALL_DIR>
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/include/png
-        COMMAND ${CMAKE_COMMAND} -E rename
-            <INSTALL_DIR>/include/libpng16
-            <INSTALL_DIR>/include/png
-        COMMAND ${CMAKE_COMMAND} -E remove
-            <INSTALL_DIR>/include/png.h
-            <INSTALL_DIR>/include/pngconf.h
-            <INSTALL_DIR>/include/pnglibconf.h
-        COMMENT "Move FreeType headers to broken WIN32 SDK location"
-    )
-endif()
-
 ExternalProject_PatchSet(python-cmake PYTHON_CMAKE_PATCHSET)
 ExternalProject_Add(python-cmake
     DEPENDS patch

@@ -30,7 +30,8 @@ script:
   - >
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
-      travis_wait 70 cmake --build . --config RelWithDebInfo
+      sysctl hwp.ncpu
+      travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hwp.ncpu | awk '{print 2*$2}')
     fi
   - >
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then

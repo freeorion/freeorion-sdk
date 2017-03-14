@@ -533,7 +533,6 @@ if(NOT WIN32)
         )
     endif()
     set(BOOST_TOOLSET clang)
-    set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
     set(BOOST_OSX_SYSROOT ${CMAKE_OSX_SYSROOT})
     # strip concrete mac osx directory to allow boost build the detection of
     # available SDKs.
@@ -553,7 +552,6 @@ else()
         list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WINXP)
     endif()
     set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
-    set(BOOST_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Boost)
     set(BOOST_OSX_SYSROOT "")
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
@@ -619,7 +617,7 @@ ExternalProject_Add(boost
         -s ZLIB_INCLUDE=${SDK_INSTALL_DIR}/include
         -s ZLIB_LIBRARY_PATH=${SDK_INSTALL_DIR}/lib
     INSTALL_COMMAND ""
-    INSTALL_DIR ${BOOST_CONFIGURE_INSTALL_DIR}
+    INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS boost)
 

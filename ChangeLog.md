@@ -8,6 +8,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Use `j` instead of `y` when unpacking the SDK in MacOSX bootstrap.
 - Install zlib headers in the default location for the Windows SDK.
 - Install libpng headers in the default location for the Windows SDK.
+- Install Boost into root directory of the Windows SDK.
 
 
 ## [4] - 2016-02-17

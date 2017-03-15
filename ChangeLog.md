@@ -3,7 +3,10 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [5] - TBA
+## [6] - TBA
+
+
+## [5] - 2017-03-15
 
 - Use `j` instead of `y` when unpacking the SDK in MacOSX bootstrap.
 - Install zlib headers in the default location for the Windows SDK.
@@ -11,7 +14,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Install Boost into root directory of the Windows SDK.
 
 
-## [4] - 2016-02-17
+## [4] - 2017-02-17
 
 - Don't build python against any potentially installed instance of OpenSSL
   to avoid missing dependencies on distribution.

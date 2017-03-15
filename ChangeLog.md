@@ -3,10 +3,10 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## [6] - TBA
+## v6 - TBA
 
 
-## [5] - 2017-03-15
+## v5 - 2017-03-15
 
 - Use `j` instead of `y` when unpacking the SDK in MacOSX bootstrap.
 - Install zlib headers in the default location for the Windows SDK.
@@ -14,7 +14,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Install Boost into root directory of the Windows SDK.
 
 
-## [4] - 2017-02-17
+## v4 - 2017-02-17
 
 - Don't build python against any potentially installed instance of OpenSSL
   to avoid missing dependencies on distribution.
@@ -28,21 +28,21 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
   clang.
 
 
-## [3] - 2016-12-12
+## v3 - 2016-12-12
 
 - Change SDK version scheme to simple sequence number
 - Update output of bootstrap scripts to list the minimum required IDE
   for each platform (Visual Studio 2015 - Windows ; Xcode 6.4 - MacOSX).
 
 
-## [2] - 2016-11-30
+## [0.4.6-2] - 2016-11-30
 
 - Use dotglob to copy hidden files in MacOSX SDK
 - Fix install name for SDL dependency library on MacOSX
 - Fix install name for python dependency library on MacOSX
 
 
-## [1] - 2016-11-09
+## [0.4.6-1] - 2016-11-09
 
 Initial changelog for the first automatic created FreeOrionSDK.  It documents
 the differences between the manual maintained old SDK and the new one.

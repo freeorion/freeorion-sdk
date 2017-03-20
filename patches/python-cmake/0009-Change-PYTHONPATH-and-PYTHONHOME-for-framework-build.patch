@@ -1,4 +1,4 @@
-From 53eb4f71e45dc289eb2677fae6abdd944016abe3 Mon Sep 17 00:00:00 2001
+From 08839485be1d6085c18a5ae55927281d9dbd9bcf Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sun, 18 Sep 2016 23:18:14 +0200
 Subject: [PATCH] Change PYTHONPATH and PYTHONHOME for framework builds
@@ -10,10 +10,10 @@ Subject: [PATCH] Change PYTHONPATH and PYTHONHOME for framework builds
  3 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b7681ca..b9bba4c 100644
+index 2e66f6c..525a9e2 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -444,7 +444,11 @@ if(BUILD_SHARED AND UNIX)
+@@ -434,7 +434,11 @@ if(BUILD_LIBPYTHON_SHARED AND UNIX)
      if(APPLE)
          set(_envvar DYLD_LIBRARY_PATH)
      endif()
@@ -27,10 +27,10 @@ index b7681ca..b9bba4c 100644
  
  # Add extension modules
 diff --git a/cmake/ConfigureChecks.cmake b/cmake/ConfigureChecks.cmake
-index 863213f..16f7d93 100644
+index fc8ea6d..f87e75b 100644
 --- a/cmake/ConfigureChecks.cmake
 +++ b/cmake/ConfigureChecks.cmake
-@@ -614,7 +614,9 @@ set(WITH_DYLD 0)
+@@ -643,7 +643,9 @@ set(WITH_DYLD 0)
  set(WITH_NEXT_FRAMEWORK 0)
  if(APPLE)
    set(WITH_DYLD 1)
@@ -42,7 +42,7 @@ index 863213f..16f7d93 100644
  
  if(HAVE_LONG_LONG)
 diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
-index 1dae0b2..610338e 100644
+index abf5706..984c9ee 100644
 --- a/cmake/python/CMakeLists.txt
 +++ b/cmake/python/CMakeLists.txt
 @@ -53,7 +53,7 @@ if(UNIX AND PY_VERSION VERSION_GREATER "2.7.4")
@@ -54,6 +54,3 @@ index 1dae0b2..610338e 100644
          COMMAND ${CMAKE_COMMAND}
            -DBIN_BUILD_DIR:PATH=${BIN_BUILD_DIR}
            -DPYTHON_BINARY_DIR:PATH=${PROJECT_BINARY_DIR}
--- 
-2.7.4
-

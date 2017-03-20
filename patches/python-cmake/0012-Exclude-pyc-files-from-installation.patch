@@ -1,4 +1,4 @@
-From e8ff2075538bd4fd71335c7fcedfdba24143fcc6 Mon Sep 17 00:00:00 2001
+From 91522058d83d597d8bc0402b197c1860d7c619ec Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 11 Oct 2016 22:17:03 +0200
 Subject: [PATCH] Exclude pyc files from installation
@@ -25,6 +25,3 @@ index a6eef10..8324db2 100644
      if(include_file AND (NOT is_platform_file OR is_matching_platform_file))
          get_filename_component(path ${file} PATH)
  
--- 
-2.7.4
-

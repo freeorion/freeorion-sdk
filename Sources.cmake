@@ -23,8 +23,8 @@ set(LIBPNG_VERSION 1.6.27)
 set(LIBPNG_URL https://downloads.sourceforge.net/project/libpng/libpng16/${LIBPNG_VERSION}/libpng-${LIBPNG_VERSION}.tar.gz)
 set(LIBPNG_MD5 58698519e9f6126c1caeefc28dbcbd5f)
 
-set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/8af559448be1576bb0bb1ffd7afbfbb649b2d9dc.zip)
-set(PYTHON_CMAKE_MD5 eb4d1f5709a9dbdd890e1f218e13e9c5)
+set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/9da2738063b6b5e16ea3578a95f7b93c6d44c9d2.zip)
+set(PYTHON_CMAKE_MD5 4397f6fe1bc5e11a18bab22e24b233e5)
 
 set(PYTHON_VERSION 2.7.12)
 set(PYTHON_URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz)

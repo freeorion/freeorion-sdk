@@ -1,4 +1,4 @@
-From 5d658176388f0299f08c7fd7cdeabbc4149da7ff Mon Sep 17 00:00:00 2001
+From 11ca717f414f167dea75dd0d17927d4e654b426d Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 6 Sep 2016 16:59:04 +0200
 Subject: [PATCH] Disable MSVC specific compiler warnings
@@ -14,7 +14,7 @@ Subject: [PATCH] Disable MSVC specific compiler warnings
  1 file changed, 3 insertions(+)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 50f7389..2fe04e7 100644
+index 0f73902..db93b24 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
 @@ -165,6 +165,9 @@ elseif(WIN32)
@@ -27,6 +27,3 @@ index 50f7389..2fe04e7 100644
  endif()
  
  set(THREAD_SOURCES )
--- 
-2.7.4
-

@@ -1,16 +1,16 @@
-From 3c0d0260f01f19f2adb34dfa3ceb1b769a48377f Mon Sep 17 00:00:00 2001
+From 5462bc8facbe82a724e99ec45327c737a3faa6e3 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 17 Sep 2016 21:36:45 +0200
 Subject: [PATCH] Install binaries, libraries, headers files and auxilliary
  files into framework
 
 ---
- CMakeLists.txt               | 23 ++++++++++++++++++++---
+ CMakeLists.txt               | 22 +++++++++++++++++++---
  cmake/include/CMakeLists.txt | 18 ++++++++++++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ 2 files changed, 37 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 19eba46..b7681ca 100644
+index c5d2a50..2e66f6c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -84,6 +84,8 @@ if(APPLE)
@@ -22,7 +22,7 @@ index 19eba46..b7681ca 100644
  else()
    set(BUILD_FRAMEWORK OFF)
  endif()
-@@ -318,6 +320,9 @@ if(USE_LIB64)
+@@ -306,6 +308,9 @@ if(USE_LIB64)
      set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
      set(LIBDIR "lib64")
  endif()
@@ -32,11 +32,10 @@ index 19eba46..b7681ca 100644
  set(PYTHONHOME "${LIBDIR}/${LIBPYTHON}")
  
  # Install tree directory
-@@ -325,15 +330,27 @@ set(BIN_INSTALL_DIR bin)                         # Contains the python executabl
+@@ -313,8 +318,15 @@ set(BIN_INSTALL_DIR bin)                         # Contains the python executabl
  if(INSTALL_WINDOWS_TRADITIONAL)
      set(BIN_INSTALL_DIR .)                       # Contains the python executable
  endif()
--set(CONFIG_INSTALL_DIR share/${LIBPYTHON})
 +if(BUILD_FRAMEWORK)
 +    set(BIN_INSTALL_DIR ${FRAMEWORK_DIR_PREFIX}/bin)
 +endif()
@@ -44,13 +43,13 @@ index 19eba46..b7681ca 100644
 +if(BUILD_FRAMEWORK)
 +    set(SHARE_INSTALL_DIR ${FRAMEWORK_DIR_PREFIX}/share)
 +endif()
+ set(LD_VERSION ${LIBPYTHON_VERSION}${ABIFLAGS})
+-set(CONFIG_INSTALL_DIR share/${LIBPYTHON})
 +set(CONFIG_INSTALL_DIR ${SHARE_INSTALL_DIR}/${LIBPYTHON})
  set(EXTENSION_INSTALL_DIR ${PYTHONHOME}/lib-dynload)
- if(INSTALL_WINDOWS_TRADITIONAL)
-     set(EXTENSION_INSTALL_DIR DLLs)
- endif()
-+
- set(INCLUDE_INSTALL_DIR include/${LIBPYTHON})
+ set(LIB_CONFIG_INSTALL_DIR ${PYTHONHOME}/config-${LD_VERSION})
+ 
+@@ -325,6 +337,10 @@ set(INCLUDE_INSTALL_DIR include/python${LD_VERSION})
  if(MSVC)
      set(INCLUDE_INSTALL_DIR include/python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR})
  endif()
@@ -61,7 +60,7 @@ index 19eba46..b7681ca 100644
  # Build tree directory
  set(BIN_BUILD_DIR ${PROJECT_BINARY_DIR}/bin)
  set(CONFIG_BUILD_DIR ${PROJECT_BINARY_DIR}/${CONFIG_INSTALL_DIR})
-@@ -542,7 +559,7 @@ if(UNIX)
+@@ -533,7 +549,7 @@ if(UNIX)
                      ${PROJECT_BINARY_DIR}/Misc/python-${LIBPYTHON_VERSION}.pc
                      ${PROJECT_BINARY_DIR}/Misc/python-${PY_VERSION_MAJOR}.pc
                      ${PROJECT_BINARY_DIR}/Misc/python.pc
@@ -70,7 +69,7 @@ index 19eba46..b7681ca 100644
                  COMPONENT Development)
      endif()
  
-@@ -569,7 +586,7 @@ if(UNIX)
+@@ -560,7 +576,7 @@ if(UNIX)
  
      # Install manual
      if(INSTALL_MANUAL)
@@ -105,6 +104,3 @@ index f75ede6..e14bb19 100644
 +        )
 +    ")
 +endif()
--- 
-2.7.4
-

@@ -1,4 +1,4 @@
-From 34e3d82ba3eda3b7a81d3bc69833dc5ccc9c2bbc Mon Sep 17 00:00:00 2001
+From 8c945333277387f981979a7ea07ed352539ec3b0 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 12:09:42 +0200
 Subject: [PATCH] Populate Makefile variable with MacOSX framework variables
@@ -10,7 +10,7 @@ Subject: [PATCH] Populate Makefile variable with MacOSX framework variables
  3 files changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f3c8672..f03250b 100644
+index 0e155aa..9cc3345 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -84,11 +84,20 @@ if(APPLE)
@@ -37,7 +37,7 @@ index f3c8672..f03250b 100644
  option(INSTALL_MANUAL "Install man files" ON)
  option(INSTALL_TEST "Install test files" ON)
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index ac42f1c..415d6d7 100644
+index 28eca5f..bf0059f 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
 @@ -476,7 +476,7 @@ function(add_libpython name type install component)
@@ -70,6 +70,3 @@ index 5dd942c..a899a7c 100644
  # Deployment target selected during configure, to be checked
  # by distutils. The export statement is needed to ensure that the
  # deployment target is active during build.
--- 
-2.7.4
-

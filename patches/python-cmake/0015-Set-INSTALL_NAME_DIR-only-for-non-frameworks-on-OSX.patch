@@ -1,4 +1,4 @@
-From f0b32b9d45f42dc9bc59a0d05c34c6f0ce195cca Mon Sep 17 00:00:00 2001
+From 84bf1e0f31545fe8069ef2da6645e2e9daf0fa5b Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 15 Nov 2016 10:57:52 +0100
 Subject: [PATCH] Set INSTALL_NAME_DIR only for non-frameworks on OSX
@@ -8,7 +8,7 @@ Subject: [PATCH] Set INSTALL_NAME_DIR only for non-frameworks on OSX
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 415d6d7..2671678 100644
+index bf0059f..411a317 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
 @@ -457,7 +457,6 @@ function(add_libpython name type install component)
@@ -30,6 +30,3 @@ index 415d6d7..2671678 100644
      endif()
  
      if(install)
--- 
-2.7.4
-

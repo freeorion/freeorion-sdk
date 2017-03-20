@@ -1,4 +1,4 @@
-From c06a6887a3e9256a43eda5b2166a5cf5d4ff7fe2 Mon Sep 17 00:00:00 2001
+From 657649dd6071ae70f0a69bc22800882ae13efcfb Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 20 Sep 2016 17:21:09 +0200
 Subject: [PATCH] Install platform library files on MacOSX
@@ -22,6 +22,3 @@ index f3a7c96..a6eef10 100644
  foreach(file ${libfiles})
      # Don't install files for other platforms
      string(REGEX MATCH "^plat-" is_platform_file "${file}")
--- 
-2.7.4
-

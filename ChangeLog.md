@@ -6,6 +6,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 ## v6 - TBA
 - Update python-cmake-buildsystem from 8af559448be1576bb0bb1ffd7afbfbb649b2d9dc
   to 9da2738063b6b5e16ea3578a95f7b93c6d44c9d2.
+- Update libpng version to 1.6.29
 
 
 ## v5 - 2017-03-15

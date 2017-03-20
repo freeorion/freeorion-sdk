@@ -24,7 +24,7 @@ set(LIBPNG_URL https://downloads.sourceforge.net/project/libpng/libpng16/${LIBPN
 set(LIBPNG_MD5 68553080685f812d1dd7a6b8215c37d8)
 
 set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/9da2738063b6b5e16ea3578a95f7b93c6d44c9d2.zip)
-set(PYTHON_CMAKE_MD5 4397f6fe1bc5e11a18bab22e24b233e5)
+set(PYTHON_CMAKE_MD5 c77837daf2be404eeb85dee308831cd4)
 
 set(PYTHON_VERSION 2.7.12)
 set(PYTHON_URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz)

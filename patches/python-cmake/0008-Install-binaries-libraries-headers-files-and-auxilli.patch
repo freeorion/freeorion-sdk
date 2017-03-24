@@ -1,13 +1,14 @@
-From 5462bc8facbe82a724e99ec45327c737a3faa6e3 Mon Sep 17 00:00:00 2001
+From 87abba81ab9fbeb784521c193d432dfa40dda126 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 17 Sep 2016 21:36:45 +0200
 Subject: [PATCH] Install binaries, libraries, headers files and auxilliary
  files into framework
 
 ---
- CMakeLists.txt               | 22 +++++++++++++++++++---
- cmake/include/CMakeLists.txt | 18 ++++++++++++++++++
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ CMakeLists.txt                 | 22 +++++++++++++++++++---
+ cmake/include/CMakeLists.txt   | 18 ++++++++++++++++++
+ cmake/libpython/CMakeLists.txt | 11 +++++++++++
+ 3 files changed, 48 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index c5d2a50..2e66f6c 100644
@@ -104,3 +105,25 @@ index f75ede6..e14bb19 100644
 +        )
 +    ")
 +endif()
+diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
+index 28eca5f..81389cd 100644
+--- a/cmake/libpython/CMakeLists.txt
++++ b/cmake/libpython/CMakeLists.txt
+@@ -488,6 +488,17 @@ function(add_libpython name type install component)
+             FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
+             COMPONENT ${component}
+         )
++	if(BUILD_FRAMEWORK)
++	    install(CODE "
++		message(STATUS \"Creating Python library framework symlinks...\")
++		execute_process(
++		    COMMAND
++			\${CMAKE_COMMAND} -E create_symlink \"../${FRAMEWORK_NAME}\" libpython${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}.dylib
++		    WORKING_DIRECTORY
++			\"${CMAKE_INSTALL_PREFIX}/${FRAMEWORK_DIR_PREFIX}/lib\"
++		)
++	    ")
++	endif()
+     endif()
+ endfunction()
+ 

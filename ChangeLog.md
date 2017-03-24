@@ -9,6 +9,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update libpng version to 1.6.29
 - Fix bug in python-cmake-buildsystem, which prevented the execution of some
   scripts on MacOSX.
+- Fix bug in python-cmake-buildsystem, which prevented the correct linking
+  against the SDK python framework on MacOSX.
 
 
 ## v5 - 2017-03-15

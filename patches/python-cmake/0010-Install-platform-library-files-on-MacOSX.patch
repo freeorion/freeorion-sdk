@@ -1,4 +1,4 @@
-From 657649dd6071ae70f0a69bc22800882ae13efcfb Mon Sep 17 00:00:00 2001
+From 1e0d6529c5dd633d81aef7ac7c1d41e124b7c381 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 20 Sep 2016 17:21:09 +0200
 Subject: [PATCH] Install platform library files on MacOSX

@@ -1,4 +1,4 @@
-From 06a2409d68e17eac7d767e632c2d9747f4147515 Mon Sep 17 00:00:00 2001
+From 8c38fc53555b5d7d38f279f375ab19f6264f08a4 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 15 Nov 2016 10:57:52 +0100
 Subject: [PATCH] Set INSTALL_NAME_DIR only for non-frameworks on OSX

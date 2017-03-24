@@ -1,4 +1,4 @@
-From 5140b4108ab20142de7b9f383b33b2a44a9abb23 Mon Sep 17 00:00:00 2001
+From f047845c5c8fcc968ebd38a22cc250d8479c82bb Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 13 Sep 2016 17:10:25 +0200
 Subject: [PATCH] Include backported Visual Studio 2015 patch into build

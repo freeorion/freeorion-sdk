@@ -1,4 +1,4 @@
-From 87abba81ab9fbeb784521c193d432dfa40dda126 Mon Sep 17 00:00:00 2001
+From 7fe6d6eee391ad4811ad9c3bd1465c0799828dae Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 17 Sep 2016 21:36:45 +0200
 Subject: [PATCH] Install binaries, libraries, headers files and auxilliary

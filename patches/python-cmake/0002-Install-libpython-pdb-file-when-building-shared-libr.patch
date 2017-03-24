@@ -1,4 +1,4 @@
-From 227bed48a45430fdc30192cf9ed9e1ec02322dd1 Mon Sep 17 00:00:00 2001
+From a4028e5141a3c53ee2e36cee2217aeaba17ae95c Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:32:22 +0100
 Subject: [PATCH] Install libpython pdb file when building shared libraries

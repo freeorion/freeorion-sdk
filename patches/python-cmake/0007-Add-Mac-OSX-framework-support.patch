@@ -1,4 +1,4 @@
-From 66d0c4ea0152c7b5c8206ceb0498c987e78824f7 Mon Sep 17 00:00:00 2001
+From 0c4dd9f1800de82f70c87608b92741aa46190b33 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 9 Apr 2016 20:16:24 +0200
 Subject: [PATCH] Add Mac OSX framework support

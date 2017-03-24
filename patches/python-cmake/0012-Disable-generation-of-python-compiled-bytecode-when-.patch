@@ -1,4 +1,4 @@
-From db97ac239ca6f98c7a23f7045cd9016cad4be86a Mon Sep 17 00:00:00 2001
+From a29ee929032301c9ca46acfef6808d3a12169ece Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 10:16:07 +0200
 Subject: [PATCH] Disable generation of python compiled bytecode when calling

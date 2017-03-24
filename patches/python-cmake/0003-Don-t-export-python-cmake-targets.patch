@@ -1,4 +1,4 @@
-From 3cb348c6891bb96b0a206e42974608211713dda1 Mon Sep 17 00:00:00 2001
+From 13022bc3970a555db644c305d0edb602cf91f92f Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:08 +0100
 Subject: [PATCH] Don't export python cmake targets

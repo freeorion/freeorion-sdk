@@ -1,4 +1,4 @@
-From 8e8e38aa5829c31ceec7a0988c972be137fbdaca Mon Sep 17 00:00:00 2001
+From de1d50a6204754b09e9ef7deb779d206a4b9c0a8 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 12:09:42 +0200
 Subject: [PATCH] Populate Makefile variable with MacOSX framework variables

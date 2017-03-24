@@ -1,4 +1,4 @@
-From 5c25b561e7b205dc62de0fd7bae8a0af4cfd3fd5 Mon Sep 17 00:00:00 2001
+From fad46cf0cf376ae252797e5e78e584ea3ab454b7 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:55 +0100
 Subject: [PATCH] Change pathes to match current SDK layout

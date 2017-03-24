@@ -1,4 +1,4 @@
-From eaaf02768e47645abb082878e00c7fc153357c93 Mon Sep 17 00:00:00 2001
+From f7b23621c45b2d7b6b5085a24349b3a804584a7b Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 20 Mar 2017 13:25:21 +0100
 Subject: [PATCH] Builtin some modules in python3, but not in python2
@@ -34,11 +34,11 @@ python -c 'import sys ; print sys.version, "\n", sys.builtin_module_names'
 ('__builtin__', '__main__', '_ast', '_codecs', '_sre', '_symtable', '_warnings', '_weakref', 'errno', 'exceptions', 'gc', 'imp', 'marshal', 'posix', 'pwd', 'signal', 'sys', 'thread', 'xxsubtype', 'zipimport')
 ```
 ---
- cmake/extensions/CMakeLists.txt | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ cmake/extensions/CMakeLists.txt | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/cmake/extensions/CMakeLists.txt b/cmake/extensions/CMakeLists.txt
-index 681141a..0df92d7 100644
+index 681141a..203d78d 100644
 --- a/cmake/extensions/CMakeLists.txt
 +++ b/cmake/extensions/CMakeLists.txt
 @@ -27,6 +27,11 @@ if(WIN32)
@@ -62,13 +62,14 @@ index 681141a..0df92d7 100644
  add_python_extension(cPickle ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES cPickle.c)
  set(crypt2_NAME crypt)
  set(crypt2_SOURCES cryptmodule.c)
-@@ -54,14 +59,11 @@ set(datetime2_NAME datetime)
+@@ -54,14 +59,14 @@ set(datetime2_NAME datetime)
  set(datetime2_SOURCES datetimemodule.c)
  set(datetime3_NAME _datetime)
  set(datetime3_SOURCES _datetimemodule.c)
 -if(UNIX)
--  list(APPEND datetime${PY_VERSION_MAJOR}_SOURCES timemodule.c)
--endif()
++if(UNIX AND IS_PY2)
+   list(APPEND datetime${PY_VERSION_MAJOR}_SOURCES timemodule.c)
+ endif()
 -add_python_extension(${datetime${PY_VERSION_MAJOR}_NAME} ${WIN32_BUILTIN} REQUIRES HAVE_LIBM BUILTIN SOURCES ${datetime${PY_VERSION_MAJOR}_SOURCES} LIBRARIES ${M_LIBRARIES})
 +add_python_extension(${datetime${PY_VERSION_MAJOR}_NAME} ${WIN32_BUILTIN} REQUIRES HAVE_LIBM SOURCES ${datetime${PY_VERSION_MAJOR}_SOURCES} LIBRARIES ${M_LIBRARIES})
  #if(ENABLE_DATETIME AND CMAKE_C_COMPILER_ID MATCHES GNU)
@@ -79,7 +80,7 @@ index 681141a..0df92d7 100644
  add_python_extension(future_builtins ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES future_builtins.c)
  add_python_extension(_heapq ${WIN32_BUILTIN} SOURCES _heapqmodule.c)
  add_python_extension(_hotshot ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES _hotshot.c)
-@@ -74,7 +76,7 @@ add_python_extension(_io BUILTIN SOURCES
+@@ -74,7 +79,7 @@ add_python_extension(_io BUILTIN SOURCES
      _io/stringio.c
      _io/textio.c
  )
@@ -88,7 +89,7 @@ index 681141a..0df92d7 100644
  add_python_extension(_json ${WIN32_BUILTIN} SOURCES _json.c)
  add_python_extension(_locale ${WIN32_BUILTIN} SOURCES _localemodule.c) # access to ISO C locale support
  add_python_extension(_lsprof ${WIN32_BUILTIN} SOURCES _lsprof.c rotatingtree.c)
-@@ -92,7 +94,7 @@ set(thread3_NAME _thread)
+@@ -92,7 +97,7 @@ set(thread3_NAME _thread)
  set(thread2_SOURCES ${SRC_DIR}/Modules/threadmodule.c)
  set(thread3_SOURCES ${SRC_DIR}/Modules/_threadmodule.c)
  add_python_extension(${thread${PY_VERSION_MAJOR}_NAME} BUILTIN REQUIRES WITH_THREAD SOURCES ${thread${PY_VERSION_MAJOR}_SOURCES})

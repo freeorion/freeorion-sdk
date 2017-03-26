@@ -3,7 +3,7 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
-## v7 - TBA
+## v7 - 2017-03-28
 
 - Enable `select` extension of python dependency.  This allows FreeOrion build
   scripts to spawn subprocesses on UNIX-like systems.

@@ -297,7 +297,6 @@ ExternalProject_Add(python
         -DENABLE_PWD=OFF
         -DENABLE_PYEXPAT=OFF
         #DENABLE_READLINE=OFF
-        -DENABLE_SELECT=OFF
         -DENABLE_SOCKET=OFF
         -DENABLE_SPWD=OFF
         -DENABLE_SQLITE3=OFF

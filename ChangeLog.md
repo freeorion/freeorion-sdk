@@ -3,6 +3,12 @@
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
 
+## v8 - TBA
+
+- Add patch to Boost dependency to fix boost #10591, which affects both running
+  FreeOrion for older MacOSX platforms and building FreeOrion with CMake.
+
+
 ## v7 - 2017-03-28
 
 - Enable `select` extension of python dependency.  This allows FreeOrion build

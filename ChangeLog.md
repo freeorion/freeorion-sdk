@@ -7,6 +7,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 - Add patch to Boost dependency to fix boost #10591, which affects both running
   FreeOrion for older MacOSX platforms and building FreeOrion with CMake.
+- Change OSX deployment target to 10.9
 
 
 ## v7 - 2017-03-28

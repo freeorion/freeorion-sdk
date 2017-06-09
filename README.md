@@ -55,6 +55,9 @@ properly set up:
 
 `cmake ..`
 
+(For a Mac, use the correct generator:
+`cmake -G Xcode ..` )
+
 This command creates a native build system for the SDK. After that the SDK
 can be build with:
 

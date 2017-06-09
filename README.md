@@ -57,9 +57,13 @@ properly set up:
 
 This command creates a native build system for the SDK.
 
-The version of MSVC to use may be specified, by adding `-G "Visual Studio 14 2015"` or `-G "Visual Studio 15 2017"` or equivalent for other versions at the end of this command.
+To select a specific IDE or a version thereof use the `-G` (generator)
+parameter.  Valid values for this parameter are `-G "Visual Studio 14 2015"`,
+`-G "Visual Studio 15 2017"`, `-G "Xcode" or similar.
 
-The MSVC toolset version may be specified, by adding `-T v140` or `-T v141` or equivalent for other versions at the end of this command.
+To select a specific MSVC toolset version use the `-T` (toolset) parameter.
+Valid values for this parameter are `-T v140` or `-T v141` or equivalent for
+other versions at the end of this command.
 
 After that, the SDK can be build with:
 

@@ -1,0 +1,36 @@
+From 21a68c40c767890e726f24fa9a67323a7067ecb3 Mon Sep 17 00:00:00 2001
+From: memem359 <mememory359@mac.com>
+Date: Wed, 7 Jun 2017 17:23:38 -0400
+Subject: [PATCH] Fix hidden visibility symbols for mac/clang
+
+---
+ boost/locale/definitions.hpp | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/boost/locale/definitions.hpp b/boost/locale/definitions.hpp
+index b305ff7..a98cec9 100644
+--- a/boost/locale/definitions.hpp
++++ b/boost/locale/definitions.hpp
+@@ -15,15 +15,13 @@
+ # define BOOST_SYMBOL_VISIBLE
+ #endif
+ 
+-#ifdef BOOST_HAS_DECLSPEC 
+-#   if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_LOCALE_DYN_LINK)
+-#       ifdef BOOST_LOCALE_SOURCE
+-#           define BOOST_LOCALE_DECL BOOST_SYMBOL_EXPORT
+-#       else
+-#           define BOOST_LOCALE_DECL BOOST_SYMBOL_IMPORT
+-#       endif  // BOOST_LOCALE_SOURCE
+-#   endif  // DYN_LINK
+-#endif  // BOOST_HAS_DECLSPEC
++#if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_LOCALE_DYN_LINK)
++#   ifdef BOOST_LOCALE_SOURCE
++#       define BOOST_LOCALE_DECL BOOST_SYMBOL_EXPORT
++#   else
++#       define BOOST_LOCALE_DECL BOOST_SYMBOL_IMPORT
++#   endif  // BOOST_LOCALE_SOURCE
++#endif  // DYN_LINK
+ 
+ #ifndef BOOST_LOCALE_DECL
+ #   define BOOST_LOCALE_DECL

@@ -1,0 +1,115 @@
+Boost has certain preprocessor macros that only work for Windows.
+This causes visibility=hidden problems for the Mac/Clang build.
+These patches will have the macros operate for the Mac.
+
+The first file (log/detail/setup_config.hpp) was fixed for 1.60, but FO uses 1.59
+See for details-  https://github.com/boostorg/log/pull/10
+
+The changse to iostreams/detail/config/dyn_link.hpp were submitted as a PR and have been merged.
+Details-  https://github.com/boostorg/iostreams/pull/34
+
+The third file locale/definitions.hpp was also submitted as a PR
+for the Boost repository, but it may be some time before the mod acts on it.
+Details-  https://github.com/boostorg/locale/pull/15
+
+---
+
+diff --git a/boost/log/detail/setup_config.hpp b/boost/log/detail/setup_config.hpp
+index fec50fb..28c6671 100644
+--- a/boost/log/detail/setup_config.hpp
++++ b/boost/log/detail/setup_config.hpp
+@@ -30,11 +30,17 @@
+ #        define BOOST_LOG_SETUP_DLL
+ #   endif
+ 
+-#   if defined(BOOST_HAS_DECLSPEC) && defined(BOOST_LOG_SETUP_DLL)
+-#       define BOOST_LOG_SETUP_API __declspec(dllimport)
+-#   else
++#   if defined(BOOST_LOG_SETUP_DLL)
++#       if defined(BOOST_SYMBOL_IMPORT)
++#           define BOOST_LOG_SETUP_API BOOST_SYMBOL_IMPORT
++#       elif defined(BOOST_HAS_DECLSPEC)
++#           define BOOST_LOG_SETUP_API __declspec(dllimport)
++#       endif
++#   endif
++#   ifndef BOOST_LOG_SETUP_API
+ #       define BOOST_LOG_SETUP_API
+-#   endif // defined(BOOST_HAS_DECLSPEC)
++#   endif
++
+ //
+ // Automatically link to the correct build variant where possible.
+ //
+@@ -48,12 +54,15 @@
+ 
+ #else // !defined(BOOST_LOG_SETUP_BUILDING_THE_LIB)
+ 
+-#   if defined(BOOST_HAS_DECLSPEC) && defined(BOOST_LOG_SETUP_DLL)
+-#       define BOOST_LOG_SETUP_API __declspec(dllexport)
+-#   elif defined(__GNUC__) && __GNUC__ >= 4 && (defined(linux) || defined(__linux) || defined(__linux__))
+-#       define BOOST_LOG_SETUP_API __attribute__((visibility("default")))
+-#   else
+-#       define BOOST_LOG_SETUP_API
++#   if defined(BOOST_LOG_SETUP_DLL)
++#       if defined(BOOST_SYMBOL_EXPORT)
++#           define BOOST_LOG_SETUP_API BOOST_SYMBOL_EXPORT
++#       elif defined(BOOST_HAS_DECLSPEC)
++#           define BOOST_LOG_SETUP_API __declspec(dllexport)
++#       endif
++#   endif
++#   ifndef BOOST_LOG_SETUP_API
++#       define BOOST_LOG_SETUP_API BOOST_SYMBOL_VISIBLE
+ #   endif
+ 
+ #endif // !defined(BOOST_LOG_SETUP_BUILDING_THE_LIB)
+
+
+diff --git a/boost/iostreams/detail/config/dyn_link.hpp b/boost/iostreams/detail/config/dyn_link.hpp
+index 518e0b0..47b037f 100755
+--- a/boost/iostreams/detail/config/dyn_link.hpp
++++ b/boost/iostreams/detail/config/dyn_link.hpp
+@@ -28,6 +28,15 @@
+ #   define BOOST_IOSTREAMS_DECL __declspec(dllimport)
+ #  endif  
+ # endif  
++//--------------Enable dynamic linking for non-windows---------------------//
++#else // BOOST_HAS_DECLSPEC
++# if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_IOSTREAMS_DYN_LINK)
++#  ifdef BOOST_IOSTREAMS_SOURCE
++#   define BOOST_IOSTREAMS_DECL BOOST_SYMBOL_EXPORT
++#  else
++#   define BOOST_IOSTREAMS_DECL BOOST_SYMBOL_IMPORT
++#  endif
++# endif
+ #endif 
+ 
+ #ifndef BOOST_IOSTREAMS_DECL
+
+
+diff --git a/boost/locale/definitions.hpp b/boost/locale/definitions.hpp
+index b305ff7..a98cec9 100644
+--- a/boost/locale/definitions.hpp
++++ b/boost/locale/definitions.hpp
+@@ -15,15 +15,13 @@
+ # define BOOST_SYMBOL_VISIBLE
+ #endif
+ 
+-#ifdef BOOST_HAS_DECLSPEC 
+-#   if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_LOCALE_DYN_LINK)
+-#       ifdef BOOST_LOCALE_SOURCE
+-#           define BOOST_LOCALE_DECL BOOST_SYMBOL_EXPORT
+-#       else
+-#           define BOOST_LOCALE_DECL BOOST_SYMBOL_IMPORT
+-#       endif  // BOOST_LOCALE_SOURCE
+-#   endif  // DYN_LINK
+-#endif  // BOOST_HAS_DECLSPEC
++#if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_LOCALE_DYN_LINK)
++#   ifdef BOOST_LOCALE_SOURCE
++#       define BOOST_LOCALE_DECL BOOST_SYMBOL_EXPORT
++#   else
++#       define BOOST_LOCALE_DECL BOOST_SYMBOL_IMPORT
++#   endif  // BOOST_LOCALE_SOURCE
++#endif  // DYN_LINK
+ 
+ #ifndef BOOST_LOCALE_DECL
+ #   define BOOST_LOCALE_DECL

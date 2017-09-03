@@ -53,7 +53,7 @@ set(DIST_PACK_TOOLS )
 set(DIST_PACK_TARGETS )
 
 if(APPLE)
-    set(BUILD_SHARED_LIBS OFF)
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build external projects except for Boost as static libraries" FORCE)
     set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
 endif()
 

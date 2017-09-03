@@ -555,7 +555,7 @@ else()
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
 
-if(BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS OR APPLE)
     set(BOOST_LINK "shared")
 else()
     set(BOOST_LINK "static")

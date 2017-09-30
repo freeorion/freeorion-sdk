@@ -11,7 +11,7 @@ option(CMAKE_VERBOSE_MAKEFILE "Build with verbose Makefile output." OFF)
 set(DIST_VERSION 7 CACHE STRING "FreeOrionSDK release version.")
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "Set the C++ standard the dependencies should be build with.")
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Set the minimum OSX deployment target version")
-set(CMAKE_OSX_ARCHITECTURES i386 CACHE STRING "Set the architecture the universal binaries for OSX should be built for")
+set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE STRING "Set the architecture the binaries for OSX should be built for")
 set(CMAKE_INSTALL_MESSAGE NEVER CACHE STRING "Set the verbosity level for the install messages")
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -53,8 +53,15 @@ set(DIST_PACK_TOOLS )
 set(DIST_PACK_TARGETS )
 
 if(APPLE)
-    set(BUILD_SHARED_LIBS OFF)
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build external projects except for Boost as static libraries" FORCE)
     set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
+
+# CMake sets the value for OSX_SYSROOT after the project call.
+# Not certain if that is true for older versions of CMake, so provide a default.
+    if(NOT CMAKE_OSX_SYSROOT)
+        set(CMAKE_OSX_SYSROOT /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+            CACHE PATH "Use default path to OSX SYSROOT")
+    endif()
 endif()
 
 # Common download directory for all dependency source releases.  Storing
@@ -152,6 +159,13 @@ if(APPLE)
         message(FATAL_ERROR "Unable to locate `hdiutil` executable.")
     endif()
     list(APPEND DIST_PACK_TOOLS hdiutil)
+
+    add_custom_target(installnametool)
+    find_program(INAMETOOL_EXECUTABLE install_name_tool)
+    if(NOT INAMETOOL_EXECUTABLE)
+        message(FATAL_ERROR "Unable to locate `install_name_tool` executable.")
+    endif()
+    list(APPEND DIST_PACK_TOOLS installnametool)
 endif()
 
 ExternalProject_PatchSet(zlib ZLIB_PATCHSET)
@@ -555,7 +569,7 @@ else()
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
 
-if(BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS OR APPLE)
     set(BOOST_LINK "shared")
 else()
     set(BOOST_LINK "static")
@@ -677,6 +691,54 @@ elseif(APPLE)
         ${CMAKE_COMMAND} -E remove_directory
         ${SDK_INSTALL_DIR}
     )
+
+# Need to make Mac-specific changes to the dylib install_name for
+#    12 libraries that will be copied with the FO executable.
+#This uses the install_name_tool to overwrite those paths.
+# Need to change both the library's id and where it looks for
+#    dependent libraries.
+    set(DYLIB_OSX_NAMES
+        libboost_date_time.dylib
+        libboost_filesystem.dylib
+        libboost_iostreams.dylib
+        libboost_locale.dylib
+        libboost_log.dylib
+        libboost_log_setup.dylib
+        libboost_python.dylib
+        libboost_regex.dylib
+        libboost_serialization.dylib
+        libboost_signals.dylib
+        libboost_system.dylib
+        libboost_thread.dylib
+    )
+# install_name_tool will ignore any cases where the _DYLIB_NAME library
+# does not depend on the _DYLIB_DEPEND library
+    foreach(_DYLIB_NAME IN LISTS DYLIB_OSX_NAMES)
+        add_custom_command(
+            TARGET pre-pack
+	    PRE_BUILD
+            WORKING_DIRECTORY
+                ${SDK_INSTALL_DIR}/lib
+	    COMMAND
+	        ${INAMETOOL_EXECUTABLE} -id
+	            @executable_path/../SharedSupport/${_DYLIB_NAME}
+		    ${SDK_INSTALL_DIR}/lib/${_DYLIB_NAME}
+            )
+        foreach(_DYLIB_DEPEND IN LISTS DYLIB_OSX_NAMES)
+            add_custom_command(
+                TARGET pre-pack
+	        PRE_BUILD
+                WORKING_DIRECTORY
+                    ${SDK_INSTALL_DIR}/lib
+	        COMMAND
+	            ${INAMETOOL_EXECUTABLE} -change
+		    @rpath/${_DYLIB_DEPEND}
+	            @executable_path/../SharedSupport/${_DYLIB_DEPEND}
+		    ${SDK_INSTALL_DIR}/lib/${_DYLIB_NAME}
+            )
+        endforeach(_DYLIB_DEPEND)
+    endforeach(_DYLIB_NAME)
+
     list(APPEND DIST_PACK_TARGETS pre-pack)
 else()
     message(FATAL "Target system not yet supported")

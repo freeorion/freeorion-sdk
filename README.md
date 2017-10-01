@@ -59,6 +59,8 @@ This command creates a native build system for the SDK.
 
 The version of MSVC to use may be specified, by adding `-G "Visual Studio 14 2015"` or `-G "Visual Studio 15 2017"` or equivalent for other versions at the end of this command.
 
+The MSVC toolset version may be specified, by adding `-T v140` or `-T v141` or equivalent for other versions at the end of this command.
+
 After that, the SDK can be build with:
 
 `cmake --build . --config RelWithDebInfo`

@@ -55,14 +55,15 @@ properly set up:
 
 `cmake ..`
 
-This command creates a native build system for the SDK. After that the SDK
-can be build with:
+This command creates a native build system for the SDK.
+
+The version of MSVC to use may be specified, by adding `-G "Visual Studio 14 2015"` or `-G "Visual Studio 15 2017"` or equivalent for other versions at the end of this command.
+
+After that, the SDK can be build with:
 
 `cmake --build . --config RelWithDebInfo`
 
 The `--config RelWithDebInfo` parameter is required.
-
-The version of MSVC to use may also be specified, by adding `-G "Visual Studio 14 2015"` or `-G "Visual Studio 15 2017"` or equivalent for other versions at the end of this command.
 
 The build takes around 25 minutes and the results are stored inside the `build/INSTALL`
 directory and a prepackaged version called

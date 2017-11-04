@@ -529,6 +529,8 @@ if(NOT WIN32)
             "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -stdlib=libc++ ${BOOST_ARCHITECTURES}"
             "cflags=${BOOST_ARCHITECTURES}"
             "linkflags=-stdlib=libc++ ${BOOST_ARCHITECTURES}"
+            "hardcode-dll-paths=false"
+            "dll-path=@executable_path/../SharedSupport"
         )
     endif()
     set(BOOST_TOOLSET clang)

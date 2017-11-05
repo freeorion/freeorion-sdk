@@ -2,6 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+
 ## v10 - 2018-05-26
 
 - Build freetype2 dependency with explicit dependency on zlib and libpng and

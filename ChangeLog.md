@@ -2,7 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
-## v9 - TBA
+## v9 - 2018-05-23
 
 - Replace FreeOrionSDK Apple Disk Image release with a bzip2 compressed
   tarball and remove bootstrap script. The FreeOrion build system now

@@ -549,8 +549,13 @@ else()
     set(BOOST_CONFIGURE_FLAGS
         debug-store=database
     )
+    if(CMAKE_CL_64)
+        list(APPEND BOOST_CONFIGURE_FLAGS address-model=64)
+    endif()
     if("${_VS_PLATFORM_TOOLSET_TARGET}" STREQUAL "_xp")
         list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WINXP)
+    else()
+        list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN7)
     endif()
     set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
     set(BOOST_OSX_SYSROOT "")

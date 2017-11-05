@@ -1,0 +1,31 @@
+From 46d8e8c82afa0ee8f6b644843a58c1b110e6ae4e Mon Sep 17 00:00:00 2001
+From: memem359 <mememory359@mac.com>
+Date: Wed, 7 Jun 2017 17:49:31 -0400
+Subject: [PATCH] Fix hidden visibility symbols for mac/clang
+
+---
+ boost/iostreams/detail/config/dyn_link.hpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/boost/iostreams/detail/config/dyn_link.hpp b/boost/iostreams/detail/config/dyn_link.hpp
+index 15490cfe..cc8c73bd 100644
+--- a/boost/iostreams/detail/config/dyn_link.hpp
++++ b/boost/iostreams/detail/config/dyn_link.hpp
+@@ -27,7 +27,16 @@
+ #  else
+ #   define BOOST_IOSTREAMS_DECL __declspec(dllimport)
+ #  endif  
+-# endif  
++# endif
++//--------------Enable dynamic linking for non-windows---------------------//
++#else // BOOST_HAS_DECLSPEC
++# if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_IOSTREAMS_DYN_LINK)
++#  ifdef BOOST_IOSTREAMS_SOURCE
++#   define BOOST_IOSTREAMS_DECL BOOST_SYMBOL_EXPORT
++#  else
++#   define BOOST_IOSTREAMS_DECL BOOST_SYMBOL_IMPORT
++#  endif
++# endif
+ #endif 
+ 
+ #ifndef BOOST_IOSTREAMS_DECL

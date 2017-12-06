@@ -2,6 +2,10 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v9 - TBA
+
+- Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
+
 
 ## v8 - 2017-11-05
 

@@ -10,6 +10,8 @@
 # custom label called `version` is used. Whenever a new image should be deployed
 # the version label value needs to be increased by one.
 
+# coreutils is included to use timeout in travis-ci builds
+
 FROM docker.io/ubuntu:16.04
 LABEL version="6" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
@@ -20,6 +22,8 @@ RUN apt-get update --assume-yes \
         cmake \
         python \
         doxygen \
+        ccache \
+        coreutils \
         libpython-dev \
         libfreetype6-dev \
         libglew-dev \
@@ -46,6 +50,8 @@ RUN apt-get update --assume-yes \
     && rm -rf \
         /var/lib/apt/lists/* \
         /usr/share/cmake-3.5/Help \
+        /usr/share/doc/ccache \
+        /usr/share/doc/coreutils-common \
         /usr/share/doc/libasound2-dev/examples \
         /usr/share/doc/libasound2/examples \
         /usr/share/doc/libboost-date-time1.58-dev/data \

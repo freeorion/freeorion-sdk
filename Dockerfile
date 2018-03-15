@@ -16,6 +16,13 @@ FROM docker.io/ubuntu:xenial-20180417
 
 LABEL version="7" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
+
+RUN echo "# don't install documentation inside container\n\
+path-exclude=/usr/share/doc/*\n\
+path-exclude=/usr/share/man/*\n\
+path-exclude=/usr/share/cmake-3.5/Help/*\n\
+" > /etc/dpkg/dpkg.cfg.d/docker-no-documentation
+
 RUN apt-get update --assume-yes \
     && apt-get install --assume-yes --no-install-recommends \
         git \
@@ -49,21 +56,4 @@ RUN apt-get update --assume-yes \
         libboost-date-time-dev \
         libboost-test-dev \
     && rm -rf \
-        /var/lib/apt/lists/* \
-        /usr/share/cmake-3.5/Help \
-        /usr/share/doc/ccache \
-        /usr/share/doc/coreutils-common \
-        /usr/share/doc/libasound2-dev/examples \
-        /usr/share/doc/libasound2/examples \
-        /usr/share/doc/libboost-date-time1.58-dev/data \
-        /usr/share/doc/libexpat1-dev/examples \
-        /usr/share/doc/libexpat1-dev/expat.html \
-        /usr/share/doc/libfreetype6/css \
-        /usr/share/doc/libfreetype6/design \
-        /usr/share/doc/libfreetype6/reference \
-        /usr/share/doc/libfreetype6/tutorials \
-        /usr/share/doc/libfreetype6/image \
-        /usr/share/doc/libfreetype6/glyphs \
-        /usr/share/doc/libicu-dev/examples \
-        /usr/share/doc/libogg-dev/html \
-        /usr/share/doc/libvorbis-dev/html
+        /var/lib/apt/lists/*

@@ -17,6 +17,8 @@ FROM docker.io/ubuntu:xenial-20180417
 LABEL version="7" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN echo "# don't install documentation inside container\n\
 path-exclude=/usr/share/doc/*\n\
 path-exclude=/usr/share/man/*\n\

@@ -27,6 +27,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Move suppression of recommends installed packages into config file for Docker
   image.
 - Don't install static libraries into Docker image
+- Set Debian frontend to noninteractive to avoid warnings during apt-get usage.
 
 
 ## v8 - 2017-11-05

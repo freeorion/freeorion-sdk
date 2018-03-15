@@ -12,7 +12,8 @@
 
 # coreutils is included to use timeout in travis-ci builds
 
-FROM docker.io/ubuntu:16.04
+FROM docker.io/ubuntu:xenial-20180417
+
 LABEL version="7" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 RUN apt-get update --assume-yes \

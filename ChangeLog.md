@@ -26,6 +26,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Don't install package documentation into Docker image
 - Move suppression of recommends installed packages into config file for Docker
   image.
+- Don't install static libraries into Docker image
 
 
 ## v8 - 2017-11-05

@@ -23,6 +23,17 @@ path-exclude=/usr/share/man/*\n\
 path-exclude=/usr/share/cmake-3.5/Help/*\n\
 " > /etc/dpkg/dpkg.cfg.d/docker-no-documentation
 
+RUN echo "# don't install static libraries inside container\n\
+path-exclude=/usr/lib/x86_64-linux-gnu/*.a\n\
+path-exclude=/usr/lib/python2.7/config-x86_64-linux-gnu/*.a\n\
+path-include=/usr/lib/x86_64-linux-gnu/libc_nonshared.a\n\
+path-include=/usr/lib/gcc/x86_64-linux-gnu/5/libgcc.a\n\
+path-include=/usr/lib/x86_64-linux-gnu/libmvec_nonshared.a\n\
+path-include=/usr/lib/x86_64-linux-gnu/libpthread.a\n\
+path-include=/usr/lib/x86_64-linux-gnu/libpthread-2.0.a\n\
+path-include=/usr/lib/x86_64-linux-gnu/libpthread_nonshared.a\n\
+" > /etc/dpkg/dpkg.cfg.d/docker-no-static-libraries
+
 RUN echo "# don't install recommends and suggests packages\n\
 APT::Install-Recommends \"false\";\n\
 APT::Install-Suggests \"false\";\n\

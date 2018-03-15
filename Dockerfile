@@ -23,8 +23,13 @@ path-exclude=/usr/share/man/*\n\
 path-exclude=/usr/share/cmake-3.5/Help/*\n\
 " > /etc/dpkg/dpkg.cfg.d/docker-no-documentation
 
+RUN echo "# don't install recommends and suggests packages\n\
+APT::Install-Recommends \"false\";\n\
+APT::Install-Suggests \"false\";\n\
+" > /etc/apt/apt.conf.d/docker-no-suggests
+
 RUN apt-get update --assume-yes \
-    && apt-get install --assume-yes --no-install-recommends \
+    && apt-get install --assume-yes \
         git \
         g++ \
         cmake \

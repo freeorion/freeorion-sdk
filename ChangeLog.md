@@ -24,6 +24,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Pin Docker image to a stable and more recent base image
   (docker.io/ubuntu:xenial-20180417).
 - Don't install package documentation into Docker image
+- Move suppression of recommends installed packages into config file for Docker
+  image.
 
 
 ## v8 - 2017-11-05

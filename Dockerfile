@@ -14,7 +14,7 @@
 
 FROM docker.io/ubuntu:xenial-20180417
 
-LABEL version="7" \
+LABEL version="8" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 
 ENV DEBIAN_FRONTEND=noninteractive

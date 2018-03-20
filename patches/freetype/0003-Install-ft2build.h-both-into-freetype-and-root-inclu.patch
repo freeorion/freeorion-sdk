@@ -1,0 +1,67 @@
+From 958aca5501f8a3badd15c9e3ca1c888795ac0cd1 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Thu, 22 Sep 2016 23:40:18 +0200
+Subject: [PATCH] Install ft2build.h both into freetype and root include dir
+
+---
+ CMakeLists.txt                        | 19 +++++++++++++++++++
+ include/{ft2build.h => ft2build.h.in} |  2 +-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+ rename include/{ft2build.h => ft2build.h.in} (98%)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 241b483ba..88b985dac 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -131,6 +131,18 @@ execute_process(
+   OUTPUT_FILE ${PROJECT_BINARY_DIR}/include/freetype2/ftconfig.h
+ )
+ 
++set(FT_HEADER_PATH config/ftheader.h)
++configure_file(
++    include/ft2build.h.in
++    include/freetype2/ft2build.h
++)
++
++set(FT_HEADER_PATH freetype/config/ftheader.h)
++configure_file(
++    include/ft2build.h.in
++    include/ft2build.h
++)
++
+ file(GLOB PUBLIC_HEADERS "include/*.h")
+ file(GLOB PUBLIC_CONFIG_HEADERS "include/config/*.h")
+ file(GLOB PRIVATE_HEADERS "include/internal/*.h")
+@@ -229,6 +241,13 @@ endif ()
+ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+   DESTINATION include/freetype2
+   PATTERN "internal" EXCLUDE
++  PATTERN "ft2build.h.in" EXCLUDE
++)
++install(FILES ${PROJECT_BINARY_DIR}/include/ft2build.h
++  DESTINATION include
++)
++install(FILES ${PROJECT_BINARY_DIR}/include/freetype2/ft2build.h
++  DESTINATION include/freetype
+ )
+ install(TARGETS freetype
+   RUNTIME DESTINATION bin
+diff --git a/include/ft2build.h b/include/ft2build.h.in
+similarity index 98%
+rename from include/ft2build.h
+rename to include/ft2build.h.in
+index 6f8eb7f37..b98af77a5 100644
+--- a/include/ft2build.h
++++ b/include/ft2build.h.in
+@@ -34,7 +34,7 @@
+ #ifndef __FT2BUILD_H__
+ #define __FT2BUILD_H__
+ 
+-#include <config/ftheader.h>
++#include <@FT_HEADER_PATH@>
+ 
+ #endif /* __FT2BUILD_H__ */
+ 
+-- 
+2.14.3
+

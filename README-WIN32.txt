@@ -65,6 +65,6 @@ Dependency Versions Included:
 * libvorbis 1.3.5     <https://xiph.org/vorbis/>
 * OpenAL Soft 1.17.2  <http://kcat.strangesoft.net/openal.html>
 * libpng 1.6.29       <http://www.libpng.org/pub/png/libpng.html>
-* zlib 1.2.8          <http://www.zlib.net/>
+* zlib 1.2.11         <http://www.zlib.net/>
 * Python 2.7.12       <https://www.python.org/>
 * SDL 2.0.4           <https://www.libsdl.org/>

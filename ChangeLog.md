@@ -4,6 +4,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 ## v9 - TBA
 
+- Update zlib version to 1.2.11
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 
 

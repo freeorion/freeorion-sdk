@@ -10,6 +10,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update SDL2 version to 2.0.8
 - Update libopenal-soft version to 1.18.2
 - Use upstream conventions for freetype2 install header path
+- Use upstream conventions for freetype2 ft2build.h install path.
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 
 

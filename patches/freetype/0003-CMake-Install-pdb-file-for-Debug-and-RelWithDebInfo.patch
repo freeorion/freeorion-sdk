@@ -1,4 +1,4 @@
-From 9bfe50a06ba63cf1ef0aa70cf5f01d4902e7bb72 Mon Sep 17 00:00:00 2001
+From 6c8f4bac073bd2ff4213527f9480c8b2ca53afb7 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sun, 12 Feb 2017 15:57:24 +0100
 Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
@@ -8,10 +8,10 @@ Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
  1 file changed, 7 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 88b985dac..407247bf9 100644
+index 241b483ba..cbe963a1f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -255,6 +255,13 @@ install(TARGETS freetype
+@@ -236,6 +236,13 @@ install(TARGETS freetype
    ARCHIVE DESTINATION lib
    FRAMEWORK DESTINATION Library/Frameworks
  )

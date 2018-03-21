@@ -1,4 +1,4 @@
-From fef7cda2554ce895ed9e39fb9f57cc3daa028134 Mon Sep 17 00:00:00 2001
+From 2712ebde5d80728ced03ac14ef1121cfead9aab5 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 1 Apr 2016 17:21:45 +0200
 Subject: [PATCH] CMake: Install pdb file for Debug and RelWithDebInfo
@@ -9,11 +9,11 @@ Subject: [PATCH] CMake: Install pdb file for Debug and RelWithDebInfo
  1 file changed, 7 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 74356b6..d3abe6d 100755
+index 8f1e828d1..aa17932b6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1526,6 +1526,13 @@ if(NOT WINDOWS OR CYGWIN)
-   install(FILES "${SDL2_SOURCE_DIR}/sdl2.m4" DESTINATION "share/aclocal")
+@@ -1834,6 +1834,13 @@ if(NOT (WINDOWS OR CYGWIN))
+   install(FILES "${SDL2_SOURCE_DIR}/sdl2.m4" DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/aclocal")
  endif()
  
 +if(SDL_SHARED AND (MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
@@ -25,7 +25,7 @@ index 74356b6..d3abe6d 100755
 +
  ##### Uninstall target #####
  
- configure_file(
+ if(NOT TARGET uninstall)
 -- 
-2.7.4
+2.14.3
 

@@ -1,0 +1,52 @@
+From 8410e75ba96ed1a55a31ef9861ea318b9302a986 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Fri, 1 Apr 2016 18:10:19 +0200
+Subject: [PATCH] CMake: Add MacOSX Framework support
+
+---
+ CMakeLists.txt | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 39efa950c..b37c4ab1e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -333,6 +333,9 @@ set_option(VIDEO_VIVANTE       "Use Vivante EGL video driver" ${UNIX_SYS})
+ dep_option(VIDEO_VULKAN        "Enable Vulkan support" ON "ANDROID OR APPLE OR LINUX OR WINDOWS" OFF)
+ set_option(VIDEO_KMSDRM        "Use KMS DRM video driver" ${UNIX_SYS})
+ dep_option(KMSDRM_SHARED       "Dynamically load KMS DRM support" ON "VIDEO_KMSDRM" OFF)
++if(APPLE)
++  set_option(BUILD_FRAMEWORK   "Build Framework bundle for OSX" OFF)
++endif()
+ 
+ # TODO: We should (should we?) respect cmake's ${BUILD_SHARED_LIBS} flag here
+ # The options below are for compatibility to configure's default behaviour.
+@@ -1731,6 +1734,16 @@ if(SDL_SHARED)
+     set_target_properties(SDL2 PROPERTIES STATIC_LIBRARY_FLAGS "/NODEFAULTLIB")
+   endif()
+   set(_INSTALL_LIBS "SDL2" ${_INSTALL_LIBS})
++  if(APPLE AND BUILD_FRAMEWORK)
++    set_target_properties(SDL2 PROPERTIES
++      FRAMEWORK TRUE
++      FRAMEWORK_VERSION ${SDL_VERSION}
++      MACOSX_FRAMEWORK_IDENTIFIER org.libsdl.SDL2
++      MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${SDL_VERSION}
++      MACOSX_FRAMEWORK_BUNDLE_VERSION ${SDL_VERSION}
++      XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
++      OUTPUT_NAME "SDL2")
++  endif()
+   target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+   target_include_directories(SDL2 PUBLIC $<INSTALL_INTERFACE:include>)
+   if (NOT ANDROID)
+@@ -1819,7 +1832,7 @@ endforeach()
+ list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
+ install(FILES ${INCLUDE_FILES} DESTINATION include/SDL2)
+ 
+-if(NOT (WINDOWS OR CYGWIN))
++if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
+   if(SDL_SHARED)
+     if (APPLE)
+         set(SOEXT "dylib")
+-- 
+2.14.3
+

@@ -7,6 +7,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update zlib version to 1.2.11
 - Update libpng version to 1.6.34
 - Update GLEW version to 2.1.0
+- Update SDL2 version to 2.0.8
 - Update libopenal-soft version to 1.18.2
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 

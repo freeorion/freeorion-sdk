@@ -30,9 +30,9 @@ set(PYTHON_VERSION 2.7.12)
 set(PYTHON_URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz)
 set(PYTHON_MD5 88d61f82e3616a4be952828b3694109d)
 
-set(FREETYPE_VERSION 2.5.5)
+set(FREETYPE_VERSION 2.9)
 set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)
-set(FREETYPE_MD5 7448edfbd40c7aa5088684b0a3edb2b8)
+set(FREETYPE_MD5 d23a1b246e78890458c6672cb45eacd0)
 
 set(SDL_VERSION 2.0.8)
 set(SDL_URL https://www.libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz)

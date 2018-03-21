@@ -1,4 +1,4 @@
-From 6c8f4bac073bd2ff4213527f9480c8b2ca53afb7 Mon Sep 17 00:00:00 2001
+From 1eb50c12832ded0e6dfacdf484fdf847ab5836fc Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sun, 12 Feb 2017 15:57:24 +0100
 Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
@@ -8,23 +8,23 @@ Subject: [PATCH] CMake: Install pdb file for `Debug` and `RelWithDebInfo`
  1 file changed, 7 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 241b483ba..cbe963a1f 100644
+index 9bb154768..cc9fc9545 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -236,6 +236,13 @@ install(TARGETS freetype
-   ARCHIVE DESTINATION lib
-   FRAMEWORK DESTINATION Library/Frameworks
- )
-+if((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
-+    install(
-+        FILES $<TARGET_PDB_FILE:freetype>
-+        DESTINATION lib
-+        CONFIGURATIONS Debug RelWithDebInfo
+@@ -432,6 +432,13 @@ if (NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
+     DESTINATION lib/cmake/freetype
+     FILE freetype-config.cmake
+     )
++  if((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
++    install(FILES
++      $<TARGET_PDB_FILE:freetype>
++      DESTINATION lib
++      CONFIGURATIONS Debug RelWithDebInfo
 +    )
-+endif()
++  endif()
+ endif ()
  
- # Packaging
- # CPack version numbers for release tarball name.
+ 
 -- 
 2.14.3
 

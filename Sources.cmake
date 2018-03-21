@@ -50,9 +50,9 @@ set(OPENAL_SOFT_VERSION 1.17.2)
 set(OPENAL_SOFT_URL http://kcat.strangesoft.net/openal-releases/openal-soft-${OPENAL_SOFT_VERSION}.tar.bz2)
 set(OPENAL_SOFT_MD5 1764e0d8fec499589b47ebc724e0913d)
 
-set(GLEW_VERSION 1.13.0)
+set(GLEW_VERSION 2.1.0)
 set(GLEW_URL http://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)
-set(GLEW_MD5 7cbada3166d2aadfc4169c4283701066)
+set(GLEW_MD5 b2ab12331033ddfaa50dc39345343980)
 
 set(BOOST_VERSION 1.59.0)
 string(REPLACE "." "_" BOOST_VERSION_ ${BOOST_VERSION})

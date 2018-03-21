@@ -60,7 +60,7 @@ Dependency Versions Included:
 
 * Boost 1.59          <http://www.boost.org/>
 * FreeType 2.5.5      <https://www.freetype.org/>
-* GLEW 1.13.0         <http://glew.sourceforge.net/>
+* GLEW 2.1.0          <http://glew.sourceforge.net/>
 * libogg 1.3.2        <https://xiph.org/ogg/>
 * libvorbis 1.3.5     <https://xiph.org/vorbis/>
 * OpenAL Soft 1.17.2  <http://kcat.strangesoft.net/openal.html>

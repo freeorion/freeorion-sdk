@@ -23,12 +23,12 @@ set(LIBPNG_VERSION 1.6.34)
 set(LIBPNG_URL https://downloads.sourceforge.net/project/libpng/libpng16/${LIBPNG_VERSION}/libpng-${LIBPNG_VERSION}.tar.gz)
 set(LIBPNG_MD5 03fbc5134830240104e96d3cda648e71)
 
-set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/9da2738063b6b5e16ea3578a95f7b93c6d44c9d2.zip)
-set(PYTHON_CMAKE_MD5 c77837daf2be404eeb85dee308831cd4)
+set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/e5d28807ef5a94987bc0c0cf60b3f16bb60adce1.zip)
+set(PYTHON_CMAKE_MD5 074f6a86e22517f476b73808a6204f5d)
 
-set(PYTHON_VERSION 2.7.12)
+set(PYTHON_VERSION 2.7.14)
 set(PYTHON_URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz)
-set(PYTHON_MD5 88d61f82e3616a4be952828b3694109d)
+set(PYTHON_MD5 cee2e4b33ad3750da77b2e85f2f8b724)
 
 set(FREETYPE_VERSION 2.9)
 set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)

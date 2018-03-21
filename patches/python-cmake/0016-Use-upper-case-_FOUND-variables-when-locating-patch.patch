@@ -1,0 +1,34 @@
+From 9e21e2025bce0251af0bdc48b5d5abccffb331d1 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sat, 24 Mar 2018 12:09:36 +0100
+Subject: [PATCH] Use upper case *_FOUND variables when locating `patch`
+
+---
+ cmake/PythonApplyPatches.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/PythonApplyPatches.cmake b/cmake/PythonApplyPatches.cmake
+index 487176a..f4fd003 100644
+--- a/cmake/PythonApplyPatches.cmake
++++ b/cmake/PythonApplyPatches.cmake
+@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH
+ 
+ if(NOT DEFINED PATCH_COMMAND)
+   find_package(Git)
+-  if(Git_FOUND)
++  if(GIT_FOUND)
+     set(PATCH_COMMAND ${GIT_EXECUTABLE} apply --whitespace=fix)
+     # Initialize Git repo to ensure "git apply" works when source tree
+     # is located within an already versioned tree.
+@@ -25,7 +25,7 @@ if(NOT DEFINED PATCH_COMMAND)
+     endif()
+   else()
+     find_package(Patch)
+-    if(Patch_FOUND)
++    if(PATCH_FOUND)
+       # Since support for git diffs which copy or rename files was
+       # added in patch 2.7, we can not use older version.
+       if("${Patch_VERSION}" VERSION_EQUAL "2.7.0" OR "${Patch_VERSION}" VERSION_GREATER "2.7.0")
+-- 
+2.14.3
+

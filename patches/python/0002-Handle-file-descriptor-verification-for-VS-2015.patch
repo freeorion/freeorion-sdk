@@ -517,29 +517,3 @@ index 057900d..1fd94e3 100644
      if (handle == -1)
          return PyErr_SetFromErrno(PyExc_IOError);
  
-diff --git a/PCbuild/pythoncore.vcxproj b/PCbuild/pythoncore.vcxproj
-index a29d31e..0a46b4c 100644
---- a/PCbuild/pythoncore.vcxproj
-+++ b/PCbuild/pythoncore.vcxproj
-@@ -331,6 +331,7 @@
-     <ClCompile Include="..\Parser\parsetok.c" />
-     <ClCompile Include="..\Parser\tokenizer.c" />
-     <ClCompile Include="..\PC\_subprocess.c" />
-+    <ClCompile Include="..\PC\invalid_parameter_handler.c" />
-     <ClCompile Include="..\PC\_winreg.c" />
-     <ClCompile Include="..\PC\config.c" />
-     <ClCompile Include="..\PC\dl_nt.c" />
-diff --git a/PCbuild/pythoncore.vcxproj.filters b/PCbuild/pythoncore.vcxproj.filters
-index 49066b6..bb133cf 100644
---- a/PCbuild/pythoncore.vcxproj.filters
-+++ b/PCbuild/pythoncore.vcxproj.filters
-@@ -797,6 +797,9 @@
-     <ClCompile Include="..\PC\_subprocess.c">
-       <Filter>PC</Filter>
-     </ClCompile>
-+    <ClCompile Include="..\PC\invalid_parameter_handler.c">
-+      <Filter>PC</Filter>
-+    </ClCompile>
-     <ClCompile Include="..\PC\_winreg.c">
-       <Filter>PC</Filter>
-     </ClCompile>

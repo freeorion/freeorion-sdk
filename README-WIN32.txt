@@ -66,5 +66,5 @@ Dependency Versions Included:
 * OpenAL Soft 1.18.2  <http://kcat.strangesoft.net/openal.html>
 * libpng 1.6.34       <http://www.libpng.org/pub/png/libpng.html>
 * zlib 1.2.11         <http://www.zlib.net/>
-* Python 2.7.12       <https://www.python.org/>
+* Python 2.7.14       <https://www.python.org/>
 * SDL 2.0.8           <https://www.libsdl.org/>

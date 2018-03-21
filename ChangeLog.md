@@ -16,6 +16,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Use upstream conventions for freetype2 install header path
 - Use upstream conventions for freetype2 ft2build.h install path.
 - Build freetype2 as shared library.
+- Update Python version to 2.7.14
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 
 

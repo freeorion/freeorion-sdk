@@ -1,4 +1,4 @@
-From f7b23621c45b2d7b6b5085a24349b3a804584a7b Mon Sep 17 00:00:00 2001
+From 2a8662a2969b17d09627d3ff076302f7423cd687 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 20 Mar 2017 13:25:21 +0100
 Subject: [PATCH] Builtin some modules in python3, but not in python2
@@ -38,7 +38,7 @@ python -c 'import sys ; print sys.version, "\n", sys.builtin_module_names'
  1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/cmake/extensions/CMakeLists.txt b/cmake/extensions/CMakeLists.txt
-index 681141a..203d78d 100644
+index 8c12e0d..3aaceba 100644
 --- a/cmake/extensions/CMakeLists.txt
 +++ b/cmake/extensions/CMakeLists.txt
 @@ -27,6 +27,11 @@ if(WIN32)
@@ -80,16 +80,16 @@ index 681141a..203d78d 100644
  add_python_extension(future_builtins ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES future_builtins.c)
  add_python_extension(_heapq ${WIN32_BUILTIN} SOURCES _heapqmodule.c)
  add_python_extension(_hotshot ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES _hotshot.c)
-@@ -74,7 +79,7 @@ add_python_extension(_io BUILTIN SOURCES
-     _io/stringio.c
-     _io/textio.c
- )
+@@ -82,7 +87,7 @@ if(WIN32 AND EXISTS ${SRC_DIR}/Modules/_io/winconsoleio.c)
+ endif()
+ add_python_extension(_io BUILTIN SOURCES ${_io_SOURCES})
+ 
 -add_python_extension(itertools ${WIN32_BUILTIN} SOURCES itertoolsmodule.c) # Functions creating iterators for efficient looping
 +add_python_extension(itertools ${WIN32_BUILTIN} ${PY3_BUILTIN} SOURCES itertoolsmodule.c) # Functions creating iterators for efficient looping
  add_python_extension(_json ${WIN32_BUILTIN} SOURCES _json.c)
  add_python_extension(_locale ${WIN32_BUILTIN} SOURCES _localemodule.c) # access to ISO C locale support
  add_python_extension(_lsprof ${WIN32_BUILTIN} SOURCES _lsprof.c rotatingtree.c)
-@@ -92,7 +97,7 @@ set(thread3_NAME _thread)
+@@ -100,7 +105,7 @@ set(thread3_NAME _thread)
  set(thread2_SOURCES ${SRC_DIR}/Modules/threadmodule.c)
  set(thread3_SOURCES ${SRC_DIR}/Modules/_threadmodule.c)
  add_python_extension(${thread${PY_VERSION_MAJOR}_NAME} BUILTIN REQUIRES WITH_THREAD SOURCES ${thread${PY_VERSION_MAJOR}_SOURCES})
@@ -98,3 +98,6 @@ index 681141a..203d78d 100644
  add_python_extension(unicodedata SOURCES unicodedata.c)
  
  # Python3
+-- 
+2.14.3
+

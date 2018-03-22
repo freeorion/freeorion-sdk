@@ -1,7 +1,7 @@
-From 4be252e510e403036674d0c48f3813115124eee2 Mon Sep 17 00:00:00 2001
+From 5ef33815bfecec8c2126fde98a0830816a99d564 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
-Date: Mon, 6 Feb 2017 21:39:01 +0100
-Subject: [PATCH] Search Xcode whole installation for MacOSX SDKs
+Date: Fri, 23 Mar 2018 21:45:30 +0100
+Subject: [tools/build] Search Xcode whole installation for MacOSX SDKs
 
 With more recent installations of Xcode the platform SDKs are not
 located within the SDK subdirectory anymore.
@@ -10,7 +10,7 @@ located within the SDK subdirectory anymore.
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
-index 2701de3..3b5a0ee 100644
+index 6f7be142..3881290b 100644
 --- a/tools/build/src/tools/darwin.jam
 +++ b/tools/build/src/tools/darwin.jam
 @@ -15,7 +15,7 @@ import toolset : flags ;
@@ -22,16 +22,16 @@ index 2701de3..3b5a0ee 100644
  import version ;
  import property-set ;
  import regex ;
-@@ -333,8 +333,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
+@@ -368,8 +368,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
  local rule init-available-sdk-versions ( condition * : root ? )
  {
      root ?= /Developer ;
 -    local sdks-root = $(root)/SDKs ;
--    local sdks = [ GLOB $(sdks-root) : MacOSX*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
-+    local sdks = [ glob-tree $(root) : MacOSX*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
+-    local sdks = [ GLOB $(sdks-root) : MacOSX*.sdk AppleTVOS*.sdk AppleTVSimulator*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
++    local sdks = [ glob-tree $(root) : MacOSX*.sdk AppleTVOS*.sdk AppleTVSimulator*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
      local result ;
      for local sdk in $(sdks)
      {
 -- 
-2.9.3
+2.14.3
 

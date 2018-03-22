@@ -1,7 +1,7 @@
-From 21a68c40c767890e726f24fa9a67323a7067ecb3 Mon Sep 17 00:00:00 2001
+From 1e2fe7afa3b6cd27e2b37750a1ef86b42a42d96d Mon Sep 17 00:00:00 2001
 From: memem359 <mememory359@mac.com>
 Date: Wed, 7 Jun 2017 17:23:38 -0400
-Subject: [PATCH] Fix hidden visibility symbols for mac/clang
+Subject: [libs/locale] Fix hidden visibility symbols for mac/clang
 
 ---
  boost/locale/definitions.hpp | 16 +++++++---------
@@ -34,3 +34,6 @@ index b305ff7..a98cec9 100644
  
  #ifndef BOOST_LOCALE_DECL
  #   define BOOST_LOCALE_DECL
+-- 
+2.14.3
+

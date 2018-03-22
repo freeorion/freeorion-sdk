@@ -1,7 +1,7 @@
-From 807d099d91b8f41a668ab84d75ce5f897c66874d Mon Sep 17 00:00:00 2001
+From a662194e1443a8e47e9589b3c07f934c52a6f2d1 Mon Sep 17 00:00:00 2001
 From: Christian Henning <chhenning@gmail.com>
 Date: Mon, 4 Feb 2013 20:17:39 +0000
-Subject: [PATCH] The last fix produces a compiler with Visual Studio 2010.
+Subject: [libs/gil] The last fix produces a compiler with Visual Studio 2010.
 
 See ticket 7970.
 
@@ -25,5 +25,5 @@ index 2618d6a..8d45239 100644
  template <>
  struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
 -- 
-2.9.3
+2.14.3
 

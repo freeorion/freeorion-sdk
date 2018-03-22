@@ -1,7 +1,7 @@
-From 95963be70a10ee10825392bd8247b31bf1e9b6c9 Mon Sep 17 00:00:00 2001
+From 13f87e81352e0bd20e97689328a146c016a45d79 Mon Sep 17 00:00:00 2001
 From: Christian Henning <chhenning@gmail.com>
 Date: Wed, 6 Feb 2013 01:35:03 +0000
-Subject: [PATCH] #7920
+Subject: [libs/gil] #7920
 
 [SVN r82755]
 ---
@@ -42,5 +42,5 @@ index 8d45239..9b880fa 100644
  //////////////////////////////////////
  ////  unsigned_integral_num_bits - given an unsigned integral channel type, returns the minimum number of bits needed to represent it
 -- 
-2.9.3
+2.14.3
 

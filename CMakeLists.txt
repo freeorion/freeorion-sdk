@@ -596,7 +596,7 @@ ExternalProject_Add(boost
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-context
         --without-coroutine
-        --without-coroutine2
+        --without-fiber
         --without-graph_parallel
         --without-mpi
         --without-wave

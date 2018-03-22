@@ -346,9 +346,7 @@ ExternalProject_Add(freetype
     ${FREETYPE_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        # FreeType doesn't provide any exported symbols, so build
-        # it as static library.
-        -DBUILD_SHARED_LIBS=OFF
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
         -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}

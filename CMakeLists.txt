@@ -386,6 +386,7 @@ ExternalProject_Add(sdl
         -DSDL_STATIC=OFF
         -DDIRECTX=OFF
         -DRENDER_D3D=OFF
+        -DVIDEO_VULKAN=OFF
         ${SDL_CONFIGURE_FLAGS}
     INSTALL_DIR ${SDL_CONFIGURE_INSTALL_DIR}
 )

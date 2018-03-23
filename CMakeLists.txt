@@ -250,6 +250,8 @@ ExternalProject_Add(python
         ${CMAKE_COMMAND} -E make_directory <SOURCE_DIR>/cmake
     COMMAND
         ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
+    COMMAND
+        ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/patches/ <SOURCE_DIR>/patches/
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}

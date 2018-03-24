@@ -5,6 +5,13 @@ using python
     : @PYTHON_INSTALL_DIR@/lib # libraries
     ;
 
+using python3
+    : @PYTHON3_VERSION@  # version
+    : @PYTHON3_INSTALL_DIR@/bin/python3  # cmd-or-prefix
+    : @PYTHON3_INSTALL_DIR@/include/python@PYTHON3_VERSION@ # includes
+    : @PYTHON3_INSTALL_DIR@/lib # libraries
+    ;
+
 # detect the location of the Mac OSX SDK.
 using clang
     : # version (not used)

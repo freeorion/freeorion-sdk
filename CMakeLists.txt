@@ -420,7 +420,7 @@ ExternalProject_Add(python3
         -DENABLE_TKINTER=OFF
         -DENABLE_UNICODEDATA=OFF
         #DENABLE_ZLIB=OFF
-    INSTALL_DIR ${PYTHON_CONFIGURE_INSTALL_DIR}
+    INSTALL_DIR ${PYTHON3_CONFIGURE_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS python3)
 
@@ -694,8 +694,10 @@ endif()
 
 if(APPLE)
     set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks/Python.framework/Versions/${PYTHON_VERSION})
+    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks/Python.framework/Versions/${PYTHON3_VERSION})
 else()
     set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
+    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR})
 endif()
 
 configure_file(

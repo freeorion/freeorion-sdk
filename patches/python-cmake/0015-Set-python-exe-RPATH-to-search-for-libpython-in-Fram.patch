@@ -1,4 +1,4 @@
-From c924a21c2ae712e6b95291bc6b16695efd4c9ca2 Mon Sep 17 00:00:00 2001
+From 6be4a26c8ce4a93314865974304348d27b49525f Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 23 Mar 2017 22:51:06 +0100
 Subject: [PATCH] Set python exe RPATH to search for libpython in Frameworks
@@ -8,7 +8,7 @@ Subject: [PATCH] Set python exe RPATH to search for libpython in Frameworks
  1 file changed, 6 insertions(+)
 
 diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
-index 718d1d7..1d46836 100644
+index c7f01d6..d6137e5 100644
 --- a/cmake/python/CMakeLists.txt
 +++ b/cmake/python/CMakeLists.txt
 @@ -27,6 +27,12 @@ if(MSVC)
@@ -24,3 +24,6 @@ index 718d1d7..1d46836 100644
  # Export target
  set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS python)
  
+-- 
+2.14.3
+

@@ -1,4 +1,4 @@
-From 7162b145a4f8f6d86a3179514881186ff40d0fbe Mon Sep 17 00:00:00 2001
+From 5d525a15adb51268978267d70f2611c8ae567213 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 14 Sep 2016 13:35:17 +0200
 Subject: [PATCH] Disable MSVC deprecation warnings in CMake
@@ -8,10 +8,10 @@ Subject: [PATCH] Disable MSVC deprecation warnings in CMake
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a7a173d..caccbdf 100644
+index fbd2fb43f..9bb154768 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -109,6 +109,7 @@ if (MSVC)
+@@ -167,6 +167,7 @@ if (MSVC)
      set(CMAKE_${CONFIG}_POSTFIX "${VERSION_MAJOR}${VERSION_MINOR}${VERSION_PATCH}MT")
    endforeach()
    set(CMAKE_DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}d")
@@ -20,5 +20,5 @@ index a7a173d..caccbdf 100644
  
  # Compiler definitions for building the library
 -- 
-2.7.4
+2.14.3
 

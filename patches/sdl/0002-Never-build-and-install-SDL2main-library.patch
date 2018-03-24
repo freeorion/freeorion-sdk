@@ -1,29 +1,37 @@
-From 60b5d874ecb39ed410ebae2dbaf7c2645b81d57e Mon Sep 17 00:00:00 2001
+From b8b84a04806f077a341a6014ae71ce0ac9d182ad Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 1 Apr 2016 17:23:05 +0200
 Subject: [PATCH] Never build and install SDL2main library
 
 ---
- CMakeLists.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ CMakeLists.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d3abe6d..1615ae4 100755
+index aa17932b6..3fe76072c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1450,9 +1450,9 @@ endif()
+@@ -1693,13 +1693,13 @@ endif()
  # Ensure that the extra cflags are used at compile time
  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
  
 -# Always build SDLmain
 -add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
+-target_include_directories(SDL2main PUBLIC $<INSTALL_INTERFACE:include>)
 -set(_INSTALL_LIBS "SDL2main")
+-if (NOT ANDROID)
+-  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
+-endif()
 +# Never build SDLmain
 +#add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
++#target_include_directories(SDL2main PUBLIC $<INSTALL_INTERFACE:include>)
 +#set(_INSTALL_LIBS "SDL2main")
++#if (NOT ANDROID)
++#  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
++#endif()
  
  if(SDL_SHARED)
-   add_library(SDL2 SHARED ${SOURCE_FILES})
+   add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
 -- 
-2.7.4
+2.14.3
 

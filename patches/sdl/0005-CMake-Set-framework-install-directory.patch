@@ -1,4 +1,4 @@
-From 88215b7ce8e28464c50cef1983cb847d5994e5a0 Mon Sep 17 00:00:00 2001
+From 5fd4d7b5908d51531e5a83d34621f41d10270959 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 1 Apr 2016 18:58:04 +0200
 Subject: [PATCH] CMake: Set framework install directory
@@ -8,17 +8,17 @@ Subject: [PATCH] CMake: Set framework install directory
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a0434ca..5a99e1f 100755
+index b37c4ab1e..ef2aa64d1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1520,6 +1520,7 @@ install(TARGETS ${_INSTALL_LIBS}
+@@ -1793,6 +1793,7 @@ install(TARGETS ${_INSTALL_LIBS} EXPORT SDL2Targets
    LIBRARY DESTINATION "lib${LIB_SUFFIX}"
    ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
    RUNTIME DESTINATION bin
 +  FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
    PUBLIC_HEADER DESTINATION include/SDL2)
  
- if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
+ ##### Export files #####
 -- 
-2.7.4
+2.14.3
 

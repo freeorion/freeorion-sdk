@@ -1,4 +1,4 @@
-From 7544021b85a7f917bacc357e0e41a11cb38b19d1 Mon Sep 17 00:00:00 2001
+From 60cc7ba689be7a427237ec4825aacd50321e74b1 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 6 Sep 2016 16:59:04 +0200
 Subject: [PATCH] Disable MSVC specific compiler warnings
@@ -14,16 +14,19 @@ Subject: [PATCH] Disable MSVC specific compiler warnings
  1 file changed, 3 insertions(+)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 0f73902..db93b24 100644
+index 7a089a8..a33084f 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -165,6 +165,9 @@ elseif(WIN32)
-         SOURCE ${SRC_DIR}/PC/dl_nt.c
-         PROPERTY COMPILE_DEFINITIONS Py_ENABLE_SHARED
-     )
+@@ -178,6 +178,9 @@ elseif(WIN32)
+             Py_ENABLE_SHARED
+             MS_DLL_ID="${ms_dll_id}"
+         )
 +    if(MSVC)
 +        add_compile_options(/wd4101 /wd4018 /wd4244 /wd4996)
 +    endif()
  endif()
  
  set(THREAD_SOURCES )
+-- 
+2.14.3
+

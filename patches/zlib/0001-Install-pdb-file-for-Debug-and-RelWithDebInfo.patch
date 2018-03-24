@@ -1,14 +1,14 @@
-From 6fdf8a933db4ca3be83190f54056db9a15f67582 Mon Sep 17 00:00:00 2001
+From 695a6fb4dbf48e2d573607be0f516ae39c38b083 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 10 Mar 2016 09:31:51 +0100
-Subject: [PATCH 1/2] Install pdb file for `Debug` and `RelWithDebInfo`
+Subject: [PATCH] Install pdb file for `Debug` and `RelWithDebInfo`
 
 ---
  CMakeLists.txt | 7 +++++++
  1 file changed, 7 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0c0247c..54f03f5 100644
+index 0fe939d..37bfdaf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -225,6 +225,13 @@ endif()
@@ -26,5 +26,5 @@ index 0c0247c..54f03f5 100644
  #============================================================================
  # Example binaries
 -- 
-2.5.0
+2.14.3
 

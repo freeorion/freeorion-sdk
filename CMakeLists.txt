@@ -33,6 +33,9 @@ function(ExternalProject_PatchSet TARGET_NAME RESULT)
         endif()
         set(${RESULT} ${${RESULT}} ${PATCH_EXECUTABLE} -p1 < ${_PATCH})
     endforeach()
+    if(NOT ${RESULT})
+        set(${RESULT} PATCH_COMMAND "")
+    endif()
     set(${RESULT} ${${RESULT}} PARENT_SCOPE)
 endfunction()
 
@@ -250,6 +253,8 @@ ExternalProject_Add(python
         ${CMAKE_COMMAND} -E make_directory <SOURCE_DIR>/cmake
     COMMAND
         ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
+    COMMAND
+        ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/patches/ <SOURCE_DIR>/patches/
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -346,9 +351,7 @@ ExternalProject_Add(freetype
     ${FREETYPE_PATCHSET}
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        # FreeType doesn't provide any exported symbols, so build
-        # it as static library.
-        -DBUILD_SHARED_LIBS=OFF
+        -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
         -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
@@ -386,6 +389,7 @@ ExternalProject_Add(sdl
         -DSDL_STATIC=OFF
         -DDIRECTX=OFF
         -DRENDER_D3D=OFF
+        -DVIDEO_VULKAN=OFF
         ${SDL_CONFIGURE_FLAGS}
     INSTALL_DIR ${SDL_CONFIGURE_INSTALL_DIR}
 )
@@ -548,6 +552,7 @@ else()
     set(_VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}.0")
     set(BOOST_CONFIGURE_FLAGS
         debug-store=database
+        address-model=32
     )
     if("${_VS_PLATFORM_TOOLSET_TARGET}" STREQUAL "_xp")
         list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WINXP)
@@ -592,12 +597,13 @@ ExternalProject_Add(boost
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         toolset=${BOOST_TOOLSET}
         -d
+        --layout=system
         --debug-configuration
         --abbreviate-paths
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
         --without-context
         --without-coroutine
-        --without-coroutine2
+        --without-fiber
         --without-graph_parallel
         --without-mpi
         --without-wave

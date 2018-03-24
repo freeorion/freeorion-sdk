@@ -1,4 +1,4 @@
-From 1a84cec75c56d1162d0900395f45221db6ecb71d Mon Sep 17 00:00:00 2001
+From c762d143906d6907daf5967e79a8d22090e15e05 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 10 Mar 2016 12:43:18 +0100
 Subject: [PATCH] Don't install pkg-config files on Windows
@@ -9,10 +9,10 @@ Except if the build system is Cygwin.
  1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5784d35..5001028 100644
+index a871f4cf..e5b836cd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1089,10 +1089,13 @@ SET(PACKAGE_VERSION "${LIB_VERSION}")
+@@ -1211,10 +1211,13 @@ SET(PACKAGE_VERSION "${LIB_VERSION}")
  CONFIGURE_FILE(
      "${OpenAL_SOURCE_DIR}/config.h.in"
      "${OpenAL_BINARY_DIR}/config.h")
@@ -28,21 +28,21 @@ index 5784d35..5001028 100644
 +        @ONLY)
 +ENDIF()
  
- # Build a common library with reusable helpers
- ADD_LIBRARY(common STATIC ${COMMON_OBJS})
-@@ -1183,8 +1186,10 @@ IF(ALSOFT_INSTALL)
+ MACRO(ADD_INCLUDE_DIRS TRGT TESTVAR INCVAR)
+     IF(${TESTVAR})
+@@ -1342,8 +1345,10 @@ IF(ALSOFT_INSTALL)
                    include/AL/efx-presets.h
-             DESTINATION include/AL
+             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/AL
      )
 -    INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
--            DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
+-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 +    IF(NOT WIN32 OR CYGWIN)
 +        INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
-+                DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
++                DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 +    ENDIF()
- ENDIF()
- 
- 
+     IF(TARGET soft_oal)
+         INSTALL(TARGETS soft_oal
+                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 -- 
-2.7.4
+2.14.3
 

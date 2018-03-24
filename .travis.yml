@@ -23,6 +23,7 @@ before_script:
       # Delete the outdated `/C=BE/O=GlobalSign nv-sa/OU=Root CA/CN=GlobalSign Root CA` certificate
       sudo security delete-certificate -Z 2F173F7DE99667AFA57AF80AA2D1B12FAC830338 /System/Library/Keychains/SystemRootCertificates.keychain
       rvm osx-ssl-certs update $(travis_internal_ruby)
+      brew install gpatch
       mkdir -p build
       cd build
     fi

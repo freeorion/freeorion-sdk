@@ -4,6 +4,22 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 ## v9 - TBA
 
+- Update zlib version to 1.2.11
+- Update libpng version to 1.6.34
+- Update boost version to 1.66
+- Disabled Boost library:
+  - fiber
+- Use simpler boost shared libary naming scheme on Windows
+- Update GLEW version to 2.1.0
+- Update SDL2 version to 2.0.8
+- Update libopenal-soft version to 1.18.2
+- Update freetype2 version to 2.9
+- Build freetype2 as shared library on Windows
+- Remove freetype2 shared library suffix on Windows
+- Use upstream conventions for freetype2 install header path
+- Use upstream conventions for freetype2 ft2build.h install path.
+- Build freetype2 as shared library.
+- Update Python version to 2.7.14
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 
 

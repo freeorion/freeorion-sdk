@@ -1,7 +1,7 @@
-From 5f4e247589db1e4a35f7b0346994c0c2f689b2f7 Mon Sep 17 00:00:00 2001
+From 4f66d87288ca0ae054e4e6413667157ac2b24d45 Mon Sep 17 00:00:00 2001
 From: Christian Henning <chhenning@gmail.com>
 Date: Sun, 3 Feb 2013 20:04:23 +0000
-Subject: [PATCH] #7970
+Subject: [libs/gil] #7970
 
 [SVN r82702]
 ---
@@ -22,5 +22,5 @@ index 1361219..2618d6a 100644
  template <>
  struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
 -- 
-2.9.3
+2.14.3
 

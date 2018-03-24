@@ -1,7 +1,7 @@
-From 07086c515f51b765d135b5a73dee154723c42686 Mon Sep 17 00:00:00 2001
+From 130da38760ebcff0f4620ee12ac8f5385456bb12 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 6 Feb 2017 21:37:25 +0100
-Subject: [PATCH] Print selected configurations for darwin compiler when
+Subject: [tools/build] Print selected configurations for darwin compiler when
  debugging
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH] Print selected configurations for darwin compiler when
  1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
-index edd6b7a..2701de3 100644
+index 1760a198..6f7be142 100644
 --- a/tools/build/src/tools/darwin.jam
 +++ b/tools/build/src/tools/darwin.jam
 @@ -19,6 +19,7 @@ import path : basename ;
@@ -20,7 +20,7 @@ index edd6b7a..2701de3 100644
  import errors ;
  
  ## Use a framework.
-@@ -196,17 +197,17 @@ rule init ( version ? : command * : options * : requirement * )
+@@ -203,17 +204,17 @@ rule init ( version ? : command * : options * : requirement * )
      
      # - Initialize the SDKs available in the root for this tool.
      local sdks = [ init-available-sdk-versions $(condition) : $(root) ] ;
@@ -50,5 +50,5 @@ index edd6b7a..2701de3 100644
  
  # Add and set options for a discovered SDK version.
 -- 
-2.9.3
+2.14.3
 

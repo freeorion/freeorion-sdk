@@ -44,6 +44,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Use upstream conventions for freetype2 ft2build.h install path.
 - Build freetype2 as shared library.
 - Update Python version to 2.7.14
+- Add Python3 in version 3.6.4 to SDK
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 - Pin Docker image to a stable and more recent base image
   (docker.io/ubuntu:xenial-20180417).

@@ -597,6 +597,7 @@ ExternalProject_Add(boost
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         toolset=${BOOST_TOOLSET}
         -d
+        --layout=system
         --debug-configuration
         --abbreviate-paths
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam

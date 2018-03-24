@@ -9,6 +9,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update boost version to 1.66
 - Disabled Boost library:
   - fiber
+- Use simpler boost shared libary naming scheme on Windows
 - Update GLEW version to 2.1.0
 - Update SDL2 version to 2.0.8
 - Update libopenal-soft version to 1.18.2

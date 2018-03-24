@@ -707,7 +707,7 @@ configure_file(
 
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
-    DEPENDS patch zlib python
+    DEPENDS patch zlib python python3
     URL ${BOOST_URL}
     URL_MD5 ${BOOST_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}

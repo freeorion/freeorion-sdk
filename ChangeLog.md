@@ -14,6 +14,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update SDL2 version to 2.0.8
 - Update libopenal-soft version to 1.18.2
 - Update freetype2 version to 2.9
+- Build freetype2 as shared library on Windows
+- Remove freetype2 shared library suffix on Windows
 - Use upstream conventions for freetype2 install header path
 - Use upstream conventions for freetype2 ft2build.h install path.
 - Build freetype2 as shared library.

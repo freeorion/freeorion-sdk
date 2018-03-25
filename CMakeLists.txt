@@ -431,11 +431,11 @@ if(WIN32)
         zipPythonSTDlib
         DEPENDEES install
         WORKING_DIRECTORY
-            <INSTALL_DIR>/lib/python36
+            <INSTALL_DIR>/lib/python35
         COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python36/lib-dynload
+            <INSTALL_DIR>/lib/python35/lib-dynload
         COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
-            <INSTALL_DIR>/bin/python36.zip
+            <INSTALL_DIR>/bin/python35.zip
             .
         COMMENT "Zip python3 standard library"
     )
@@ -444,7 +444,7 @@ if(WIN32)
         removePythonSTDlib
         DEPENDEES zipPythonSTDlib
         COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python36
+            <INSTALL_DIR>/lib/python35
         COMMENT "Remove python3 standard library from install"
     )
 endif()

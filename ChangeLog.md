@@ -21,6 +21,13 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Build freetype2 as shared library.
 - Update Python version to 2.7.14
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
+- Pin Docker image to a stable and more recent base image
+  (docker.io/ubuntu:xenial-20180417).
+- Don't install package documentation into Docker image
+- Move suppression of recommends installed packages into config file for Docker
+  image.
+- Don't install static libraries into Docker image
+- Set Debian frontend to noninteractive to avoid warnings during apt-get usage.
 
 
 ## v8 - 2017-11-05

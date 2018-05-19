@@ -1,0 +1,45 @@
+From 1f2f59d101970627299610cbbcc76fb368342911 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sat, 19 May 2018 20:26:51 +0200
+Subject: [PATCH] Apply MSVC 1900 patches to MSVC 1910+ compiler too
+
+---
+ cmake/PythonApplyPatches.cmake         | 7 +++++++
+ patches/2.7.13/Windows-MSVC/README.rst | 1 +
+ 2 files changed, 8 insertions(+)
+
+diff --git a/cmake/PythonApplyPatches.cmake b/cmake/PythonApplyPatches.cmake
+index ea0be11..aeda26c 100644
+--- a/cmake/PythonApplyPatches.cmake
++++ b/cmake/PythonApplyPatches.cmake
+@@ -101,8 +101,15 @@ _apply_patches("${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}")
+ _apply_patches("${_py_version}")
+ _apply_patches("${_py_version}/${CMAKE_SYSTEM_NAME}")
+ _apply_patches("${_py_version}/${CMAKE_SYSTEM_NAME}-${CMAKE_C_COMPILER_ID}")
++
+ set(_version ${CMAKE_C_COMPILER_VERSION})
+ if(MSVC)
+   set(_version ${MSVC_VERSION})
++  if("${_version}" VERSION_LESS "2000" AND
++      ("${_version}" VERSION_EQUAL "1900" OR "${_version}" VERSION_GREATER "1900"))
++    set(_version "1900")
++    message(STATUS "Using ${_version} patches for 1900 <= MSVC_VERSION < 2000")
++  endif()
+ endif()
++
+ _apply_patches("${_py_version}/${CMAKE_SYSTEM_NAME}-${CMAKE_C_COMPILER_ID}/${_version}")
+diff --git a/patches/2.7.13/Windows-MSVC/README.rst b/patches/2.7.13/Windows-MSVC/README.rst
+index 21de3ab..db3eb7a 100644
+--- a/patches/2.7.13/Windows-MSVC/README.rst
++++ b/patches/2.7.13/Windows-MSVC/README.rst
+@@ -15,6 +15,7 @@
+   * 1700: VS2012
+   * 1800: VS2013
+   * 1900: VS2015
++  * 1914: VS2017 15.7
+ 
+ * ``0002-VS2015-Support-Backport-Issue-22919-Windows-build-up.patch``: This patch
+   is a partial backport of `python/cpython@65e4cb1 <https://github.com/python/cpython/commit/65e4cb1>`_.
+-- 
+2.14.3
+

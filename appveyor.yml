@@ -1,5 +1,9 @@
 os: Visual Studio 2017
 version: ci-{build}
+environment:
+  matrix:
+   - TOOlSET: v140_xp
+     GENERATOR: "Visual Studio 14"
 cache:
   - build\downloads -> Sources.cmake
 init:
@@ -12,7 +16,7 @@ before_build:
   - if not exist build\NUL mkdir build
   - cd build
 build_script:
-  - cmake -G "Visual Studio 14" -T v140_xp ..
+  - cmake -G "%GENERATOR%" -T %TOOLSET% ..
   - cmake --build . --config RelWithDebInfo -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
 test: off
 artifacts:

@@ -1,4 +1,4 @@
-From 4bdc427239f62c57116e342098253c86d0f8f95a Mon Sep 17 00:00:00 2001
+From 13d12f39eee0a779e666363ef8350d44568672cd Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 9 Apr 2016 20:16:24 +0200
 Subject: [PATCH] Add Mac OSX framework support
@@ -9,7 +9,7 @@ Subject: [PATCH] Add Mac OSX framework support
  2 files changed, 21 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f364089..1f7a9e3 100644
+index e04822d..24ad782 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -79,6 +79,14 @@ else()
@@ -28,10 +28,10 @@ index f364089..1f7a9e3 100644
  option(INSTALL_MANUAL "Install man files" ON)
  option(INSTALL_TEST "Install test files" ON)
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 8c6b80b..f9f7e1f 100644
+index a33084f..ef66a73 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -497,11 +497,24 @@ function(add_libpython name type install component)
+@@ -494,11 +494,24 @@ function(add_libpython name type install component)
      # Export target
      set_property(GLOBAL APPEND PROPERTY PYTHON_TARGETS ${name})
  

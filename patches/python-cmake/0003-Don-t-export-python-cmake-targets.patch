@@ -1,4 +1,4 @@
-From 1831ddc3f0f4496ccf9fba9e045ebc19f1635c3c Mon Sep 17 00:00:00 2001
+From 7947f1a5bfdcc6a7d659e00bb81f53981a7696c7 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 21 Mar 2016 20:39:08 +0100
 Subject: [PATCH] Don't export python cmake targets
@@ -10,10 +10,10 @@ Subject: [PATCH] Don't export python cmake targets
  3 files changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c7ed309..91a5ce3 100644
+index 1c34feb..55f8357 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -662,18 +662,6 @@ write_basic_package_version_file(
+@@ -664,18 +664,6 @@ write_basic_package_version_file(
      COMPATIBILITY SameMajorVersion
  )
  

@@ -1,4 +1,4 @@
-From f7a1a85885ec6faadf33bc3d3d3acff9b27c2d4f Mon Sep 17 00:00:00 2001
+From 1e90f2ff662c29fb755a97e88c3581410344d280 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 20 Sep 2016 17:21:09 +0200
 Subject: [PATCH] Install platform library files on MacOSX
@@ -8,7 +8,7 @@ Subject: [PATCH] Install platform library files on MacOSX
  1 file changed, 4 insertions(+)
 
 diff --git a/cmake/lib/CMakeLists.txt b/cmake/lib/CMakeLists.txt
-index f3a7c96..a6eef10 100644
+index 82e8ec8..31d18eb 100644
 --- a/cmake/lib/CMakeLists.txt
 +++ b/cmake/lib/CMakeLists.txt
 @@ -7,6 +7,10 @@ if(UNIX)

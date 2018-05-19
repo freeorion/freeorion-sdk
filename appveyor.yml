@@ -4,6 +4,8 @@ environment:
   matrix:
    - TOOlSET: v140_xp
      GENERATOR: "Visual Studio 14"
+   - TOOlSET: v141_xp
+     GENERATOR: "Visual Studio 15"
 cache:
   - build\downloads -> Sources.cmake
 init:

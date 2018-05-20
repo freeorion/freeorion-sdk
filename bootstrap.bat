@@ -4,7 +4,8 @@ echo          FreeOrion Windows SDK bootstrapper
 echo ----------------------------------------------------
 echo For help on compiling FreeOrion have a look at the Wiki:
 echo http://freeorion.org/index.php/Compile_In_Windows
-echo Note: You need to have MSVC 2015 installed to use the SDK
+echo Note: You need to have MSVC 2015 or 2017 installed to use
+echo the SDK
 echo ----------------------------------------------------
 echo Cloning the FreeOrion repository from GitHub...
 cd "%~d0%~p0"

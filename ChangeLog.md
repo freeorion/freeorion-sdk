@@ -4,6 +4,8 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 ## v9 - TBA
 
+- Add FreeOrionSDK release for Visual Studio 2017 support, using the v141_xp
+  toolset.
 - Update zlib version to 1.2.11
 - Update libpng version to 1.6.34
 - Update boost version to 1.66

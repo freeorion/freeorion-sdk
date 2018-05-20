@@ -1,4 +1,4 @@
-From 60cc7ba689be7a427237ec4825aacd50321e74b1 Mon Sep 17 00:00:00 2001
+From f6e88deab23181a6c48828250b306627a80404b7 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 6 Sep 2016 16:59:04 +0200
 Subject: [PATCH] Disable MSVC specific compiler warnings

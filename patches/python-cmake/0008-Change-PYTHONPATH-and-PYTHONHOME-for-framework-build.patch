@@ -1,4 +1,4 @@
-From 42538ee95935eb8650ae919ee95d80fd536f466c Mon Sep 17 00:00:00 2001
+From 2d7dcb49b2dfc2b2306bb02db3ea214e81a07011 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sun, 18 Sep 2016 23:18:14 +0200
 Subject: [PATCH] Change PYTHONPATH and PYTHONHOME for framework builds
@@ -10,10 +10,10 @@ Subject: [PATCH] Change PYTHONPATH and PYTHONHOME for framework builds
  3 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b102850..daf43fd 100644
+index ee6c0ff..3da1ef6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -465,7 +465,11 @@ if(BUILD_LIBPYTHON_SHARED AND UNIX)
+@@ -467,7 +467,11 @@ if(BUILD_LIBPYTHON_SHARED AND UNIX)
      if(APPLE)
          set(_envvar DYLD_LIBRARY_PATH)
      endif()

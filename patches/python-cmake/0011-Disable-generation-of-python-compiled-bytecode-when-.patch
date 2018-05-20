@@ -1,4 +1,4 @@
-From a5b1772466a2ddea1846c49d5f959f3c3899ed79 Mon Sep 17 00:00:00 2001
+From 27a3dc7c00513fe7aa781b58556fb4bdfa9300c3 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 10:16:07 +0200
 Subject: [PATCH] Disable generation of python compiled bytecode when calling
@@ -10,10 +10,10 @@ Subject: [PATCH] Disable generation of python compiled bytecode when calling
  2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 82611f1..0049fc6 100644
+index 9edc412..e60b76b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -492,7 +492,7 @@ endif()
+@@ -494,7 +494,7 @@ endif()
  # Add target to run "Argument Clinic" over all source files
  if(IS_PY3)
  add_custom_target(clinic
@@ -22,7 +22,7 @@ index 82611f1..0049fc6 100644
      DEPENDS python
      WORKING_DIRECTORY ${SRC_DIR}
      COMMENT "Running 'Argument Clinic' over all source files"
-@@ -520,7 +520,7 @@ add_custom_target(generate_graminit
+@@ -522,7 +522,7 @@ add_custom_target(generate_graminit
  
  # Add target to generate 'opcode.h' header file
  add_custom_target(generate_opcode_h
@@ -31,7 +31,7 @@ index 82611f1..0049fc6 100644
          ${SRC_DIR}/Lib/opcode.py
          ${PROJECT_BINARY_DIR}/CMakeFiles/opcode.h
      COMMAND ${CMAKE_COMMAND} -E copy_if_different
-@@ -534,7 +534,7 @@ add_custom_target(generate_opcode_h
+@@ -536,7 +536,7 @@ add_custom_target(generate_opcode_h
  
  # Add target to generate 'Include/Python-ast.h' from 'Python.asdl'
  add_custom_target(generate_python_ast_h
@@ -40,7 +40,7 @@ index 82611f1..0049fc6 100644
          -h ${SRC_DIR}/Include
          ${SRC_DIR}/Parser/Python.asdl
      DEPENDS python
-@@ -545,7 +545,7 @@ add_custom_target(generate_python_ast_h
+@@ -547,7 +547,7 @@ add_custom_target(generate_python_ast_h
  
  # Add target to generate 'Python/Python-ast.c' from 'Python.asdl'
  add_custom_target(generate_python_ast_c
@@ -49,7 +49,7 @@ index 82611f1..0049fc6 100644
          -c ${SRC_DIR}/Python
          ${SRC_DIR}/Parser/Python.asdl
      DEPENDS python
-@@ -635,9 +635,9 @@ if(BUILD_TESTING)
+@@ -637,9 +637,9 @@ if(BUILD_TESTING)
      set(TESTPROG ${PROJECT_BINARY_DIR}/${PYTHONHOME}/test/regrtest.py)
      set(TESTPYTHONOPTS )
      if(IS_PY2)

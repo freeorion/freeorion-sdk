@@ -1,4 +1,4 @@
-From 2a8662a2969b17d09627d3ff076302f7423cd687 Mon Sep 17 00:00:00 2001
+From a09bc20a564e789539a32ec48404ff24b1fc63f8 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Mon, 20 Mar 2017 13:25:21 +0100
 Subject: [PATCH] Builtin some modules in python3, but not in python2
@@ -38,7 +38,7 @@ python -c 'import sys ; print sys.version, "\n", sys.builtin_module_names'
  1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/cmake/extensions/CMakeLists.txt b/cmake/extensions/CMakeLists.txt
-index 8c12e0d..3aaceba 100644
+index 301c9f2..dd1a75b 100644
 --- a/cmake/extensions/CMakeLists.txt
 +++ b/cmake/extensions/CMakeLists.txt
 @@ -27,6 +27,11 @@ if(WIN32)

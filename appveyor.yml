@@ -1,9 +1,11 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 version: ci-{build}
-#branches:
-#  only:
-#    - master
-#    - /FreeOrionSDK_\d{4}-\d{2}-\d{2}/
+environment:
+  matrix:
+   - TOOlSET: v140_xp
+     GENERATOR: "Visual Studio 14"
+   - TOOlSET: v141_xp
+     GENERATOR: "Visual Studio 15"
 cache:
   - build\downloads -> Sources.cmake
 init:
@@ -16,7 +18,7 @@ before_build:
   - if not exist build\NUL mkdir build
   - cd build
 build_script:
-  - cmake -G "Visual Studio 14" -T v140_xp ..
+  - cmake -G "%GENERATOR%" -T %TOOLSET% ..
   - cmake --build . --config RelWithDebInfo -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
 test: off
 artifacts:

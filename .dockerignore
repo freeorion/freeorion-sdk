@@ -4,7 +4,6 @@
 appveyor.yml
 boost-config.jam.in
 bootstrap.bat
-bootstrap.command
 ChangeLog.md
 cmake
 CMakeLists.txt

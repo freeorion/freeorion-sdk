@@ -1,4 +1,4 @@
-From b0515b6733994d46e5c17fcb99440db85a5df8ff Mon Sep 17 00:00:00 2001
+From 291b8ba027a55f5f6123c3dd0bf63c9e39efb714 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Thu, 22 Mar 2018 21:35:38 +0100
 Subject: [PATCH] CMake: When building a shared library export all symbols
@@ -8,7 +8,7 @@ Subject: [PATCH] CMake: When building a shared library export all symbols
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index cc9fc9545..fce28e8e2 100644
+index f99a594e8..620f36f98 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -120,7 +120,7 @@ project(freetype)

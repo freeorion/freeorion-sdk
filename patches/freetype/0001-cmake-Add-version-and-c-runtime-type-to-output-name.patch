@@ -1,4 +1,4 @@
-From ae3794bdd7b00c51430b36753fa26f1106c267d2 Mon Sep 17 00:00:00 2001
+From 95bc06a5cbb74fd4c30f2eae5737bb01ecd77a32 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 9 Mar 2016 17:35:42 +0100
 Subject: [PATCH] [cmake] Add version and c runtime type to output name
@@ -6,23 +6,19 @@ Subject: [PATCH] [cmake] Add version and c runtime type to output name
 This mimics the currently used naming policy from the MSVC project
 files.
 ---
- CMakeLists.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b0f86126b..fbd2fb43f 100644
+index b0f86126b..dc2c4a554 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -160,6 +160,15 @@ set(PROJECT_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+@@ -160,6 +160,11 @@ set(PROJECT_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
  set(SHARED_LIBRARY_VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
  
  
 +# Set default version and debug suffix for libraries on MSVC
 +if (MSVC)
-+  foreach(CONFIG ${CMAKE_CONFIGURATION_TYPES})
-+    string(TOUPPER ${CONFIG} CONFIG)
-+    set(CMAKE_${CONFIG}_POSTFIX "${VERSION_MAJOR}${VERSION_MINOR}${VERSION_PATCH}MT")
-+  endforeach()
 +  set(CMAKE_DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}d")
 +endif ()
 +

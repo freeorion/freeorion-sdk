@@ -1,14 +1,14 @@
-From eb9602e4f9af0c078e46322aa73a90c6b4674815 Mon Sep 17 00:00:00 2001
+From 8a05500c8ad7b72f38ca3ff67116b1e2e4d61afa Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 1 Apr 2016 17:51:35 +0200
 Subject: [PATCH] CMake: Use PUBLIC_HEADER property to install headers
 
 ---
- CMakeLists.txt | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ CMakeLists.txt | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3fe76072c..39efa950c 100644
+index 3fe76072c..56cced0f0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1701,11 +1701,19 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
@@ -56,6 +56,24 @@ index 3fe76072c..39efa950c 100644
  
  ##### Export files #####
  if (APPLE)
+@@ -1799,16 +1810,7 @@ install(
+   COMPONENT Devel
+ )
+ 
+-file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
+-file(GLOB BIN_INCLUDE_FILES ${SDL2_BINARY_DIR}/include/*.h)
+-foreach(_FNAME ${BIN_INCLUDE_FILES})
+-  get_filename_component(_INCNAME ${_FNAME} NAME)
+-  list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
+-endforeach()
+-list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
+-install(FILES ${INCLUDE_FILES} DESTINATION include/SDL2)
+-
+-if(NOT (WINDOWS OR CYGWIN))
++if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
+   if(SDL_SHARED)
+     if (APPLE)
+         set(SOEXT "dylib")
 -- 
 2.14.3
 

@@ -1,4 +1,4 @@
-From 685636d926627facdde64af1bcc5f2152c15d94a Mon Sep 17 00:00:00 2001
+From d937af79b0b3dcdbf60dde9f67ef2aed000e69db Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 4 Nov 2016 19:40:21 +0100
 Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
@@ -9,7 +9,7 @@ Subject: [PATCH] Enable MACOSX_RPATH to prefix the install_name for Mac
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ef2aa64d1..1edd7b11b 100644
+index 50446f868..9162443e7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1741,7 +1741,7 @@ if(SDL_SHARED)

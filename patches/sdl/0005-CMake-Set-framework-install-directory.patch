@@ -1,4 +1,4 @@
-From 5fd4d7b5908d51531e5a83d34621f41d10270959 Mon Sep 17 00:00:00 2001
+From 4243d36624b0ab5bf80c3ab9c0269e419a4beb09 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Fri, 1 Apr 2016 18:58:04 +0200
 Subject: [PATCH] CMake: Set framework install directory
@@ -8,7 +8,7 @@ Subject: [PATCH] CMake: Set framework install directory
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b37c4ab1e..ef2aa64d1 100644
+index f32165cb7..50446f868 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1793,6 +1793,7 @@ install(TARGETS ${_INSTALL_LIBS} EXPORT SDL2Targets

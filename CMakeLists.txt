@@ -57,7 +57,6 @@ set(DIST_PACK_TARGETS )
 
 if(APPLE)
     set(BUILD_SHARED_LIBS OFF)
-    set(SDK_INSTALL_DIR "${SDK_INSTALL_DIR}/dep")
 endif()
 
 # Common download directory for all dependency source releases.  Storing
@@ -148,13 +147,6 @@ if(APPLE)
         message(FATAL_ERROR "Unable to locate `tar` executable.")
     endif()
     list(APPEND DIST_PACK_TOOLS tar)
-
-    add_custom_target(hdiutil)
-    find_program(HDIUTIL_EXECUTABLE hdiutil)
-    if(NOT HDIUTIL_EXECUTABLE)
-        message(FATAL_ERROR "Unable to locate `hdiutil` executable.")
-    endif()
-    list(APPEND DIST_PACK_TOOLS hdiutil)
 endif()
 
 ExternalProject_PatchSet(zlib ZLIB_PATCHSET)
@@ -663,31 +655,7 @@ if(WIN32)
         ${SDK_INSTALL_DIR}/README.txt
         COPYONLY
     )
-elseif(APPLE)
-    # SDK_INSTALL_DIR points to the `dep` subdirectory
-    file(
-        COPY
-            ${CMAKE_SOURCE_DIR}/bootstrap.command
-        DESTINATION
-            ${SDK_INSTALL_DIR}/../
-    )
-
-    add_custom_target(pre-pack
-        DEPENDS
-        ${DIST_PACK_TOOLS}
-        ${DIST_PACK_TARGETS}
-    WORKING_DIRECTORY
-        ${SDK_INSTALL_DIR}/..
-    COMMAND
-        ${TAR_EXECUTABLE} cjf
-        dep.tar.bz2
-        dep
-    COMMAND
-        ${CMAKE_COMMAND} -E remove_directory
-        ${SDK_INSTALL_DIR}
-    )
-    list(APPEND DIST_PACK_TARGETS pre-pack)
-else()
+elseif(NOT APPLE)
     message(FATAL "Target system not yet supported")
 endif()
 
@@ -704,15 +672,13 @@ endif()
 if(WIN32)
     set(DIST_PACK_COMMAND ${ZIP_EXECUTABLE} -r -q -9)
     set(DIST_PACK_EXT zip)
-    set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR})
-    set(DIST_PACK_SOURCE .)
 else()
-    set(DIST_PACK_COMMAND ${HDIUTIL_EXECUTABLE} create -volname ${PROJECT_NAME} -format UDZO -srcfolder .)
-    set(DIST_PACK_EXT dmg)
-    # SDK_INSTALL_DIR points to the `dep` subdirectory
-    set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR}/..)
-    set(DIST_PACK_SOURCE)
+    set(DIST_PACK_COMMAND ${TAR_EXECUTABLE} cjf)
+    set(DIST_PACK_EXT tar.bz2)
 endif()
+
+set(DIST_PACK_WORKING_DIR ${SDK_INSTALL_DIR})
+set(DIST_PACK_SOURCE .)
 
 set(DIST_ARTIFACT "${CMAKE_BINARY_DIR}/${PROJECT_NAME}_${DIST_VERSION}_${DIST_TOOLSET}.${DIST_PACK_EXT}")
 

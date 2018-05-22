@@ -4,6 +4,10 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 
 ## v9 - TBA
 
+- Replace FreeOrionSDK Apple Disk Image release with a bzip2 compressed
+  tarball and remove bootstrap script. The FreeOrion build system now
+  implements the automatic download and unpacking of the SDK so the
+  additional dmg image wrapping only adds needless complexity.
 - Add FreeOrionSDK release for Visual Studio 2017 support, using the v141_xp
   toolset.
 - Update zlib version to 1.2.11

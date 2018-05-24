@@ -1,65 +1,67 @@
-matrix:
+stages:
+  - build
+
+jobs:
   include:
-    - language: generic
+    - stage: build
       os: linux
+      language: shell
       services:
         - docker
-    - language: cpp
+      env:
+        - NAME="Build Docker image for Linux CI build"
+        # Authentication to connect to Docker Hub
+        - secure: "fqzrCnPhOV7SNWW50sYgOUUhZuzfK7SsD80OFfRx2NwbRIPJrEbHtx5W2Xu8QK2P4EwqSnT1oIx3FZ6kkLEf6tQwiYE+ZUITG9xOSNeJOM8fOoCQtgfttfWnpFWn8dXB92cZYTgcp92vpHGZGNMlN+aO92qyekGP0IHkM37qDs7WShiw3aecKVVFUnpzurpWxSY41uC2dC+Gs+oA+zXdVKFM4qLlMOCL60V91w8i0LWeuc18uGNSblDUpoXxOszbWuMHEzvgzVFTpKPbRsBSuoTph+Hiqp4Bng5ezZ2zMSnu6ujfkzflBoVOKEiQc9wb86n//kB5YrS9hVerp6PQe5yEVoJE7ZMkoAEeCWCrFlFC0d1jmcRuz58N5jpNe0xHbaejTmBlGPFzo/pLtjPLXUoI5bt8Arg/DrEIY0cQU8tKSY9dM5JDpaCMA/JYYRK8Dyb0Dgg+S5mIt+ekErumr/eHM1SYyqg2UEWKmT53kjaN7JI0VUpRHNoeitO59NoKofHNXzSQiVhr2lMio5WUIprVwaR1R0IconzZAtP9cbRLI3iXsTCc6V42sVyOLye3k2afzg+jQu8pHVwus7tqttDNXBZ/2FcniN075rDCM51oAop48gjU+hvRz94+66w6U2hyzpRqWmPSwxuFqGQ+qNVvJtZIdZIxDjz6LNgyeUk="
+        - secure: "V8M7EGN5VZnkcejfnWy9D8SBNp0bm1MTVri08+7FUwzWOVgGnXCuM6VrgUDnFbrXNdfk7qh/ZWbEyZ6HuSqxMcpvD/rg2GeQyXv8sv9yh+YNwtV8XPxF4ymQD9sgvOc3/IN+ekDLPxOIbA0Niha9xJNPa5Vt1HxG0yPcaKwV0OjrsgpcGUQFDrILN0L5lAtYME5B8jwE2RL0UKi3Apqiw0/J+6usIYf5RsBcSjjCSIVnvvyZnu3DW4A1j7OpO9k70ZvXq8SrSeIYxfCrZPk7H+6C7xaBHG4Brk4aeThXBtSyEWZtjAbB5G7lYMxA7h2z4FJC8RRoUGms7jxM8N6XcTQU69fNpG2YUFmPpYG9FxVV2i2j5fGhVOJhJEWQ1g4z3OPmJDfn/YGcCTmpSnyKWicEETLFY6rIIbFJpByBlo1ID5CBk8RmW0cFhEeCE+/TsBknCc2i6oWyeUtkaIIK6OnYdl1UVJ0rSsAkwEaHW+AzWdcReiK8hAjOXJyEqJDpbObG8Bx2XlF3d8ifojOzfBQsda4cT/yh5LGm6gbod2Z9Sg4YPpeXmtYtqSgzHB6P4hc3ZylHY+D5FSx8/nV4r6URkuOBzJZiHHOIpk3tNEFQ4H8cd+sUdoDSS1Tzo3QTV5STMPxpcahXjeLBk70wE93xQ5lTYqklI0/tI0CzAB4="
+      script:
+        - export SHORT_COMMIT=${TRAVIS_COMMIT::8}
+        - export DOCKER_REPO=freeorion/freeorion-travis-build
+        # get latest remote tag
+        - export DOCKER_RTAG=$(curl -s https://registry.hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/ | jq '.results[]["name"]' | sort -rn | sed -n '2s/"//gp')
+        # calculate next tag
+        - export DOCKER_NTAG=$((${DOCKER_RTAG} + 1))
+        - docker pull ${DOCKER_REPO}:${DOCKER_RTAG}
+        - docker build -f Dockerfile -t ${DOCKER_REPO}:${SHORT_COMMIT} .
+        # calculate current tag
+        - export DOCKER_CTAG=$(docker inspect ${DOCKER_REPO}:${SHORT_COMMIT} | jq '.[]["ContainerConfig"]["Labels"]["version"]' | sed -n 's/"//gp')
+        - >
+          if [[ "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
+            docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:${DOCKER_NTAG}
+            docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:latest
+          fi
+      after_success:
+        - >
+          if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" && "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
+            docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
+            docker push ${DOCKER_REPO}:${DOCKER_NTAG}
+            docker push ${DOCKER_REPO}:latest
+          fi
+    - stage: build
       os: osx
+      language: cpp
       osx_image: xcode6.4
       compiler: clang
-cache:
-  directories:
-    - build/downloads
-env:
-  global:
-    - secure: "fqzrCnPhOV7SNWW50sYgOUUhZuzfK7SsD80OFfRx2NwbRIPJrEbHtx5W2Xu8QK2P4EwqSnT1oIx3FZ6kkLEf6tQwiYE+ZUITG9xOSNeJOM8fOoCQtgfttfWnpFWn8dXB92cZYTgcp92vpHGZGNMlN+aO92qyekGP0IHkM37qDs7WShiw3aecKVVFUnpzurpWxSY41uC2dC+Gs+oA+zXdVKFM4qLlMOCL60V91w8i0LWeuc18uGNSblDUpoXxOszbWuMHEzvgzVFTpKPbRsBSuoTph+Hiqp4Bng5ezZ2zMSnu6ujfkzflBoVOKEiQc9wb86n//kB5YrS9hVerp6PQe5yEVoJE7ZMkoAEeCWCrFlFC0d1jmcRuz58N5jpNe0xHbaejTmBlGPFzo/pLtjPLXUoI5bt8Arg/DrEIY0cQU8tKSY9dM5JDpaCMA/JYYRK8Dyb0Dgg+S5mIt+ekErumr/eHM1SYyqg2UEWKmT53kjaN7JI0VUpRHNoeitO59NoKofHNXzSQiVhr2lMio5WUIprVwaR1R0IconzZAtP9cbRLI3iXsTCc6V42sVyOLye3k2afzg+jQu8pHVwus7tqttDNXBZ/2FcniN075rDCM51oAop48gjU+hvRz94+66w6U2hyzpRqWmPSwxuFqGQ+qNVvJtZIdZIxDjz6LNgyeUk="
-    - secure: "V8M7EGN5VZnkcejfnWy9D8SBNp0bm1MTVri08+7FUwzWOVgGnXCuM6VrgUDnFbrXNdfk7qh/ZWbEyZ6HuSqxMcpvD/rg2GeQyXv8sv9yh+YNwtV8XPxF4ymQD9sgvOc3/IN+ekDLPxOIbA0Niha9xJNPa5Vt1HxG0yPcaKwV0OjrsgpcGUQFDrILN0L5lAtYME5B8jwE2RL0UKi3Apqiw0/J+6usIYf5RsBcSjjCSIVnvvyZnu3DW4A1j7OpO9k70ZvXq8SrSeIYxfCrZPk7H+6C7xaBHG4Brk4aeThXBtSyEWZtjAbB5G7lYMxA7h2z4FJC8RRoUGms7jxM8N6XcTQU69fNpG2YUFmPpYG9FxVV2i2j5fGhVOJhJEWQ1g4z3OPmJDfn/YGcCTmpSnyKWicEETLFY6rIIbFJpByBlo1ID5CBk8RmW0cFhEeCE+/TsBknCc2i6oWyeUtkaIIK6OnYdl1UVJ0rSsAkwEaHW+AzWdcReiK8hAjOXJyEqJDpbObG8Bx2XlF3d8ifojOzfBQsda4cT/yh5LGm6gbod2Z9Sg4YPpeXmtYtqSgzHB6P4hc3ZylHY+D5FSx8/nV4r6URkuOBzJZiHHOIpk3tNEFQ4H8cd+sUdoDSS1Tzo3QTV5STMPxpcahXjeLBk70wE93xQ5lTYqklI0/tI0CzAB4="
-before_script:
-  - >
-    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew install gpatch
-      mkdir -p build
-      cd build
-    fi
-script:
-  - >
-    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
-      travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
-    fi
-  - >
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      export SHORT_COMMIT=${TRAVIS_COMMIT::8}
-      export DOCKER_REPO=freeorion/freeorion-travis-build
-      # get latest remote tag
-      export DOCKER_RTAG=$(curl -s https://registry.hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/ | jq '.results[]["name"]' | sort -rn | sed -n '2s/"//gp')
-      # calculate next tag
-      export DOCKER_NTAG=$((${DOCKER_RTAG} + 1))
-      docker pull ${DOCKER_REPO}:${DOCKER_RTAG}
-      docker build -f Dockerfile -t ${DOCKER_REPO}:${SHORT_COMMIT} .
-      # calculate current tag
-      export DOCKER_CTAG=$(docker inspect ${DOCKER_REPO}:${SHORT_COMMIT} | jq '.[]["ContainerConfig"]["Labels"]["version"]' | sed -n 's/"//gp')
-      if [[ "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
-        docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:${DOCKER_NTAG}
-        docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:latest
-      fi
-    fi
-after_success:
-  - >
-    if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" && "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
-      docker login -u="${DOCKER_USER}" -p="${DOCKER_PASS}"
-      docker push ${DOCKER_REPO}:${DOCKER_NTAG}
-      docker push ${DOCKER_REPO}:latest
-    fi
-deploy:
-  provider: releases
-  api-key:
-    secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
-  # Undocumented flag to create a draft release
-  draft: true
-  file_glob: true
-  file: FreeOrionSDK_*.tar.bz2
-  skip_cleanup: true
-  on:
-    tags: true
+      cache:
+        directories:
+          - build/downloads
+      env:
+        - NAME="Build FreeOrionSDK"
+      before_install:
+        - brew install gpatch
+      before_script:
+        - mkdir -p build
+        - cd build
+      script:
+        - cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
+        - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
+      deploy:
+        provider: releases
+        api-key:
+          secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
+        # Undocumented flag to create a draft release
+        draft: true
+        file_glob: true
+        file: FreeOrionSDK_*.tar.bz2
+        skip_cleanup: true
+        on:
+          tags: true

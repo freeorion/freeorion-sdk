@@ -2,6 +2,14 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v10 - 2018-05-24
+
+- Build freetype2 dependency with explicit dependency on zlib and libpng and
+  without explicit dependency on bzip2 and HarfBuzz. This enables zlib
+  compressed font and fonts with bitmap emoticons. This disables bzip2
+  compressed fonts formats and complex script language glyphs (e.g. persian).
+
+
 ## v9 - 2018-05-23
 
 - Replace FreeOrionSDK Apple Disk Image release with a bzip2 compressed

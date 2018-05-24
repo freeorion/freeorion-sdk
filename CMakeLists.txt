@@ -336,7 +336,7 @@ endif()
 
 ExternalProject_PatchSet(freetype FREETYPE_PATCHSET)
 ExternalProject_Add(freetype
-    DEPENDS patch
+    DEPENDS patch libpng zlib
     URL ${FREETYPE_URL}
     URL_MD5 ${FREETYPE_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -349,6 +349,10 @@ ExternalProject_Add(freetype
         -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
         -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES_}
         -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
+        -DWITH_ZLIB=ON
+        -DWITH_PNG=ON
+        -DWITH_BZIP2=OFF
+        -DWITH_HARFBUZZ=OFF
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS freetype)

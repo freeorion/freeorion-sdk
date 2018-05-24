@@ -39,7 +39,7 @@ jobs:
     - stage: build
       os: osx
       language: cpp
-      osx_image: xcode6.4
+      osx_image: xcode8.3
       compiler: clang
       cache:
         directories:
@@ -52,7 +52,7 @@ jobs:
         - mkdir -p build
         - cd build
       script:
-        - cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ..
+        - cmake -G "Xcode" ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
       deploy:
         provider: releases

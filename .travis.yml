@@ -18,8 +18,6 @@ env:
 before_script:
   - >
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      # Use a more verbose travis_wait implementation
-      . .travis_wait
       brew install gpatch
       mkdir -p build
       cd build

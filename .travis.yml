@@ -17,13 +17,13 @@ jobs:
         - export SHORT_COMMIT=${TRAVIS_COMMIT::8}
         - export DOCKER_REPO=freeorion/freeorion-travis-build
         # get latest remote tag
-        - export DOCKER_RTAG=$(curl -s https://registry.hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/ | jq '.results[]["name"]' | sort -rn | sed -n '2s/"//gp')
+        - export DOCKER_RTAG=$(curl -s https://registry.hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/ | jq -r '[.results[].name | tonumber?] | max')
         # calculate next tag
         - export DOCKER_NTAG=$((${DOCKER_RTAG} + 1))
         - docker pull ${DOCKER_REPO}:${DOCKER_RTAG}
         - docker build -f Dockerfile -t ${DOCKER_REPO}:${SHORT_COMMIT} .
         # calculate current tag
-        - export DOCKER_CTAG=$(docker inspect ${DOCKER_REPO}:${SHORT_COMMIT} | jq '.[]["ContainerConfig"]["Labels"]["version"]' | sed -n 's/"//gp')
+        - export DOCKER_CTAG=$(docker inspect ${DOCKER_REPO}:${SHORT_COMMIT} | jq -r '.[]["ContainerConfig"]["Labels"]["version"]')
         - >
           if [[ "${DOCKER_CTAG}" != "${DOCKER_RTAG}" ]]; then
             docker tag ${DOCKER_REPO}:${SHORT_COMMIT} ${DOCKER_REPO}:${DOCKER_NTAG}

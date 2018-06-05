@@ -18,7 +18,7 @@ before_build:
   - cd build
 build_script:
   - cmake -G "%GENERATOR%" -T %TOOLSET% ..
-  - cmake --build . --config RelWithDebInfo -- /maxcpucount /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
+  - cmake --build . --config RelWithDebInfo -- /maxcpucount /property:BuildInParallel=true /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
 test: off
 artifacts:
   - name: FreeOrionSDK_Package

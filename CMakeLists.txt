@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD 11 CACHE STRING "Set the C++ standard the dependencies sh
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Set the minimum OSX deployment target version")
 set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE STRING "Set the architecture the binaries for OSX should be built for")
 set(CMAKE_INSTALL_MESSAGE NEVER CACHE STRING "Set the verbosity level for the install messages")
+set(BOOST_PARALLEL_JOBS 1 CACHE STRING "Set the Boost.Build parallel jobs")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Set the default build configuration for this build" FORCE)
@@ -593,6 +594,7 @@ ExternalProject_Add(boost
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         toolset=${BOOST_TOOLSET}
+        -j${BOOST_PARALLEL_JOBS}
         -d
         --layout=system
         --debug-configuration

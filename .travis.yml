@@ -52,7 +52,7 @@ jobs:
         - mkdir -p build
         - cd build
       script:
-        - cmake -G "Xcode" ..
+        - cmake -G "Xcode" -D BOOST_PARALLEL_JOBS=$(sysctl hw.ncpu | awk '{print $2}') ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
       deploy:
         provider: releases

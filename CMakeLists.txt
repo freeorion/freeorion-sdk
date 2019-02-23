@@ -93,7 +93,7 @@ if(WIN32)
             <SOURCE_DIR>/bin/patch.exe
             ${SDK_BINARY_DIR}/patch.exe
     )
-    set(PATCH_EXECUTABLE ${SDK_BINARY_DIR}/patch.exe)
+    set(PATCH_EXECUTABLE ${SDK_BINARY_DIR}/patch.exe --binary)
 else()
     add_custom_target(patch)
     find_program(PATCH_EXECUTABLE patch)

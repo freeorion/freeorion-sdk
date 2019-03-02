@@ -71,12 +71,10 @@ After that, the SDK can be build with:
 
 The `--config RelWithDebInfo` parameter is required.
 
-The build takes around 25 minutes and the results are stored inside the `build/INSTALL`
-directory and a prepackaged version called
+The build takes about 25 to 40 minutes and the results are stored inside the `build/INSTALL`
+directory.
 
-`FreeOrionSDK_{MSVC,CLANG}_<timestamp>.zip`
-
-can be found in the `build` directory.
+A prepackaged version called `FreeOrionSDK_{MSVC,CLANG}_<timestamp>.zip` can be found in the `build` directory.
 
 If you have any questions or problems please feel free to create an [Issue].
 

@@ -40,6 +40,7 @@ APT::Install-Recommends \"false\";\n\
 APT::Install-Suggests \"false\";\n\
 " > /etc/apt/apt.conf.d/docker-no-suggests
 
+# install boost 1.62 to have a test against minimal supported version
 RUN apt-get update --assume-yes \
     && apt-get install --assume-yes \
         git \

@@ -549,10 +549,16 @@ else()
     set(_VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}.0")
     set(BOOST_CONFIGURE_FLAGS
         debug-store=database
-        address-model=32
     )
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        list(APPEND BOOST_CONFIGURE_FLAGS address-model=64)
+    else()
+        list(APPEND BOOST_CONFIGURE_FLAGS address-model=32)
+    endif()
     if("${_VS_PLATFORM_TOOLSET_TARGET}" STREQUAL "_xp")
         list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WINXP)
+    else()
+        list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_VISTA)
     endif()
     set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
     set(BOOST_OSX_SYSROOT "")

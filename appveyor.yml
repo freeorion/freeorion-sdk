@@ -8,6 +8,8 @@ environment:
      GENERATOR: "Visual Studio 14"
    - TOOlSET: v141_xp
      GENERATOR: "Visual Studio 15"
+   - TOOlSET: v141
+     GENERATOR: "Visual Studio 15 2017 Win64"
 cache:
   - build\downloads -> Sources.cmake
 init:

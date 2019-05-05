@@ -12,24 +12,23 @@
 
 # coreutils is included to use timeout in travis-ci builds
 
-FROM docker.io/ubuntu:xenial-20180417
+FROM docker.io/ubuntu:bionic-20190307
 
-LABEL version="8" \
+LABEL version="9" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN echo "# don't install documentation inside container\n\
-path-exclude=/usr/share/doc/*\n\
-path-exclude=/usr/share/man/*\n\
-path-exclude=/usr/share/cmake-3.5/Help/*\n\
+path-exclude=/usr/share/cmake-3.10/Help/*\n\
 " > /etc/dpkg/dpkg.cfg.d/docker-no-documentation
 
 RUN echo "# don't install static libraries inside container\n\
 path-exclude=/usr/lib/x86_64-linux-gnu/*.a\n\
 path-exclude=/usr/lib/python2.7/config-x86_64-linux-gnu/*.a\n\
+path-exclude=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/*.a\n\
 path-include=/usr/lib/x86_64-linux-gnu/libc_nonshared.a\n\
-path-include=/usr/lib/gcc/x86_64-linux-gnu/5/libgcc.a\n\
+path-include=/usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a\n\
 path-include=/usr/lib/x86_64-linux-gnu/libmvec_nonshared.a\n\
 path-include=/usr/lib/x86_64-linux-gnu/libpthread.a\n\
 path-include=/usr/lib/x86_64-linux-gnu/libpthread-2.0.a\n\
@@ -41,6 +40,7 @@ APT::Install-Recommends \"false\";\n\
 APT::Install-Suggests \"false\";\n\
 " > /etc/apt/apt.conf.d/docker-no-suggests
 
+# install boost 1.62 to have a test against minimal supported version
 RUN apt-get update --assume-yes \
     && apt-get install --assume-yes \
         git \
@@ -59,19 +59,18 @@ RUN apt-get update --assume-yes \
         zlib1g-dev \
         libsdl2-dev \
         mesa-common-dev \
-        libfreetype6-dev \
-        libpng12-dev \
-        libboost-thread-dev \
-        libboost-system-dev \
-        libboost-signals-dev \
-        libboost-serialization-dev \
-        libboost-regex-dev \
-        libboost-python-dev \
-        libboost-log-dev \
-        libboost-iostreams-dev \
-        libboost-locale-dev \
-        libboost-filesystem-dev \
-        libboost-date-time-dev \
-        libboost-test-dev \
+        libpng-dev \
+        libboost-thread1.62-dev \
+        libboost-system1.62-dev \
+        libboost-signals1.62-dev \
+        libboost-serialization1.62-dev \
+        libboost-regex1.62-dev \
+        libboost-python1.62-dev \
+        libboost-log1.62-dev \
+        libboost-iostreams1.62-dev \
+        libboost-locale1.62-dev \
+        libboost-filesystem1.62-dev \
+        libboost-date-time1.62-dev \
+        libboost-test1.62-dev \
     && rm -rf \
         /var/lib/apt/lists/*

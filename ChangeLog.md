@@ -5,6 +5,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 ## v11 - TBA
 
 - Update boost version to 1.70
+- Add Python3 in version 3.5.7 to SDK
 - Update python-cmake-buildsystem from c3b8d532242efed85fb3cd77b0e39e424b6db475
   to 501869c2b124552dae669d5fd6b7e7101a7cc30c.
 - Pin Docker image to a stable and more recent base image
@@ -44,7 +45,6 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Use upstream conventions for freetype2 ft2build.h install path.
 - Build freetype2 as shared library.
 - Update Python version to 2.7.14
-- Add Python3 in version 3.5.5 to SDK
 - Add ccache to Ubuntu Dockerfile to utilize build cache on TravisCI.
 - Pin Docker image to a stable and more recent base image
   (docker.io/ubuntu:xenial-20180417).

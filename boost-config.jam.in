@@ -1,6 +1,6 @@
 using python
     : @PYTHON_VERSION@  # version
-    : @PYTHON_INSTALL_DIR@/bin/python@PYTHON3_VERSION@  # cmd-or-prefix
+    : @PYTHON_INSTALL_DIR@/bin/python@PYTHON_VERSION@  # cmd-or-prefix
     : @PYTHON_INSTALL_DIR@/include/python@PYTHON_VERSION@ # includes
     : @PYTHON_INSTALL_DIR@/lib # libraries
     ;

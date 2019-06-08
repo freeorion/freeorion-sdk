@@ -603,6 +603,7 @@ ExternalProject_Add(boost
         -j${BOOST_PARALLEL_JOBS}
         -d
         --layout=system
+        --no-cmake-config
         --debug-configuration
         --abbreviate-paths
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam

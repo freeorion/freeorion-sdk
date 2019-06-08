@@ -738,6 +738,7 @@ ExternalProject_Add(boost
         debug-symbols=on
         ${BOOST_CONFIGURE_FLAGS}
         pch=off
+        python=${PYTHON_VERSION},${PYTHON3_VERSION}
         -s NO_BZIP2=1
         -s NO_ZLIB=0
         # Build documentation for boost::iostreams is outdated.

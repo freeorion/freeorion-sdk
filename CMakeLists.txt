@@ -603,6 +603,7 @@ ExternalProject_Add(boost
         -j${BOOST_PARALLEL_JOBS}
         -d
         --layout=system
+        # ToDo: Remove --no-cmake-config in boost 1.71
         --no-cmake-config
         --debug-configuration
         --abbreviate-paths

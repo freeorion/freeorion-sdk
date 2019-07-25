@@ -1,0 +1,45 @@
+From e31336dacc6b7028fb5e566657286edf35557968 Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Sun, 15 Apr 2018 20:25:24 +0200
+Subject: [PATCH] Use python<major>.<minor> as executable output name
+
+---
+ cmake/python/CMakeLists.txt | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
+index d6137e5..8c4012f 100644
+--- a/cmake/python/CMakeLists.txt
++++ b/cmake/python/CMakeLists.txt
+@@ -6,9 +6,11 @@ set(PYTHON_SOURCES
+ )
+ 
+ add_executable(python ${PYTHON_SOURCES})
+-set_property(
+-    TARGET python
+-    PROPERTY RUNTIME_OUTPUT_DIRECTORY ${BIN_BUILD_DIR}
++set_target_properties(
++    python
++    PROPERTIES
++    RUNTIME_OUTPUT_DIRECTORY ${BIN_BUILD_DIR}
++    OUTPUT_NAME python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}
+     )
+ 
+ # Link against the shared libpython if it was built, otherwise use the static
+@@ -87,10 +89,10 @@ if(UNIX AND NOT CMAKE_CROSSCOMPILING)
+   install(CODE
+ "message(STATUS \"Creating Python executable symlinks...\")
+ execute_process(
+-  COMMAND \${CMAKE_COMMAND} -E create_symlink python
++  COMMAND \${CMAKE_COMMAND} -E create_symlink python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}
+     python${PY_VERSION_MAJOR}
+-  COMMAND \${CMAKE_COMMAND} -E create_symlink python
+-    python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR}
++  COMMAND \${CMAKE_COMMAND} -E create_symlink python${PY_VERSION_MAJOR}
++    python
+   WORKING_DIRECTORY
+     \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}
+   )"
+-- 
+2.14.3
+

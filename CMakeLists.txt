@@ -335,6 +335,120 @@ if(WIN32)
     )
 endif()
 
+if(WIN32)
+    set(PYTHON3_CONFIGURE_FLAGS
+        -DBUILD_EXTENSIONS_AS_BUILTIN=ON
+    )
+    set(PYTHON3_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
+else()
+    set(PYTHON3_CONFIGURE_FLAGS "-DBUILD_FRAMEWORK=ON")
+    set(PYTHON3_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks)
+endif()
+
+ExternalProject_PatchSet(python3 PYTHON3_PATCHSET)
+ExternalProject_Add(python3
+    DEPENDS ${DIST_PACK_TOOLS} python-cmake zlib
+    URL ${PYTHON3_URL}
+    URL_MD5 ${PYTHON3_MD5}
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    ${PYTHON3_PATCHSET}
+    COMMAND
+        ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CMakeLists.txt <SOURCE_DIR>
+    COMMAND
+        ${CMAKE_COMMAND} -E copy ${PYTHON_CMAKE_SOURCE_DIR}/CTestConfig.cmake <SOURCE_DIR>
+    COMMAND
+        ${CMAKE_COMMAND} -E make_directory <SOURCE_DIR>/cmake
+    COMMAND
+        ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/cmake/ <SOURCE_DIR>/cmake/
+    COMMAND
+        ${CMAKE_COMMAND} -E copy_directory ${PYTHON_CMAKE_SOURCE_DIR}/patches/ <SOURCE_DIR>/patches/
+    CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+        -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES_}
+        -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
+        -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+        -DBUILD_LIBPYTHON_SHARED=${BUILD_SHARED_LIBS}
+        -DPYTHON_VERSION=${PYTHON3_VERSION}
+        ${PYTHON3_CONFIGURE_FLAGS}
+        -DDOWNLOAD_SOURCES=OFF
+        -DBUILD_TESTING=OFF
+        -DBUILD_WININST=OFF
+        -DUSE_SYSTEM_OpenSSL=OFF
+        -DENABLE_AUDIOOP=OFF
+        -DENABLE_BSDDB=OFF
+        #DENABLE_BZ2=OFF
+        -DENABLE_CODECS_CN=OFF
+        -DENABLE_CODECS_HK=OFF
+        -DENABLE_CODECS_ISO2022=OFF
+        -DENABLE_CODECS_JP=OFF
+        -DENABLE_CODECS_KR=OFF
+        #DENABLE_CODECS=OFF
+        -DENABLE_CODECS_TW=OFF
+        #DENABLE_CRYPT=OFF
+        -DENABLE_CSV=OFF
+        -DENABLE_CTYPES_TEST=OFF
+        -DENABLE_CURSES=OFF
+        -DENABLE_CURSES_PANEL=OFF
+        -DENABLE_DBM=OFF
+        -DENABLE_ELEMENTTREE=OFF
+        -DENABLE_GDBM=OFF
+        -DENABLE_GRP=OFF
+        -DENABLE_HASHLIB=OFF
+        -DENABLE_HOTSHOT=OFF
+        -DENABLE_JSON=OFF
+        -DENABLE_LINUXAUDIODEV=OFF
+        -DENABLE_MMAP=OFF
+        -DENABLE_MULTIBYTECODEC=OFF
+        -DENABLE_MULTIPROCESSING=OFF
+        -DENABLE_NIS=OFF
+        -DENABLE_OSSAUDIODEV=OFF
+        -DENABLE_PARSER=OFF
+        -DENABLE_PWD=OFF
+        -DENABLE_PYEXPAT=OFF
+        #DENABLE_READLINE=OFF
+        -DENABLE_SOCKET=OFF
+        -DENABLE_SPWD=OFF
+        -DENABLE_SQLITE3=OFF
+        -DENABLE_SSL=OFF
+        #DENABLE_STRUCT=OFF
+        -DENABLE_SYSLOG=OFF
+        -DENABLE_TERMIOS=OFF
+        -DENABLE_TESTCAPI=OFF
+        -DENABLE_TKINTER=OFF
+        -DENABLE_UNICODEDATA=OFF
+        #DENABLE_ZLIB=OFF
+    INSTALL_DIR ${PYTHON3_CONFIGURE_INSTALL_DIR}
+)
+list(APPEND DIST_PACK_TARGETS python3)
+
+if(WIN32)
+    # FreeOrion packages the python3 standard library in a zip file for
+    # distribution.
+    ExternalProject_Add_Step(python3
+        zipPythonSTDlib
+        DEPENDEES install
+        WORKING_DIRECTORY
+            <INSTALL_DIR>/lib/python35
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/lib/python35/lib-dynload
+        COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
+            <INSTALL_DIR>/bin/python35.zip
+            .
+        COMMENT "Zip python3 standard library"
+    )
+
+    ExternalProject_Add_Step(python3
+        removePythonSTDlib
+        DEPENDEES zipPythonSTDlib
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            <INSTALL_DIR>/lib/python35
+        COMMENT "Remove python3 standard library from install"
+    )
+endif()
+
 ExternalProject_PatchSet(freetype FREETYPE_PATCHSET)
 ExternalProject_Add(freetype
     DEPENDS patch libpng zlib
@@ -565,6 +679,7 @@ else()
     set(BOOST_OSX_SYSROOT "")
 endif()
 string(SUBSTRING "${PYTHON_VERSION}" 0 3 PYTHON_VERSION)
+string(SUBSTRING "${PYTHON3_VERSION}" 0 3 PYTHON3_VERSION)
 
 if(BUILD_SHARED_LIBS OR APPLE)
     set(BOOST_LINK "shared")
@@ -580,8 +695,10 @@ endif()
 
 if(APPLE)
     set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks/Python.framework/Versions/${PYTHON_VERSION})
+    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR}/Frameworks/Python.framework/Versions/${PYTHON3_VERSION})
 else()
     set(PYTHON_INSTALL_DIR ${SDK_INSTALL_DIR})
+    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR})
 endif()
 
 configure_file(
@@ -591,7 +708,7 @@ configure_file(
 
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
-    DEPENDS patch zlib python
+    DEPENDS patch zlib python python3
     URL ${BOOST_URL}
     URL_MD5 ${BOOST_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
@@ -603,6 +720,8 @@ ExternalProject_Add(boost
         -j${BOOST_PARALLEL_JOBS}
         -d
         --layout=system
+        # ToDo: Remove --no-cmake-config in boost 1.71
+        --no-cmake-config
         --debug-configuration
         --abbreviate-paths
         --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
@@ -619,6 +738,7 @@ ExternalProject_Add(boost
         debug-symbols=on
         ${BOOST_CONFIGURE_FLAGS}
         pch=off
+        python=${PYTHON_VERSION},${PYTHON3_VERSION}
         -s NO_BZIP2=1
         -s NO_ZLIB=0
         # Build documentation for boost::iostreams is outdated.

@@ -52,13 +52,13 @@ which can be opened and used to build FreeOrion.
 Dependencies Included:
 ======================
 
-The FreeOrion MSVC 2013 contains precompiled software dependencies so you don't
-have to compile them yourself, and in particular don't have to worry about
-making them all inter-compatible.  The following software versions are included:
+The SDK contains precompiled software dependencies so you don't have to compile
+them yourself, and in particular don't have to worry about making them all
+inter-compatible.  The following software versions are included:
 
 Dependency Versions Included:
 
-* Boost 1.66          <http://www.boost.org/>
+* Boost 1.70          <http://www.boost.org/>
 * FreeType 2.9        <https://www.freetype.org/>
 * GLEW 2.1.0          <http://glew.sourceforge.net/>
 * libogg 1.3.2        <https://xiph.org/ogg/>

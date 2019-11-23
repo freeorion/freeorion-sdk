@@ -1,0 +1,7 @@
+# detect the location of the Mac OSX SDK.
+using clang
+    : # version (not used)
+    : # cmd (compiler; not used)
+    : <root>@BOOST_OSX_SYSROOT@
+    ;
+

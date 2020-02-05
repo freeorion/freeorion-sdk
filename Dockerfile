@@ -14,7 +14,7 @@
 
 FROM docker.io/ubuntu:bionic-20190307
 
-LABEL version="9" \
+LABEL version="10" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -66,6 +66,7 @@ RUN apt-get update --assume-yes \
         libboost-serialization1.62-dev \
         libboost-regex1.62-dev \
         libboost-python1.62-dev \
+        libboost-timer1.62-dev \
         libboost-log1.62-dev \
         libboost-iostreams1.62-dev \
         libboost-locale1.62-dev \

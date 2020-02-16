@@ -706,6 +706,15 @@ configure_file(
     boost-config.jam
 )
 
+if(BOOST_TOOLSET EQUAL clang)
+    configure_file(
+        boost-config-clang.jam.in
+        boost-config-clang.jam
+    )
+    file(READ ${CMAKE_BINARY_DIR}/boost-config-clang.jam BOOST_CONFIG_CONTENTS)
+    file(APPEND ${CMAKE_BINARY_DIR}/boost-config.jam "${BOOST_CONFIG_CONTENTS}")
+endif()
+
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
     DEPENDS patch zlib python python3

@@ -62,3 +62,5 @@ matrix:
       GENERATOR: "Visual Studio 14 2015"
     - image: Visual Studio 2019
       GENERATOR: "Visual Studio 15 2017"
+  allow_failures:
+    - image: Visual Studio 2019

@@ -65,3 +65,26 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
+    - stage: build
+      os: windows
+      language: cpp
+      cache:
+        directories:
+          - build/downloads
+      before_script:
+        - mkdir -p build
+        - cd build
+      script:
+        - cmake -G "Visual Studio 15" -T v141_xp ..
+        - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
+      deploy:
+        provider: releases
+        api-key:
+          secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
+        # Undocumented flag to create a draft release
+        draft: true
+        file_glob: true
+        file: FreeOrionSDK_*.zip
+        skip_cleanup: true
+        on:
+          tags: true

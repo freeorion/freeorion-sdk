@@ -3,13 +3,13 @@ stages:
 
 jobs:
   include:
-    - stage: build
+    - name: Build Linux devenv for Travis CI
+      stage: build
       os: linux
       language: shell
       services:
         - docker
       env:
-        - NAME="Build Docker image for Linux CI build"
         # Authentication to connect to Docker Hub
         - secure: "fqzrCnPhOV7SNWW50sYgOUUhZuzfK7SsD80OFfRx2NwbRIPJrEbHtx5W2Xu8QK2P4EwqSnT1oIx3FZ6kkLEf6tQwiYE+ZUITG9xOSNeJOM8fOoCQtgfttfWnpFWn8dXB92cZYTgcp92vpHGZGNMlN+aO92qyekGP0IHkM37qDs7WShiw3aecKVVFUnpzurpWxSY41uC2dC+Gs+oA+zXdVKFM4qLlMOCL60V91w8i0LWeuc18uGNSblDUpoXxOszbWuMHEzvgzVFTpKPbRsBSuoTph+Hiqp4Bng5ezZ2zMSnu6ujfkzflBoVOKEiQc9wb86n//kB5YrS9hVerp6PQe5yEVoJE7ZMkoAEeCWCrFlFC0d1jmcRuz58N5jpNe0xHbaejTmBlGPFzo/pLtjPLXUoI5bt8Arg/DrEIY0cQU8tKSY9dM5JDpaCMA/JYYRK8Dyb0Dgg+S5mIt+ekErumr/eHM1SYyqg2UEWKmT53kjaN7JI0VUpRHNoeitO59NoKofHNXzSQiVhr2lMio5WUIprVwaR1R0IconzZAtP9cbRLI3iXsTCc6V42sVyOLye3k2afzg+jQu8pHVwus7tqttDNXBZ/2FcniN075rDCM51oAop48gjU+hvRz94+66w6U2hyzpRqWmPSwxuFqGQ+qNVvJtZIdZIxDjz6LNgyeUk="
         - secure: "V8M7EGN5VZnkcejfnWy9D8SBNp0bm1MTVri08+7FUwzWOVgGnXCuM6VrgUDnFbrXNdfk7qh/ZWbEyZ6HuSqxMcpvD/rg2GeQyXv8sv9yh+YNwtV8XPxF4ymQD9sgvOc3/IN+ekDLPxOIbA0Niha9xJNPa5Vt1HxG0yPcaKwV0OjrsgpcGUQFDrILN0L5lAtYME5B8jwE2RL0UKi3Apqiw0/J+6usIYf5RsBcSjjCSIVnvvyZnu3DW4A1j7OpO9k70ZvXq8SrSeIYxfCrZPk7H+6C7xaBHG4Brk4aeThXBtSyEWZtjAbB5G7lYMxA7h2z4FJC8RRoUGms7jxM8N6XcTQU69fNpG2YUFmPpYG9FxVV2i2j5fGhVOJhJEWQ1g4z3OPmJDfn/YGcCTmpSnyKWicEETLFY6rIIbFJpByBlo1ID5CBk8RmW0cFhEeCE+/TsBknCc2i6oWyeUtkaIIK6OnYdl1UVJ0rSsAkwEaHW+AzWdcReiK8hAjOXJyEqJDpbObG8Bx2XlF3d8ifojOzfBQsda4cT/yh5LGm6gbod2Z9Sg4YPpeXmtYtqSgzHB6P4hc3ZylHY+D5FSx8/nV4r6URkuOBzJZiHHOIpk3tNEFQ4H8cd+sUdoDSS1Tzo3QTV5STMPxpcahXjeLBk70wE93xQ5lTYqklI0/tI0CzAB4="
@@ -36,7 +36,8 @@ jobs:
             docker push ${DOCKER_REPO}:${DOCKER_NTAG}
             docker push ${DOCKER_REPO}:latest
           fi
-    - stage: build
+    - name: Build FreeOrionSDK for MacOS
+      stage: build
       os: osx
       language: cpp
       osx_image: xcode8.3
@@ -44,8 +45,6 @@ jobs:
       cache:
         directories:
           - build/downloads
-      env:
-        - NAME="Build FreeOrionSDK"
       before_install:
         - brew install gpatch
       before_script:
@@ -65,7 +64,8 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
-    - stage: build
+    - name: Build FreeOrionSDK for Windows
+      stage: build
       os: windows
       language: cpp
       cache:

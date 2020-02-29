@@ -1,15 +1,27 @@
-os: Visual Studio 2017
+image:
+  - Visual Studio 2015
+  - Visual Studio 2017
+  - Visual Studio 2019
 
 version: ci-{build}
 
 environment:
   matrix:
    - TOOlSET: v140_xp
-     GENERATOR: "Visual Studio 14"
+     GENERATOR: "Visual Studio 14 2015"
+     PLATFORM: Win32
    - TOOlSET: v141_xp
-     GENERATOR: "Visual Studio 15"
+     GENERATOR: "Visual Studio 15 2017"
+     PLATFORM: Win32
    - TOOlSET: v141
-     GENERATOR: "Visual Studio 15 2017 Win64"
+     GENERATOR: "Visual Studio 15 2017"
+     PLATFORM: x64
+   - TOOlSET: v142
+     GENERATOR: "Visual Studio 16 2019"
+     PLATFORM: Win32
+   - TOOlSET: v142
+     GENERATOR: "Visual Studio 16 2019"
+     PLATFORM: x64
 cache:
   - build\downloads -> Sources.cmake
 init:
@@ -19,7 +31,7 @@ before_build:
   - if not exist build\NUL mkdir build
   - cd build
 build_script:
-  - cmake -G "%GENERATOR%" -T %TOOLSET% ..
+  - cmake -G "%GENERATOR%" -T %TOOLSET% -A %PLATFORM% ..
   - cmake --build . --config RelWithDebInfo -- /maxcpucount /property:BuildInParallel=true /property:CL_MPCount=2 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
 test: off
 artifacts:
@@ -35,3 +47,18 @@ deploy:
   force_update: true
   on:
     appveyor_repo_tag: true
+
+matrix:
+  exclude:
+    - image: Visual Studio 2015
+      GENERATOR: "Visual Studio 15 2017"
+    - image: Visual Studio 2015
+      GENERATOR: "Visual Studio 16 2019"
+    - image: Visual Studio 2017
+      GENERATOR: "Visual Studio 14 2015"
+    - image: Visual Studio 2017
+      GENERATOR: "Visual Studio 16 2019"
+    - image: Visual Studio 2019
+      GENERATOR: "Visual Studio 14 2015"
+    - image: Visual Studio 2019
+      GENERATOR: "Visual Studio 15 2017"

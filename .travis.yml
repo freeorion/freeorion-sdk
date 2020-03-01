@@ -1,4 +1,6 @@
 stages:
+  - name: draft
+    if: tag IS present
   - build
 
 _build_sdk_common: &_build_sdk_common
@@ -22,6 +24,29 @@ _build_sdk_common: &_build_sdk_common
 
 jobs:
   include:
+    - name: Draft Github release
+      stage: draft
+      os: linux
+      language: shell
+      env:
+        - RELEASES_NAME="$(git tag -ln --format '%(subject)' $TRAVIS_TAG)"
+        # 1. Use sed hold space to collect only lines before the second
+        #    subsection (i.e. version titles)
+        # 2. Delete every line of that which is not between some subsection
+        #    (effectively deletes before first subsection).
+        # 3. Print remaining lines.
+        - RELEASES_RELEASE_NOTES=$(sed -n -e '/## /{x;s/^/x/;/x\{2\}/q;x;}' -e '/## /,/## /!d' -e 'p' ChangeLog.md)
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
+      deploy:
+        provider: releases
+        edge: true
+        api-key:
+          secure: "OFNno3SOwj5oubh0yTAMdfxg+lQDip9EhNDS6cic1/u0sTHriqm4v0NhW1SFzdwsX/LB/7RIp5qyx1CWBqhYWLpT78Uct7BCpESQDmEcdVDO6i9/NFAVr6Iz8FM88pAwXXY8X42VUbBqnEANIe7Av5w42zeYf8D0MuoZVoAZlX+X0uPaVq2PE8ihEaRNLWV/kJYHa6eBSzBO8H35+tytjAAm89EQR365oPwgy2NEoJhD1hTRTkiQoE1iL0J6fB121K4/YErTxMHgKawqGuMoVUAHu4CjT6BaklQ2ixWak3BqwFqDuQiO5DnGWzcJ5S9hQdMazyW6Hpn9QSljnABFMs3pbezeuRA0DqNCfd+hR6e+k+rcEGokE93NkOvabPOtaSGSmsmvDTk6Bu0f34bPQ/TSqggsui1Gj1H5trBOUR/AACN82FKIkNleBfVqy74d7+K3IugDnYb6OtkrvNhnF5sho+cWC4WyAjtRvEtZ0iqCx2e0cGyAMWSUSDYJLORDPlbls6BuIDO+iwpADNWK87DqyBk7SEKdoW+7c+EUUAWdC/GiDRmssW13IC4h0wqhwGGRnSWNDisHf8jvov9xK5VuwV6bf+fFlaAhlKpcrrjRciHTvkcvaRjrFaOTtFVFpUW0x0d9Hn6TlS3uYEGdlxk28RG4HltIWxgnCyrEHvk="
+        draft: true
+        file: .does-not-exist
+        on:
+          tags: true
+
     - name: Build Linux devenv for Travis CI
       stage: build
       os: linux
@@ -63,6 +88,7 @@ jobs:
       compiler: clang
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
       before_install:
         - brew install gpatch
       script:
@@ -74,6 +100,7 @@ jobs:
       os: windows
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
       script:
         - cmake -G "Visual Studio 15" -T v141_xp ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal

@@ -1,6 +1,25 @@
 stages:
   - build
 
+_build_sdk_common: &_build_sdk_common
+  stage: build
+  language: cpp
+  cache:
+    directories:
+      - build/downloads
+  before_script:
+    - mkdir -p build
+    - cd build
+  deploy:
+    provider: releases
+    edge: true
+    api-key:
+      secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
+    draft: true
+    file_glob: true
+    on:
+      tags: true
+
 jobs:
   include:
     - name: Build Linux devenv for Travis CI
@@ -36,55 +55,25 @@ jobs:
             docker push ${DOCKER_REPO}:${DOCKER_NTAG}
             docker push ${DOCKER_REPO}:latest
           fi
+
     - name: Build FreeOrionSDK for MacOS
-      stage: build
+      <<: *_build_sdk_common
       os: osx
-      language: cpp
-      osx_image: xcode8.3
+      osx_image: xcode9.4
       compiler: clang
-      cache:
-        directories:
-          - build/downloads
+      env:
+        - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
       before_install:
         - brew install gpatch
-      before_script:
-        - mkdir -p build
-        - cd build
       script:
         - cmake -G "Xcode" -D BOOST_PARALLEL_JOBS=$(sysctl hw.ncpu | awk '{print $2}') ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
-      deploy:
-        provider: releases
-        api-key:
-          secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
-        # Undocumented flag to create a draft release
-        draft: true
-        file_glob: true
-        file: FreeOrionSDK_*.tar.bz2
-        skip_cleanup: true
-        on:
-          tags: true
+
     - name: Build FreeOrionSDK for Windows
-      stage: build
+      <<: *_build_sdk_common
       os: windows
-      language: cpp
-      cache:
-        directories:
-          - build/downloads
-      before_script:
-        - mkdir -p build
-        - cd build
+      env:
+        - RELEASES_FILE=FreeOrionSDK_*.zip
       script:
         - cmake -G "Visual Studio 15" -T v141_xp ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
-      deploy:
-        provider: releases
-        api-key:
-          secure: "fRPiVwWwyhGlR+F+Vzt9ZDszc+TXrkq+UZ8uYRT//H0NrYV+OvvkAhE4GxRqDC2SfTnwJ5wCc07yf2Prxv7Zm5KYAJcCjBA04L9D/MD03+McGJIiKpg86XEOwAAUGuCB74gyCj3tuIKkQsops8HzYyNsP10q0o0kXQj0OmZSXFKAs1e6YsbkRM+FaPtwcA9Fek4EIp8+Wcq1HeMdR+uCDzguYjjHGBBkO4IMljqdtYLsj7PVQKiI8tmlnHbrBkEXAVqLjKRxzfiYFfKk7XA8N5TN8oOGnw9o77ic/bdeUoJmzgcCP/dfB+1UDCXKXMcA1vU89kzf7XDiHAZgNO0nJmSVCl3fSZKQA/F1/B90LEGVDofnpOJMLCpLFN8WHAGS5o4xldIafMgDSLW8rhLHOJhXPjUORQ1oiZDrTxQ+3FKdlNvPKzZsaac7r454z8g2/9ourhqV1PIJdS1hrM/g6ByTOxrPhn1+e6Yv0vENEDhRZ/ZGmjn+TQTSuyyuu0nKG9ky1jC7/aoAWNQuN7jRXrFOH8HAUhArTdNPTYEHBqprAdHh5ccLUpv4yRvCNqxmmTu+c/95vVDQ3s2RndGqwp9xSNh+7nSBfrW+78f7fY4X0X/7wBQ/1sp7GbxWuWVkvkgDC5pvaUKuiddoQoYJysXUOADMBh6FBO/zZh76HSE="
-        # Undocumented flag to create a draft release
-        draft: true
-        file_glob: true
-        file: FreeOrionSDK_*.zip
-        skip_cleanup: true
-        on:
-          tags: true

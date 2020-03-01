@@ -95,12 +95,22 @@ jobs:
         - cmake -G "Xcode" -D BOOST_PARALLEL_JOBS=$(sysctl hw.ncpu | awk '{print $2}') ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
 
-    - name: Build FreeOrionSDK for Windows
+    - name: Build FreeOrionSDK for Windows (x86)
       <<: *_build_sdk_common
       os: windows
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
       script:
-        - cmake -G "Visual Studio 15" -T v141_xp ..
+        - cmake -G "Visual Studio 15" -T v141 -A Win32 ..
+        - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
+
+    - name: Build FreeOrionSDK for Windows (x64)
+      <<: *_build_sdk_common
+      os: windows
+      env:
+        - RELEASES_FILE=FreeOrionSDK_*.zip
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
+      script:
+        - cmake -G "Visual Studio 15" -T v141 -A x64 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal

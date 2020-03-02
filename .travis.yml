@@ -68,12 +68,15 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CMAKE_GENERATOR="Visual Studio 15"
+        - CMAKE_GENERATOR_TOOLSET=v141
+        - CMAKE_GENERATOR_PLATFORM=Win32
         - CC=cl.exe
         - CXX=cl.exe
         - CC_FOR_BUILD=cl.exe
         - CXX_FOR_BUILD=cl.exe
       script:
-        - cmake -G "Visual Studio 15" -T v141 -A Win32 ..
+        - cmake ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
 
     - name: Build FreeOrionSDK for Windows (x64)
@@ -82,12 +85,15 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CMAKE_GENERATOR="Visual Studio 15"
+        - CMAKE_GENERATOR_TOOLSET=v141
+        - CMAKE_GENERATOR_PLATFORM=x64
         - CC=cl.exe
         - CXX=cl.exe
         - CC_FOR_BUILD=cl.exe
         - CXX_FOR_BUILD=cl.exe
       script:
-        - cmake -G "Visual Studio 15" -T v141 -A x64 ..
+        - cmake ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
 
     - name: Build FreeOrionSDK for Windows (x86) MSVS 2019
@@ -96,12 +102,18 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CMAKE_GENERATOR="Visual Studio 16"
+        - CMAKE_GENERATOR_TOOLSET=v142
+        - CMAKE_GENERATOR_PLATFORM=Win32
+        - CC=cl.exe
+        - CXX=cl.exe
+        - CC_FOR_BUILD=cl.exe
+        - CXX_FOR_BUILD=cl.exe
       before_install:
         - choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
         - choco install visualstudio2019-workload-vctools
-        - choco upgrade cmake
       script:
-        - cmake -G "Visual Studio 16" -T v142 -A Win32 ..
+        - cmake ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
 
     - name: Build FreeOrionSDK for Windows (x64) MSVS 2019
@@ -110,10 +122,18 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CMAKE_GENERATOR="Visual Studio 16"
+        - CMAKE_GENERATOR_TOOLSET=v142
+        - CMAKE_GENERATOR_PLATFORM=x64
+        - CMAKE_GENERATOR_PLATFORM=Win32
+        - CC=cl.exe
+        - CXX=cl.exe
+        - CC_FOR_BUILD=cl.exe
+        - CXX_FOR_BUILD=cl.exe
       before_install:
         - choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
         - choco install visualstudio2019-workload-vctools
-        - choco upgrade cmake
       script:
-        - cmake -G "Visual Studio 16" -T v142 -A x64 ..
+        - cmake ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
+

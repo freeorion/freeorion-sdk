@@ -89,3 +89,31 @@ jobs:
       script:
         - cmake -G "Visual Studio 15" -T v141 -A x64 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
+
+    - name: Build FreeOrionSDK for Windows (x86) MSVS 2019
+      <<: *_build_sdk_common
+      os: windows
+      env:
+        - RELEASES_FILE=FreeOrionSDK_*.zip
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
+      before_install:
+        - choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
+        - choco install visualstudio2019-workload-vctools
+        - choco upgrade cmake
+      script:
+        - cmake -G "Visual Studio 16" -T v142 -A Win32 ..
+        - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
+
+    - name: Build FreeOrionSDK for Windows (x64) MSVS 2019
+      <<: *_build_sdk_common
+      os: windows
+      env:
+        - RELEASES_FILE=FreeOrionSDK_*.zip
+        - RELEASES_TAG_NAME=$TRAVIS_TAG
+      before_install:
+        - choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
+        - choco install visualstudio2019-workload-vctools
+        - choco upgrade cmake
+      script:
+        - cmake -G "Visual Studio 16" -T v142 -A x64 ..
+        - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal

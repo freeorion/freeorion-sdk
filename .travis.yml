@@ -137,3 +137,5 @@ jobs:
         - cmake ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
 
+  allow_failures:
+    env: CMAKE_GENERATOR="Visual Studio 16"

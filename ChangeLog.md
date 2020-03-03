@@ -8,6 +8,10 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Add Python3 in version 3.5.7 to SDK
 - Update python-cmake-buildsystem from c3b8d532242efed85fb3cd77b0e39e424b6db475
   to 501869c2b124552dae669d5fd6b7e7101a7cc30c.
+- Drop MSVC toolkit version v14.0 support.
+- Drop MSVC toolkit Windows XP support, the minimum required Windows version is
+  now Vista.
+- Provide SDK for Windows x86 and x64 CPU architecture.
 - Pin Docker image to a stable and more recent base image
   (docker.io/ubuntu:bionic-20190307).
 

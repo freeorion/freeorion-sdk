@@ -2,7 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
-## v11 - TBA
+## v11 - 2020-03-08
 
 - Update boost version to 1.70
 - Add Python3 in version 3.5.7 to SDK

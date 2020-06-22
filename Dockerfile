@@ -12,9 +12,9 @@
 
 # coreutils is included to use timeout in travis-ci builds
 
-FROM docker.io/ubuntu:bionic-20190307
+FROM docker.io/ubuntu:bionic-20200526
 
-LABEL version="9" \
+LABEL version="10" \
       maintainer="Marcel Metz <mmetz@adrian-broher.net>"
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -72,5 +72,6 @@ RUN apt-get update --assume-yes \
         libboost-filesystem1.62-dev \
         libboost-date-time1.62-dev \
         libboost-test1.62-dev \
+        clang-format-10 \
     && rm -rf \
         /var/lib/apt/lists/*

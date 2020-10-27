@@ -58,8 +58,7 @@ properly set up:
 This command creates a native build system for the SDK.
 
 To select a specific IDE or a version thereof use the `-G` (generator)
-parameter.  Valid values for this parameter are `-G "Visual Studio 14 2015"`,
-`-G "Visual Studio 15 2017"`, `-G "Xcode"` or similar.
+parameter.  Valid values for this parameter are `-G "Visual Studio 15 2017"`, `-G "Xcode"` or similar.
 
 To select a specific MSVC toolset version use the `-T` (toolset) parameter.
 Valid values for this parameter are `-T v140` or `-T v141` or equivalent for

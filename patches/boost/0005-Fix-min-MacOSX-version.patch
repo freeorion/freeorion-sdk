@@ -1,0 +1,10 @@
+--- a/tools/build/src/tools/darwin.jam	2020-11-16 19:46:41.088054801 +0300
++++ b/tools/build/src/tools/darwin.jam	2020-11-16 19:47:07.481053385 +0300
+@@ -29,6 +29,7 @@
+ 
+ ## The minimal MacOSX version to target.
+ feature macosx-version-min : : propagated optional ;
++feature.extend macosx-version-min : 10.9 ;
+ 
+ ## A dependency, that is forced to be included in the link.
+ feature force-load : : free dependency incidental ;

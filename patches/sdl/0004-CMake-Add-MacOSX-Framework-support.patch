@@ -1,0 +1,43 @@
+From 43524a3266a76d091e41c4aca86e009fd06bae9d Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Fri, 1 Apr 2016 18:10:19 +0200
+Subject: [PATCH] CMake: Add MacOSX Framework support
+
+---
+ CMakeLists.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 56cced0f0..f32165cb7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -373,6 +373,9 @@ dep_option(KMSDRM_SHARED       "Dynamically load KMS DRM support" ON "VIDEO_KMSDRM" OFF)
+ option_string(BACKGROUNDING_SIGNAL "number to use for magic backgrounding signal or 'OFF'" "OFF")
+ option_string(FOREGROUNDING_SIGNAL "number to use for magic foregrounding signal or 'OFF'" "OFF")
+ set_option(HIDAPI              "Use HIDAPI for low level joystick drivers" ${OPT_DEF_HIDAPI})
++if(APPLE)
++  set_option(BUILD_FRAMEWORK   "Build Framework bundle for OSX" OFF)
++endif()
+ 
+ set(SDL_SHARED ${SDL_SHARED_ENABLED_BY_DEFAULT} CACHE BOOL "Build a shared version of the library")
+ set(SDL_STATIC ${SDL_STATIC_ENABLED_BY_DEFAULT} CACHE BOOL "Build a static version of the library")
+@@ -1819,6 +1822,16 @@ if(SDL_SHARED)
+     set_target_properties(SDL2 PROPERTIES STATIC_LIBRARY_FLAGS "/NODEFAULTLIB")
+   endif()
+   set(_INSTALL_LIBS "SDL2" ${_INSTALL_LIBS})
++  if(APPLE AND BUILD_FRAMEWORK)
++    set_target_properties(SDL2 PROPERTIES
++      FRAMEWORK TRUE
++      FRAMEWORK_VERSION ${SDL_VERSION}
++      MACOSX_FRAMEWORK_IDENTIFIER org.libsdl.SDL2
++      MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${SDL_VERSION}
++      MACOSX_FRAMEWORK_BUNDLE_VERSION ${SDL_VERSION}
++      MACOSX_RPATH ON
++      OUTPUT_NAME "SDL2")
++  endif()
+   target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+   target_include_directories(SDL2 PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include/SDL2>)
+   if (NOT ANDROID)
+-- 
+2.14.3
+

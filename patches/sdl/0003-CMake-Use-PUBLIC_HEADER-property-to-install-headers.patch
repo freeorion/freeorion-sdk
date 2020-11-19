@@ -11,7 +11,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 3fe76072c..56cced0f0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1701,11 +1701,19 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
+@@ -1795,13 +1795,19 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
  #  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
  #endif()
  
@@ -26,7 +26,9 @@ index 3fe76072c..56cced0f0 100644
  if(SDL_SHARED)
 -  add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
 -  if(APPLE)
--    set_target_properties(SDL2 PROPERTIES MACOSX_RPATH 1)
+-    set_target_properties(SDL2 PROPERTIES
+-      MACOSX_RPATH 1
+-      OUTPUT_NAME "SDL2-${LT_RELEASE}")
 -  elseif(UNIX AND NOT ANDROID)
 +  add_library(SDL2 SHARED ${INCLUDE_FILES} ${SOURCE_FILES} ${VERSION_SOURCES})
 +  set_target_properties(SDL2 PROPERTIES
@@ -35,7 +37,7 @@ index 3fe76072c..56cced0f0 100644
      set_target_properties(SDL2 PROPERTIES
        VERSION ${LT_VERSION}
        SOVERSION ${LT_REVISION}
-@@ -1732,7 +1740,9 @@ endif()
+@@ -1848,7 +1854,9 @@ endif()
  
  if(SDL_STATIC)
    set (BUILD_SHARED_LIBS FALSE)
@@ -46,7 +48,7 @@ index 3fe76072c..56cced0f0 100644
    if (NOT SDL_SHARED OR NOT WIN32)
      set_target_properties(SDL2-static PROPERTIES OUTPUT_NAME "SDL2")
      # Note: Apparently, OUTPUT_NAME must really be unique; even when
-@@ -1769,7 +1779,8 @@ endif()
+@@ -1887,7 +1897,8 @@ endif()
  install(TARGETS ${_INSTALL_LIBS} EXPORT SDL2Targets
    LIBRARY DESTINATION "lib${LIB_SUFFIX}"
    ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
@@ -56,7 +58,7 @@ index 3fe76072c..56cced0f0 100644
  
  ##### Export files #####
  if (APPLE)
-@@ -1799,16 +1810,7 @@ install(
+@@ -1799,23 +1810,15 @@ install(
    COMPONENT Devel
  )
  
@@ -68,12 +70,19 @@ index 3fe76072c..56cced0f0 100644
 -endforeach()
 -list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
 -install(FILES ${INCLUDE_FILES} DESTINATION include/SDL2)
--
+ 
+ string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
+ if (UPPER_BUILD_TYPE MATCHES DEBUG)
+   set(SOPOSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
+ else()
+   set(SOPOSTFIX "")
+ endif()
+
 -if(NOT (WINDOWS OR CYGWIN))
 +if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
    if(SDL_SHARED)
-     if (APPLE)
-         set(SOEXT "dylib")
+     set(SOEXT ${CMAKE_SHARED_LIBRARY_SUFFIX}) # ".so", ".dylib", etc.
+     get_target_property(SONAME SDL2 OUTPUT_NAME)
 -- 
 2.14.3
 

@@ -11,20 +11,20 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index aa17932b6..3fe76072c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1693,13 +1693,13 @@ endif()
+@@ -1787,13 +1787,13 @@ endif()
  # Ensure that the extra cflags are used at compile time
  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
  
 -# Always build SDLmain
 -add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
--target_include_directories(SDL2main PUBLIC $<INSTALL_INTERFACE:include>)
+-target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include/SDL2>)
 -set(_INSTALL_LIBS "SDL2main")
 -if (NOT ANDROID)
 -  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
 -endif()
 +# Never build SDLmain
 +#add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
-+#target_include_directories(SDL2main PUBLIC $<INSTALL_INTERFACE:include>)
++#target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include/SDL2>)
 +#set(_INSTALL_LIBS "SDL2main")
 +#if (NOT ANDROID)
 +#  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})

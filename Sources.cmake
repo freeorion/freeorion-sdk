@@ -19,9 +19,9 @@ set(ZLIB_VERSION 1.2.11)
 set(ZLIB_URL http://downloads.sourceforge.net/project/libpng/zlib/${ZLIB_VERSION}/zlib-${ZLIB_VERSION}.tar.gz)
 set(ZLIB_MD5 1c9f62f0778697a09d36121ead88e08e)
 
-set(LIBPNG_VERSION 1.6.34)
+set(LIBPNG_VERSION 1.6.37)
 set(LIBPNG_URL https://downloads.sourceforge.net/project/libpng/libpng16/${LIBPNG_VERSION}/libpng-${LIBPNG_VERSION}.tar.gz)
-set(LIBPNG_MD5 03fbc5134830240104e96d3cda648e71)
+set(LIBPNG_MD5 6c7519f6c75939efa0ed3053197abd54)
 
 set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/501869c2b124552dae669d5fd6b7e7101a7cc30c.zip)
 set(PYTHON_CMAKE_MD5 06d2b8fe33eeb08be5e8a127ffa5fff8)

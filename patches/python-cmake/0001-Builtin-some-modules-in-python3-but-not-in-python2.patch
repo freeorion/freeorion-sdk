@@ -50,10 +50,10 @@ index 301c9f2..dd1a75b 100644
 +    set(PY3_BUILTIN BUILTIN)
 +endif()
 +
- # XXX Following modules are missing:
- # lzma
- 
-@@ -40,7 +45,7 @@ add_python_extension(_codecs_iso2022 ${WIN32_BUILTIN} SOURCES cjkcodecs/_codecs_
+ add_python_extension(array ${WIN32_BUILTIN} SOURCES arraymodule.c)
+ add_python_extension(audioop ${WIN32_BUILTIN} SOURCES audioop.c)
+ add_python_extension(_bisect ${WIN32_BUILTIN} SOURCES _bisectmodule.c)
+@@ -37,7 +42,7 @@ add_python_extension(_codecs_iso2022 ${WIN32_BUILTIN} SOURCES cjkcodecs/_codecs_
  add_python_extension(_codecs_jp ${WIN32_BUILTIN} SOURCES cjkcodecs/_codecs_jp.c)
  add_python_extension(_codecs_kr ${WIN32_BUILTIN} SOURCES cjkcodecs/_codecs_kr.c)
  add_python_extension(_codecs_tw ${WIN32_BUILTIN} SOURCES cjkcodecs/_codecs_tw.c)
@@ -62,7 +62,7 @@ index 301c9f2..dd1a75b 100644
  add_python_extension(cPickle ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES cPickle.c)
  set(crypt2_NAME crypt)
  set(crypt2_SOURCES cryptmodule.c)
-@@ -54,14 +59,14 @@ set(datetime2_NAME datetime)
+@@ -51,14 +56,14 @@ set(datetime2_NAME datetime)
  set(datetime2_SOURCES datetimemodule.c)
  set(datetime3_NAME _datetime)
  set(datetime3_SOURCES _datetimemodule.c)
@@ -80,7 +80,7 @@ index 301c9f2..dd1a75b 100644
  add_python_extension(future_builtins ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES future_builtins.c)
  add_python_extension(_heapq ${WIN32_BUILTIN} SOURCES _heapqmodule.c)
  add_python_extension(_hotshot ${WIN32_BUILTIN} REQUIRES IS_PY2 SOURCES _hotshot.c)
-@@ -82,7 +87,7 @@ if(WIN32 AND EXISTS ${SRC_DIR}/Modules/_io/winconsoleio.c)
+@@ -79,7 +84,7 @@ if(WIN32 AND EXISTS ${SRC_DIR}/Modules/_io/winconsoleio.c)
  endif()
  add_python_extension(_io BUILTIN SOURCES ${_io_SOURCES})
  
@@ -89,7 +89,7 @@ index 301c9f2..dd1a75b 100644
  add_python_extension(_json ${WIN32_BUILTIN} SOURCES _json.c)
  add_python_extension(_locale ${WIN32_BUILTIN} SOURCES _localemodule.c) # access to ISO C locale support
  add_python_extension(_lsprof ${WIN32_BUILTIN} SOURCES _lsprof.c rotatingtree.c)
-@@ -100,7 +105,7 @@ set(thread3_NAME _thread)
+@@ -97,7 +102,7 @@ set(thread3_NAME _thread)
  set(thread2_SOURCES ${SRC_DIR}/Modules/threadmodule.c)
  set(thread3_SOURCES ${SRC_DIR}/Modules/_threadmodule.c)
  add_python_extension(${thread${PY_VERSION_MAJOR}_NAME} BUILTIN REQUIRES WITH_THREAD SOURCES ${thread${PY_VERSION_MAJOR}_SOURCES})

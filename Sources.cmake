@@ -26,9 +26,9 @@ set(LIBPNG_MD5 6c7519f6c75939efa0ed3053197abd54)
 set(PYTHON_CMAKE_URL https://github.com/python-cmake-buildsystem/python-cmake-buildsystem/archive/d7e201c3308c51eb1766701cbe615f38e4762274.zip)
 set(PYTHON_CMAKE_MD5 107901733cc463b30640a1c8b5aea879)
 
-set(PYTHON3_VERSION 3.6.4)
+set(PYTHON3_VERSION 3.6.5)
 set(PYTHON3_URL https://www.python.org/ftp/python/${PYTHON3_VERSION}/Python-${PYTHON3_VERSION}.tgz)
-set(PYTHON3_MD5 9de6494314ea199e3633211696735f65)
+set(PYTHON3_MD5 ab25d24b1f8cc4990ade979f6dc37883)
 
 set(FREETYPE_VERSION 2.9)
 set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)

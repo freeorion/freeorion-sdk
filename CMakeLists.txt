@@ -520,7 +520,7 @@ list(APPEND DIST_PACK_TARGETS glew)
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
     set(BOOST_CONFIGURE_FLAGS
-        macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
+        #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
         architecture=x86
     )
     set(BOOST_ARCHITECTURES)

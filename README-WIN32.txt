@@ -58,7 +58,7 @@ inter-compatible.  The following software versions are included:
 
 Dependency Versions Included:
 
-* Boost 1.70          <http://www.boost.org/>
+* Boost 1.74          <http://www.boost.org/>
 * FreeType 2.9        <https://www.freetype.org/>
 * GLEW 2.2.0          <http://glew.sourceforge.net/>
 * libogg 1.3.2        <https://xiph.org/ogg/>

@@ -50,7 +50,7 @@ jobs:
     - name: Build FreeOrionSDK for MacOS
       <<: *_build_sdk_common
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode10.1
       compiler: clang
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2

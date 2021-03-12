@@ -57,14 +57,17 @@ properly set up:
 
 This command creates a native build system for the SDK.
 
-To select a specific IDE or a version thereof, use the `-G` (generator)
-parameter.  Valid values for this parameter are `-G "Visual Studio 15 2017"`, `-G "Xcode"` or similar.
+To select a specific IDE or a version thereof, use the `-G` (generator) parameter.
+Valid values for this parameter are `-G "Visual Studio 15 2017"`, `-G "Xcode"` or similar.
+Note: `-G "Visual Studio 16 2019"` is not supported due to errors when linking FreeOrion to GLEW.
 
-To select a specific MSVC archticture, use the `-A` (architecture) parameter. Valid values for this parameter are `-A Win32` or `-A x64`.
+To select a specific MSVC archticture, use the `-A` (architecture) parameter.
+Valid values for this parameter are `-A Win32`.
+Note: `-A x64` is not tested or supported.
 
 To select a specific MSVC toolset version, use the `-T` (toolset) parameter.
-Valid values for this parameter are `-T v140` or `-T v141` or equivalent for
-other versions at the end of this command.
+Valid values for this parameter are `-T v141`.
+Note: `-T v142` requires Visual Studio 2019, so is not supported for building the SDK, but Visual Studio 2019 and toolset v142 can be used when building FreeOrion itself and linking to an SDK built with `-T v141`.
 
 After that, the SDK can be build with:
 

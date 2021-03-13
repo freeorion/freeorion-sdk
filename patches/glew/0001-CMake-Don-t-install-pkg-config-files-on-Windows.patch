@@ -12,7 +12,7 @@ diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
 index 5081e0f..7920d57 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
-@@ -186,25 +186,27 @@ if (BUILD_UTILS)
+@@ -208,26 +208,28 @@ if (BUILD_UTILS)
              DESTINATION ${CMAKE_INSTALL_BINDIR})
  endif ()
  
@@ -28,11 +28,6 @@ index 5081e0f..7920d57 100644
 -#  Mac OSX has no glu.pc unless optional X11/GLX is installed
 -if (APPLE)
 -  set (requireslib)
--endif ()
--
--configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
--
--install(FILES ${GLEW_DIR}/glew.pc
 +if (NOT WIN32 AND CYGWIN)
 +    set (prefix ${CMAKE_INSTALL_PREFIX})
 +    set (exec_prefix ${CMAKE_INSTALL_PREFIX})
@@ -45,19 +40,25 @@ index 5081e0f..7920d57 100644
 +
 +    #  Mac OSX has no glu.pc unless optional X11/GLX is installed
 +    if (APPLE)
-+      set (requireslib)
++        set (requireslib)
 +    endif ()
 +
-+    configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
++    configure_file (${GLEW_DIR}/glew.pc.in ${CMAKE_CURRENT_BINARY_DIR}/glew.pc @ONLY)
 +
-+    install(FILES ${GLEW_DIR}/glew.pc
-         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
--)
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/glew.pc
++            DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 +    )
-+endif ()
+ endif ()
  
+-configure_file (${GLEW_DIR}/glew.pc.in ${CMAKE_CURRENT_BINARY_DIR}/glew.pc @ONLY)
+-
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/glew.pc
+-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+-)
+-
  if(WIN32 AND MSVC AND (NOT MSVC_VERSION LESS 1600) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
      install(
+         FILES $<TARGET_PDB_FILE:glew>
 -- 
 2.14.3
 

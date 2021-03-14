@@ -1,0 +1,6 @@
+using msvc
+    : @_VS_PLATFORM_TOOLSET_VERSION@
+    :
+    :
+    ;
+

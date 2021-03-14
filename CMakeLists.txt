@@ -599,6 +599,15 @@ if(BOOST_TOOLSET EQUAL clang)
     file(APPEND ${CMAKE_BINARY_DIR}/boost-config.jam "${BOOST_CONFIG_CONTENTS}")
 endif()
 
+if(BOOST_TOOLSET MATCHES "^msvc-")
+    configure_file(
+        boost-config-msvc.jam.in
+        boost-config-msvc.jam
+    )
+    file(READ ${CMAKE_BINARY_DIR}/boost-config-msvc.jam BOOST_CONFIG_CONTENTS)
+    file(APPEND ${CMAKE_BINARY_DIR}/boost-config.jam "${BOOST_CONFIG_CONTENTS}")
+endif()
+
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
     DEPENDS patch zlib python3

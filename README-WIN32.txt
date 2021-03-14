@@ -60,11 +60,11 @@ Dependency Versions Included:
 
 * Boost 1.70          <http://www.boost.org/>
 * FreeType 2.9        <https://www.freetype.org/>
-* GLEW 2.1.0          <http://glew.sourceforge.net/>
+* GLEW 2.2.0          <http://glew.sourceforge.net/>
 * libogg 1.3.2        <https://xiph.org/ogg/>
 * libvorbis 1.3.5     <https://xiph.org/vorbis/>
 * OpenAL Soft 1.18.2  <http://kcat.strangesoft.net/openal.html>
-* libpng 1.6.34       <http://www.libpng.org/pub/png/libpng.html>
+* libpng 1.6.37       <http://www.libpng.org/pub/png/libpng.html>
 * zlib 1.2.11         <http://www.zlib.net/>
 * Python 3.5.7        <https://www.python.org/>
-* SDL 2.0.8           <https://www.libsdl.org/>
+* SDL 2.0.12          <https://www.libsdl.org/>

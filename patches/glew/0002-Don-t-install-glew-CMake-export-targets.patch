@@ -11,7 +11,7 @@ diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
 index 7920d57..2a41cb7 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
-@@ -222,15 +222,6 @@ install (FILES
+@@ -242,15 +242,6 @@ install (FILES
      ${GLEW_DIR}/include/GL/glxew.h
      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/GL)
  

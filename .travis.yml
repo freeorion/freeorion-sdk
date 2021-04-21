@@ -55,15 +55,17 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - HOMEBREW_NO_AUTO_UPDATE=1
       before_install:
         - brew install gpatch
       script:
         - cmake -G "Xcode" -D BOOST_PARALLEL_JOBS=$(sysctl hw.ncpu | awk '{print $2}') ..
-        - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
+        - travis_wait 49 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
 
     - name: Build FreeOrionSDK for Windows (x86)
       <<: *_build_sdk_common
       os: windows
+      compiler: cl
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
@@ -76,6 +78,7 @@ jobs:
     - name: Build FreeOrionSDK for Windows (x64)
       <<: *_build_sdk_common
       os: windows
+      compiler: cl
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG

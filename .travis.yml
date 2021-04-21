@@ -55,18 +55,22 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - HOMEBREW_NO_AUTO_UPDATE=1
       before_install:
         - brew install gpatch
       script:
         - cmake -G "Xcode" -D BOOST_PARALLEL_JOBS=$(sysctl hw.ncpu | awk '{print $2}') ..
-        - travis_wait 70 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
+        - travis_wait 49 cmake --build . --config RelWithDebInfo -- -parallelizeTargets -jobs $(sysctl hw.ncpu | awk '{print $2}')
 
     - name: Build FreeOrionSDK for Windows (x86)
       <<: *_build_sdk_common
       os: windows
+      compiler: cl
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+      before_install:
+        - choco uninstall mingw
       script:
         - cmake -G "Visual Studio 15" -T v141 -A Win32 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
@@ -74,9 +78,12 @@ jobs:
     - name: Build FreeOrionSDK for Windows (x64)
       <<: *_build_sdk_common
       os: windows
+      compiler: cl
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+      before_install:
+        - choco uninstall mingw
       script:
         - cmake -G "Visual Studio 15" -T v141 -A x64 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal

@@ -55,6 +55,7 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - HOMEBREW_NO_AUTO_UPDATE=1
       before_install:
         - brew install gpatch
       script:
@@ -67,6 +68,10 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CC=cl.exe
+        - CXX=cl.exe
+        - CC_FOR_BUILD=cl.exe
+        - CXX_FOR_BUILD=cl.exe
       script:
         - cmake -G "Visual Studio 15" -T v141 -A Win32 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal
@@ -77,6 +82,10 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.zip
         - RELEASES_TAG_NAME=$TRAVIS_TAG
+        - CC=cl.exe
+        - CXX=cl.exe
+        - CC_FOR_BUILD=cl.exe
+        - CXX_FOR_BUILD=cl.exe
       script:
         - cmake -G "Visual Studio 15" -T v141 -A x64 ..
         - travis_wait 70 cmake --build . --config RelWithDebInfo -- //maxcpucount //property:BuildInParallel=true //property:CL_MPCount=2 //verbosity:minimal

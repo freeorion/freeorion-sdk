@@ -2,6 +2,17 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v12 - 2021-04-25
+
+- Update boost version to 1.74
+- Update Python3 version to 3.6.5
+- Update SDL2 version to 2.0.12
+- Update lippng version to 1.6.37
+- Update GLEW version to 2.2.0
+- Bump C++ standard to C++17
+- Raise Mac OS X build environment to Xcode 10.1
+- Removed separate specification of Mac OS X deployment target version
+
 ## v11 - 2020-03-08
 
 - Update boost version to 1.70

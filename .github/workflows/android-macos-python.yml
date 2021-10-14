@@ -59,8 +59,9 @@ jobs:
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
         working-directory: ./
-        ndk: 21.0.6113669
+        ndk: 23.0.7421159
         cmake: 3.10.2.4988404
+        channel: beta
         script: echo "Generated AVD snapshot for caching."
 
     - uses: actions/checkout@v2
@@ -85,8 +86,9 @@ jobs:
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
         working-directory: build-python/python-cmake-buildsystem
-        ndk: 21.0.6113669
+        ndk: 23.0.7421159
         cmake: 3.10.2.4988404
+        channel: beta
         script: |
           # ls -lR /Users/runner/Library/Android/sdk
           adb devices
@@ -100,14 +102,11 @@ jobs:
     - name: Pack Python SDK
       shell: bash
       run: |
-        ls build-python/python-install-prefix
         cd build-python/python-install-prefix/lib/python3.6
         zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../python36.zip .
         cd ../..
         zip -r -9 -q ../python-3.6-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.6m.a
         cd ..
-        pwd
-        ls
 
     - uses: actions/upload-artifact@v2
       with:

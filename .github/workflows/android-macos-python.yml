@@ -106,9 +106,9 @@ jobs:
       shell: bash
       run: |
         cd build-python/python-install-prefix/lib/python3.6
-        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../python36.zip .
+        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python36.zip .
         cd ../..
-        zip -r -9 -q ../python-3.6-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.6m.a
+        zip -r -9 -q ../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.6m.a
         cd ..
 
     - uses: actions/checkout@v2
@@ -128,16 +128,14 @@ jobs:
       shell: bash
       run: |
         pushd build-boost/Boost-for-Android/build/out/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../../boost-1.76.0-sdk-${{ matrix.ndk-arch }}.zip include/ lib/
+        zip -r -9 -q ../../../../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/
         popd
         pushd build-boost/Boost-for-Android/libiconv-libicu-android/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../libiconv-libicu-sdk-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
+        zip -r -9 -q ../../../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
 
     - uses: actions/upload-artifact@v2
       with:
         name: python SDK
         path: |
-          build-python/python36.zip
-          build-python/python-3.6-sdk-${{ matrix.ndk-arch }}.zip
-          build-boost/boost-1.76.0-sdk-${{ matrix.ndk-arch }}.zip
-          build-boost/libiconv-libicu-sdk-${{ matrix.ndk-arch }}.zip
+          python36.zip
+          freeorion-android-sdk-${{ matrix.ndk-arch }}.zip

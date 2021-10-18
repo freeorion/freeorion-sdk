@@ -122,7 +122,7 @@ jobs:
       run: |
         export PYTHON_PATH=$(cd build-python/python-install-prefix/ ; pwd)
         cd build-boost/Boost-for-Android
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.76.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system /Users/runner/Library/Android/sdk/ndk/23.0.7421159/
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.74.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system /Users/runner/Library/Android/sdk/ndk/23.0.7421159/
 
     - name: Pack Boost
       shell: bash

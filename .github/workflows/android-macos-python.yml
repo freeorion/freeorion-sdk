@@ -1,6 +1,14 @@
 name: "Build Python for Android wth MacOS emulator"
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '.github/workflows/android-macos-python.yml'
+      - '.github/workflows/adb-emu.sh'
+  pull_request:
+    paths:
+      - '.github/workflows/android-macos-python.yml'
+      - '.github/workflows/adb-emu.sh'
 
 jobs:
   build-android:

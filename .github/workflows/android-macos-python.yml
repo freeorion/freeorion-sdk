@@ -106,23 +106,23 @@ jobs:
           mkdir ../python-install-prefix
           cd ../python-build
           # ls -lR /Users/runner/Library/Android/sdk/ndk/23.0.7421159/
-          /Users/runner/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake -DANDROID_NDK=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/Users/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 ../python-cmake-buildsystem/
-          /Users/runner/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build . -- VERBOSE=1
-          /Users/runner/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build . --target install
+          cmake -DANDROID_NDK=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/Users/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 ../python-cmake-buildsystem/
+          cmake --build . -- VERBOSE=1
+          cmake --build . --target install
 
     - name: Pack Python SDK
       shell: bash
       run: |
-        cd build-python/python-install-prefix/lib/python3.6
-        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python36.zip .
+        cd build-python/python-install-prefix/lib/python3.9
+        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python39.zip .
         cd ../..
-        zip -r -9 -q ../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.6m.a
+        zip -r -9 -q ../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
         cd ..
 
     - uses: actions/checkout@v2
       with:
         repository: 'moritz-wundke/Boost-for-Android'
-        ref: 'master'
+        ref: '529027ab2f1253f17797d364fb6f456d57dc9d5e'
         path: 'build-boost/Boost-for-Android'
 
     - name: Build Boost
@@ -145,5 +145,5 @@ jobs:
       with:
         name: python SDK
         path: |
-          python36.zip
+          python39.zip
           freeorion-android-sdk-${{ matrix.ndk-arch }}.zip

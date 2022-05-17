@@ -1,0 +1,33 @@
+name: "Windows build"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-windows:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+        with:
+          vs-version: '[16.0,16.30)'
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake -G "Visual Studio 16 2019" -T v141 -A Win32 ..
+      - name: Build
+        run: |
+          cd build
+          cmake --build . --config RelWithDebInfo -- /verbosity:d
+      - name: Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows SDK
+          path: |
+            build/FreeOrionSDK_12_MSVC-v141-Win32.zip
+
+

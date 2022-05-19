@@ -1,8 +1,8 @@
-From 514e77d5b1e04fb9eafef4bb2bd3d6a0bbcbd4b2 Mon Sep 17 00:00:00 2001
+From 94f66991af2bbcafd809dd6edced30edf795bde8 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Sat, 17 Sep 2016 21:36:45 +0200
-Subject: [PATCH] Install binaries, libraries, headers files and auxilliary
- files into framework
+Subject: [PATCH 06/14] Install binaries, libraries, headers files and
+ auxilliary files into framework
 
 ---
  CMakeLists.txt                 | 22 +++++++++++++++++++---
@@ -11,10 +11,10 @@ Subject: [PATCH] Install binaries, libraries, headers files and auxilliary
  3 files changed, 48 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 24ad782..ee6c0ff 100644
+index 0734f4f..adc3f27 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -84,6 +84,8 @@ if(APPLE)
+@@ -82,6 +82,8 @@ if(APPLE)
    if(BUILD_FRAMEWORK)
        set(BUILD_LIBPYTHON_SHARED ON CACHE BOOL "Forced to ON because of BUILD_FRAMEWORK=ON" FORCE)
    endif()
@@ -23,7 +23,7 @@ index 24ad782..ee6c0ff 100644
  else()
    set(BUILD_FRAMEWORK OFF)
  endif()
-@@ -331,6 +333,9 @@ if(USE_LIB64)
+@@ -443,6 +445,9 @@ if(USE_LIB64)
      set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
      set(LIBDIR "lib64")
  endif()
@@ -33,7 +33,7 @@ index 24ad782..ee6c0ff 100644
  set(PYTHONHOME "${LIBDIR}/${LIBPYTHON}")
  
  # Install tree directory
-@@ -338,8 +343,15 @@ set(BIN_INSTALL_DIR bin)                         # Contains the python executabl
+@@ -450,8 +455,15 @@ set(BIN_INSTALL_DIR bin)                         # Contains the python executabl
  if(INSTALL_WINDOWS_TRADITIONAL)
      set(BIN_INSTALL_DIR .)                       # Contains the python executable
  endif()
@@ -50,7 +50,7 @@ index 24ad782..ee6c0ff 100644
  set(EXTENSION_INSTALL_DIR ${PYTHONHOME}/lib-dynload)
  
  if (${LIBPYTHON_VERSION} GREATER 3.1)
-@@ -355,6 +367,10 @@ set(INCLUDE_INSTALL_DIR include/python${LD_VERSION})
+@@ -467,6 +479,10 @@ set(INCLUDE_INSTALL_DIR include/python${LD_VERSION})
  if(MSVC)
      set(INCLUDE_INSTALL_DIR include/python${PY_VERSION_MAJOR}.${PY_VERSION_MINOR})
  endif()
@@ -61,7 +61,7 @@ index 24ad782..ee6c0ff 100644
  # Build tree directory
  set(BIN_BUILD_DIR ${PROJECT_BINARY_DIR}/bin)
  set(CONFIG_BUILD_DIR ${PROJECT_BINARY_DIR}/${CONFIG_INSTALL_DIR})
-@@ -566,7 +582,7 @@ if(UNIX)
+@@ -717,7 +733,7 @@ if(UNIX)
                      ${PROJECT_BINARY_DIR}/Misc/python-${LIBPYTHON_VERSION}.pc
                      ${PROJECT_BINARY_DIR}/Misc/python-${PY_VERSION_MAJOR}.pc
                      ${PROJECT_BINARY_DIR}/Misc/python.pc
@@ -70,7 +70,7 @@ index 24ad782..ee6c0ff 100644
                  COMPONENT Development)
      endif()
  
-@@ -593,7 +609,7 @@ if(UNIX)
+@@ -744,7 +760,7 @@ if(UNIX)
  
      # Install manual
      if(INSTALL_MANUAL)
@@ -106,10 +106,10 @@ index f75ede6..e14bb19 100644
 +    ")
 +endif()
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index ef66a73..bd05189 100644
+index f9f3433..27391f2 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -514,6 +514,17 @@ function(add_libpython name type install component)
+@@ -597,6 +597,17 @@ function(add_libpython name type install component)
              FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
              COMPONENT ${component}
          )
@@ -128,5 +128,5 @@ index ef66a73..bd05189 100644
  endfunction()
  
 -- 
-2.14.3
+2.35.1
 

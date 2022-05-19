@@ -1,7 +1,7 @@
-From f6e88deab23181a6c48828250b306627a80404b7 Mon Sep 17 00:00:00 2001
+From 3f97e258f92ff4164759586fb2a75060be1814d5 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 6 Sep 2016 16:59:04 +0200
-Subject: [PATCH] Disable MSVC specific compiler warnings
+Subject: [PATCH 04/14] Disable MSVC specific compiler warnings
 
 * Disable C4101 'identifier' : unreferenced local variable for libpython.
 * Disable C4018 'expression' : signed/unsigned mismatch for libpython.
@@ -14,10 +14,10 @@ Subject: [PATCH] Disable MSVC specific compiler warnings
  1 file changed, 3 insertions(+)
 
 diff --git a/cmake/libpython/CMakeLists.txt b/cmake/libpython/CMakeLists.txt
-index 7a089a8..a33084f 100644
+index 72ceffe..c7d20f7 100644
 --- a/cmake/libpython/CMakeLists.txt
 +++ b/cmake/libpython/CMakeLists.txt
-@@ -178,6 +178,9 @@ elseif(WIN32)
+@@ -215,6 +215,9 @@ elseif(WIN32)
              Py_ENABLE_SHARED
              MS_DLL_ID="${ms_dll_id}"
          )
@@ -28,5 +28,5 @@ index 7a089a8..a33084f 100644
  
  set(THREAD_SOURCES )
 -- 
-2.14.3
+2.35.1
 

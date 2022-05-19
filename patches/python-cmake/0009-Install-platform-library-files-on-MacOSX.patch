@@ -1,7 +1,7 @@
-From 1e90f2ff662c29fb755a97e88c3581410344d280 Mon Sep 17 00:00:00 2001
+From 17fca69f0362b922662a5a720731300874464ad1 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Tue, 20 Sep 2016 17:21:09 +0200
-Subject: [PATCH] Install platform library files on MacOSX
+Subject: [PATCH 08/14] Install platform library files on MacOSX
 
 ---
  cmake/lib/CMakeLists.txt | 4 ++++
@@ -23,5 +23,5 @@ index 82e8ec8..31d18eb 100644
      # Don't install files for other platforms
      string(REGEX MATCH "^plat-" is_platform_file "${file}")
 -- 
-2.14.3
+2.35.1
 

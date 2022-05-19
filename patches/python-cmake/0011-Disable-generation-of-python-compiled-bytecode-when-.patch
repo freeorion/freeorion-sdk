@@ -1,8 +1,8 @@
-From 27a3dc7c00513fe7aa781b58556fb4bdfa9300c3 Mon Sep 17 00:00:00 2001
+From f556b19b82199aa5311886cfc01a326816cb6271 Mon Sep 17 00:00:00 2001
 From: Marcel Metz <mmetz@adrian-broher.net>
 Date: Wed, 19 Oct 2016 10:16:07 +0200
-Subject: [PATCH] Disable generation of python compiled bytecode when calling
- python in build
+Subject: [PATCH 10/14] Disable generation of python compiled bytecode when
+ calling python in build
 
 ---
  CMakeLists.txt              | 12 ++++++------
@@ -10,10 +10,10 @@ Subject: [PATCH] Disable generation of python compiled bytecode when calling
  2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9edc412..e60b76b 100644
+index 93de749..7f03f38 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -494,7 +494,7 @@ endif()
+@@ -604,7 +604,7 @@ endif()
  # Add target to run "Argument Clinic" over all source files
  if(IS_PY3)
  add_custom_target(clinic
@@ -22,7 +22,7 @@ index 9edc412..e60b76b 100644
      DEPENDS python
      WORKING_DIRECTORY ${SRC_DIR}
      COMMENT "Running 'Argument Clinic' over all source files"
-@@ -522,7 +522,7 @@ add_custom_target(generate_graminit
+@@ -673,7 +673,7 @@ endif()
  
  # Add target to generate 'opcode.h' header file
  add_custom_target(generate_opcode_h
@@ -31,7 +31,7 @@ index 9edc412..e60b76b 100644
          ${SRC_DIR}/Lib/opcode.py
          ${PROJECT_BINARY_DIR}/CMakeFiles/opcode.h
      COMMAND ${CMAKE_COMMAND} -E copy_if_different
-@@ -536,7 +536,7 @@ add_custom_target(generate_opcode_h
+@@ -687,7 +687,7 @@ add_custom_target(generate_opcode_h
  
  # Add target to generate 'Include/Python-ast.h' from 'Python.asdl'
  add_custom_target(generate_python_ast_h
@@ -40,7 +40,7 @@ index 9edc412..e60b76b 100644
          -h ${SRC_DIR}/Include
          ${SRC_DIR}/Parser/Python.asdl
      DEPENDS python
-@@ -547,7 +547,7 @@ add_custom_target(generate_python_ast_h
+@@ -698,7 +698,7 @@ add_custom_target(generate_python_ast_h
  
  # Add target to generate 'Python/Python-ast.c' from 'Python.asdl'
  add_custom_target(generate_python_ast_c
@@ -49,7 +49,7 @@ index 9edc412..e60b76b 100644
          -c ${SRC_DIR}/Python
          ${SRC_DIR}/Parser/Python.asdl
      DEPENDS python
-@@ -637,9 +637,9 @@ if(BUILD_TESTING)
+@@ -788,9 +788,9 @@ if(BUILD_TESTING)
      set(TESTPROG ${PROJECT_BINARY_DIR}/${PYTHONHOME}/test/regrtest.py)
      set(TESTPYTHONOPTS )
      if(IS_PY2)
@@ -62,10 +62,10 @@ index 9edc412..e60b76b 100644
      set(TESTPYTHON ${CMAKE_CROSSCOMPILING_EMULATOR} ${TESTPYTHON})
      include(cmake/UnitTests.cmake)
 diff --git a/cmake/python/CMakeLists.txt b/cmake/python/CMakeLists.txt
-index 79ed665..c7f01d6 100644
+index 6a18c65..3e48583 100644
 --- a/cmake/python/CMakeLists.txt
 +++ b/cmake/python/CMakeLists.txt
-@@ -59,7 +59,7 @@ if(UNIX AND PY_VERSION VERSION_GREATER "2.7.4")
+@@ -61,7 +61,7 @@ if(UNIX AND PY_VERSION VERSION_GREATER "2.7.4")
      add_custom_command(
          OUTPUT ${BIN_BUILD_DIR}/pybuilddir.txt ${EXTENSION_BUILD_DIR}/${_sysconfigdata_py}
          COMMAND ${PYTHON_WRAPPER_COMMAND}
@@ -75,5 +75,5 @@ index 79ed665..c7f01d6 100644
            -DBIN_BUILD_DIR:PATH=${BIN_BUILD_DIR}
            -DSYSCONFIGDATA_PY:STRING=${_sysconfigdata_py}
 -- 
-2.14.3
+2.35.1
 

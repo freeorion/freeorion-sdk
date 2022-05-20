@@ -305,6 +305,9 @@ ExternalProject_Add(python3
 )
 list(APPEND DIST_PACK_TARGETS python3)
 
+string(SUBSTRING "${PYTHON3_VERSION}" 0 3 PYTHON3_VERSION)
+string(REPLACE "." "" PYTHON3VERSION "${PYTHON3_VERSION}")
+
 if(WIN32)
     # FreeOrion packages the python3 standard library in a zip file for
     # distribution.
@@ -312,11 +315,11 @@ if(WIN32)
         zipPythonSTDlib
         DEPENDEES install
         WORKING_DIRECTORY
-            <INSTALL_DIR>/lib/python36
+            <INSTALL_DIR>/lib/python${PYTHON3VERSION}
         COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python36/lib-dynload
+            <INSTALL_DIR>/lib/python${PYTHON3VERSION}/lib-dynload
         COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
-            <INSTALL_DIR>/bin/python36.zip
+            <INSTALL_DIR>/bin/python${PYTHON3VERSION}.zip
             .
         COMMENT "Zip python3 standard library"
     )
@@ -325,7 +328,7 @@ if(WIN32)
         removePythonSTDlib
         DEPENDEES zipPythonSTDlib
         COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python36
+            <INSTALL_DIR>/lib/python${PYTHON3VERSION}
         COMMENT "Remove python3 standard library from install"
     )
 endif()
@@ -560,7 +563,6 @@ else()
     set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
     set(BOOST_OSX_SYSROOT "")
 endif()
-string(SUBSTRING "${PYTHON3_VERSION}" 0 3 PYTHON3_VERSION)
 
 if(BUILD_SHARED_LIBS OR APPLE)
     set(BOOST_LINK "shared")

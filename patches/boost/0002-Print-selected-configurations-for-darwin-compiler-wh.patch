@@ -12,7 +12,7 @@ diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
 index 1760a198..6f7be142 100644
 --- a/tools/build/src/tools/darwin.jam
 +++ b/tools/build/src/tools/darwin.jam
-@@ -19,6 +19,7 @@ import path : basename ;
+@@ -19,6 +19,7 @@
  import version ;
  import property-set ;
  import regex ;
@@ -20,11 +20,10 @@ index 1760a198..6f7be142 100644
  import errors ;
  
  ## Use a framework.
-@@ -203,17 +204,17 @@ rule init ( version ? : command * : options * : requirement * )
-     
+@@ -202,16 +203,16 @@
      # - Initialize the SDKs available in the root for this tool.
      local sdks = [ init-available-sdk-versions $(condition) : $(root) ] ;
--    
+ 
 -    #~ ECHO --- ;
 -    #~ ECHO --- bin :: $(bin) ;
 -    #~ ECHO --- root :: $(root) ;
@@ -35,7 +34,6 @@ index 1760a198..6f7be142 100644
 -    #~ ECHO --- sdks :: $(sdks) ;
 -    #~ ECHO --- ;
 -    #~ EXIT ;
-+
 +    if $(.debug-configuration)
 +    {
 +        ECHO "notice: [darwin]  compiler command: $(bin)" ;

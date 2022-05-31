@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
 option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 option(CMAKE_VERBOSE_MAKEFILE "Build with verbose Makefile output." OFF)
-set(DIST_VERSION 12 CACHE STRING "FreeOrionSDK release version.")
+set(DIST_VERSION 13 CACHE STRING "FreeOrionSDK release version.")
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "Set the C++ standard the dependencies should be build with.")
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Set the minimum OSX deployment target version")
 set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE STRING "Set the architecture the binaries for OSX should be built for")

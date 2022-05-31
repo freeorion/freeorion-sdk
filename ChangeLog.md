@@ -2,6 +2,12 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v13 - 2022-06-xx
+
+- Update boost version to 1.79
+- Update Python3 version to 3.7.12
+- Update python-cmake-buildsystem from d7e201c3308c51eb1766701cbe615f38e4762274 to own fork based on bb45aa7a4cfc7a5a93bc490c6158f702d1a2226f.
+
 ## v12 - 2021-04-25
 
 - Update boost version to 1.74

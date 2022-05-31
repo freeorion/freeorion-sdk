@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/android-macos-python.yml'
       - '.github/workflows/adb-emu.sh'
+    tags:
+      - v*
   pull_request:
     paths:
       - '.github/workflows/android-macos-python.yml'
@@ -116,7 +118,7 @@ jobs:
         cd build-python/python-install-prefix/lib/python3.9
         zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python39.zip .
         cd ../..
-        zip -r -9 -q ../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
+        zip -r -9 -q ../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
         cd ..
 
     - uses: actions/checkout@v2
@@ -136,14 +138,34 @@ jobs:
       shell: bash
       run: |
         pushd build-boost/Boost-for-Android/build/out/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip include/ lib/
+        zip -r -9 -q ../../../../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip include/ lib/
         popd
         pushd build-boost/Boost-for-Android/libiconv-libicu-android/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../../freeorion-android-sdk-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
+        zip -r -9 -q ../../../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
 
     - uses: actions/upload-artifact@v2
+      name: Artifacts
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       with:
         name: python SDK
         path: |
           python39.zip
-          freeorion-android-sdk-${{ matrix.ndk-arch }}.zip
+          FreeOrionSDK_*_Android-${{ matrix.ndk-arch }}.zip
+
+    - name: Prepare Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      id: prepare-release-options
+      run: |
+        echo "::set-output name=release-name::$(git tag -ln --format '%(subject)' ${{ github.ref_name }})"
+    - uses: softprops/action-gh-release@v1
+      name: Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      with:
+        name: ${{ steps.prepare-release-options.outputs.release-name }}
+        draft: true
+        files: |
+          python39.zip
+          FreeOrionSDK_*_Android-${{ matrix.ndk-arch }}.zip
+        token: ${{ secrets.RELEASE_TOKEN }}
+        append_body: true
+        body: ''

@@ -57,17 +57,16 @@ properly set up:
 
 This command creates a native build system for the SDK.
 
-To select a specific IDE or a version thereof, use the `-G` (generator) parameter.
-Valid values for this parameter are `-G "Visual Studio 15 2017"`, `-G "Xcode"` or similar.
-Note: `-G "Visual Studio 16 2019"` is not supported due to errors when linking FreeOrion to GLEW.
+To select a specific IDE version for the generated project files, use the `-G` (generator) parameter.
+Valid values for this parameter are `-G "Visual Studio 15 2017"`, `-G "Visual Studio 16 2019"`, `-G "Visual Studio 17 2022"`, `-G "Xcode"` or similar.
+Note: Building FreeOrion on Windows requires Visual Studio 2019 or 2022, although the SDK can be built with Visual Studio 2017.
 
 To select a specific MSVC archticture, use the `-A` (architecture) parameter.
-Valid values for this parameter are `-A Win32`.
-Note: `-A x64` is not tested or supported.
+Valid values for this parameter are `-A Win32` or `-A x64`.
 
 To select a specific MSVC toolset version, use the `-T` (toolset) parameter.
-Valid values for this parameter are `-T v141`.
-Note: `-T v142` requires Visual Studio 2019, so is not supported for building the SDK, but Visual Studio 2019 and toolset v142 can be used when building FreeOrion itself and linking to an SDK built with `-T v141`.
+Valid values for this parameter are `-T v141`, `-T v142`, or `-T v143`.
+Note: `-T v142` requires Visual Studio 2019 and `-T v143` requires Visual Studio 2022. An SDK built with `-T v141` or `-T v142` should be compatible for building FreeOrion with later toolsets, and FreeOrion itself requires the v142 or later toolset to build.
 
 After that, the SDK can be build with:
 
@@ -75,8 +74,7 @@ After that, the SDK can be build with:
 
 The `--config RelWithDebInfo` parameter is required.
 
-The build takes about 25 to 40 minutes and the results are stored inside the `build/INSTALL`
-directory.
+The build takes about 20 to 40 minutes and the results are stored inside the `build/INSTALL` directory.
 
 A prepackaged version called `FreeOrionSDK_{MSVC,CLANG}_<timestamp>.zip` can be found in the `build` directory.
 

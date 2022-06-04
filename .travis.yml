@@ -55,7 +55,6 @@ jobs:
       env:
         - RELEASES_FILE=FreeOrionSDK_*.tar.bz2
         - RELEASES_TAG_NAME=$TRAVIS_TAG
-        - HOMEBREW_NO_AUTO_UPDATE=1
       before_install:
         - brew install gpatch
       script:

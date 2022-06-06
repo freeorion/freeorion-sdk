@@ -44,9 +44,22 @@ jobs:
           cmake --build . --config RelWithDebInfo -- /verbosity:d
       - name: Artifact
         uses: actions/upload-artifact@v2
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         with:
           name: Windows SDK
           path: |
             build/FreeOrionSDK_*_MSVC-${{ matrix.toolset }}-${{ matrix.arch }}.zip
-
-
+      - name: Prepare Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: prepare-release-options
+        run: |
+          echo "::set-output name=release-name::$(git tag -ln --format '%(subject)' ${{ github.ref_name }})"
+      - uses: softprops/action-gh-release@v1
+        name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: ${{ steps.prepare-release-options.outputs.release-name }}
+          draft: true
+          files: |
+            build/FreeOrionSDK_*_MSVC-${{ matrix.toolset }}-${{ matrix.arch }}.zip
+          token: ${{ secrets.RELEASE_TOKEN }}

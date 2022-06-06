@@ -1,0 +1,28 @@
+name: "Prepare release description"
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  prepare-release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Prepare Release
+      id: prepare-release-options
+      run: |
+        echo "::set-output name=release-name::$(git tag -ln --format '%(subject)' ${{ github.ref_name }})"
+        RELEASE_NOTES=$(tempfile)
+        sed -n -e '/## /{x;s/^/x/;/x\{2\}/q;x;}' -e '/## /,/## /!d' -e 'p' ChangeLog.md >> $RELEASE_NOTES
+        echo "::set-output name=release-notes::$RELEASE_NOTES"
+    - uses: softprops/action-gh-release@v1
+      name: Release
+      with:
+        name: ${{ steps.prepare-release-options.outputs.release-name }}
+        draft: true
+        token: ${{ secrets.RELEASE_TOKEN }}
+        body_path: ${{ steps.prepare-release-options.outputs.release-notes }}

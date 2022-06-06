@@ -21,6 +21,7 @@ jobs:
         run: |
           mkdir build
           cd build
+          xcversion select 11.7
           cmake ..
       - name: Build
         run: |

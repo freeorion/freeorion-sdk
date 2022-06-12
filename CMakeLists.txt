@@ -8,7 +8,6 @@ cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
 option(BUILD_SHARED_LIBS "Build external projects as shared libraries." ON)
 option(CMAKE_VERBOSE_MAKEFILE "Build with verbose Makefile output." OFF)
-set(DIST_VERSION 13 CACHE STRING "FreeOrionSDK release version.")
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "Set the C++ standard the dependencies should be build with.")
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Set the minimum OSX deployment target version")
 set(CMAKE_OSX_ARCHITECTURES x86_64 CACHE STRING "Set the architecture the binaries for OSX should be built for")
@@ -70,6 +69,9 @@ set(SDK_BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
 
 # Import dependency source versions, URLs and MD5 checksums.
 include(Sources.cmake)
+
+# Import dist version
+include(Version.cmake)
 
 if(WIN32)
     # Windows doesn't provide a basic patch tool, so we download one from the GNUWIN32 project

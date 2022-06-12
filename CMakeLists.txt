@@ -638,6 +638,8 @@ ExternalProject_Add(boost
         pch=off
         python=${PYTHON3_VERSION}
         -s NO_BZIP2=1
+        -s NO_LZMA=1
+        -s NO_ZSTD=1
         -s NO_ZLIB=0
         # Build documentation for boost::iostreams is outdated.
         # Starting with 1.55 the zlib dependency detection uses the boost.build

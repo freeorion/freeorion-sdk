@@ -45,6 +45,13 @@ jobs:
         mkdir -p build-python/python-cmake-buildsystem
         mkdir -p build-boost/Boost-for-Android
         mkdir -p build-godot
+    
+    - name: Prepare dist version
+      id: cmake-dist-version
+      shell: cmake -P {0}
+      run: |
+        include(Version.cmake)
+        message("::set-output name=dist-version::${DIST_VERSION}")
 
     - uses: actions/cache@v2
       id: avd-cache
@@ -118,7 +125,7 @@ jobs:
         cd build-python/python-install-prefix/lib/python3.9
         zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python39.zip .
         cd ../..
-        zip -r -9 -q ../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
+        zip -r -9 -q ../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
         cd ..
 
     - uses: actions/checkout@v2
@@ -138,10 +145,10 @@ jobs:
       shell: bash
       run: |
         pushd build-boost/Boost-for-Android/build/out/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip include/ lib/
+        zip -r -9 -q ../../../../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip include/ lib/
         popd
         pushd build-boost/Boost-for-Android/libiconv-libicu-android/${{ matrix.ndk-arch }}/
-        zip -r -9 -q ../../../../FreeOrionSDK_13_Android-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
+        zip -r -9 -q ../../../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
 
     - uses: actions/upload-artifact@v2
       name: Artifacts
@@ -150,7 +157,7 @@ jobs:
         name: python SDK
         path: |
           python39.zip
-          FreeOrionSDK_*_Android-${{ matrix.ndk-arch }}.zip
+          FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip
 
     - name: Prepare Release
       if: startsWith(github.ref, 'refs/tags/v')
@@ -165,7 +172,5 @@ jobs:
         draft: true
         files: |
           python39.zip
-          FreeOrionSDK_*_Android-${{ matrix.ndk-arch }}.zip
+          FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip
         token: ${{ secrets.RELEASE_TOKEN }}
-        append_body: true
-        body: ''

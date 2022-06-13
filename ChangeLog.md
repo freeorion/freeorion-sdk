@@ -8,6 +8,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file.
 - Update Python3 version to 3.7.12
 - Switch python-cmake-buildsystem to FreeOrion-maintained fork (github.com/freeorion/python-cmake-buildsystem)
 - Start to publish Android SDK with Python 3.9 and Boost 1.78
+- Start to use Github Actions CI to test and release SDK
 
 ## v12 - 2021-04-25
 

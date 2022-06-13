@@ -2,7 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
-## v13 - 2022-06-03
+## v13 - 2022-06-13
 
 - Update boost version to 1.79
 - Update Python3 version to 3.7.12

@@ -15,10 +15,10 @@ jobs:
     - name: Prepare Release
       id: prepare-release-options
       run: |
-        echo "::set-output name=release-name::$(git tag -ln --format '%(subject)' ${{ github.ref_name }})"
+        echo "release-name=$(git tag -ln --format '%(subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
         RELEASE_NOTES=$(tempfile)
         sed -n -e '/## /{x;s/^/x/;/x\{2\}/q;x;}' -e '/## /,/## /!d' -e 'p' ChangeLog.md >> $RELEASE_NOTES
-        echo "::set-output name=release-notes::$RELEASE_NOTES"
+        echo "release-notes=$RELEASE_NOTES" >> $GITHUB_OUTPUT
     - uses: softprops/action-gh-release@v1
       name: Release
       with:

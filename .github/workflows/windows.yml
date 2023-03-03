@@ -10,22 +10,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        arch: [x64]
-        toolset: [v142]
-        msvs: ['Visual Studio 16 2019']
-        vs-versions: ['[16.0,16.30)']
-        os: [windows-2019]
+        arch: [Win32, x64]
+        toolset: [v143]
+        msvs: ['Visual Studio 17 2022']
+        vs-versions: ['[17.0,17.30)']
+        os: [windows-2022]
         include:
           - arch: Win32
-            toolset: v141
+            toolset: v142
             msvs: 'Visual Studio 16 2019'
             vs-versions: '[16.0,16.30)'
             os: windows-2019
-              #- arch: x64
-              #toolset: v143
-              #msvs: 'Visual Studio 17 2022'
-              #vs-versions: '[17.0,17.30)'
-              #os: windows-2022
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3

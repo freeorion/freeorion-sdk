@@ -28,7 +28,7 @@ jobs:
           cd build
           cmake --build . --config RelWithDebInfo
       - name: Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         with:
           name: MacOS SDK

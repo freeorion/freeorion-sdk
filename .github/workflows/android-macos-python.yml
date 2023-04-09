@@ -38,7 +38,7 @@ jobs:
 
     steps:
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: create directories
       run: |
@@ -53,7 +53,7 @@ jobs:
         include(Version.cmake)
         file(APPEND "$ENV{GITHUB_OUTPUT}" "dist-version=${DIST_VERSION}")
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: avd-cache
       with:
         path: |
@@ -83,7 +83,7 @@ jobs:
         channel: beta
         script: echo "Generated AVD snapshot for caching."
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: 'o01eg/python-cmake-buildsystem'
         ref: 'android-initial-support'
@@ -128,7 +128,7 @@ jobs:
         zip -r -9 -q ../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
         cd ..
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: 'moritz-wundke/Boost-for-Android'
         ref: '529027ab2f1253f17797d364fb6f456d57dc9d5e'
@@ -150,7 +150,7 @@ jobs:
         pushd build-boost/Boost-for-Android/libiconv-libicu-android/${{ matrix.ndk-arch }}/
         zip -r -9 -q ../../../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip lib/libicui18n.a lib/libicuuc.a lib/libicudata.a lib/libiconv.so
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       name: Artifacts
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       with:

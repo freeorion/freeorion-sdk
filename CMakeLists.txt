@@ -149,7 +149,12 @@ if(APPLE)
     if(NOT TAR_EXECUTABLE)
         message(FATAL_ERROR "Unable to locate `tar` executable.")
     endif()
-    list(APPEND DIST_PACK_TOOLS tar)
+    add_custom_target(zip)
+    find_program(ZIP_EXECUTABLE zip)
+    if(NOT ZIP_EXECUTABLE)
+        message(FATAL_ERROR "Unable to locate `zip` executable.")
+    endif()
+    list(APPEND DIST_PACK_TOOLS tar zip)
 endif()
 
 ExternalProject_PatchSet(zlib ZLIB_PATCHSET)
@@ -229,7 +234,9 @@ if(WIN32)
     )
     set(PYTHON3_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
 else()
-    set(PYTHON3_CONFIGURE_FLAGS "-DBUILD_FRAMEWORK=OFF")
+    set(PYTHON3_CONFIGURE_FLAGS
+        -DBUILD_EXTENSIONS_AS_BUILTIN=ON
+        -DBUILD_FRAMEWORK=OFF)
     set(PYTHON3_CONFIGURE_INSTALL_DIR ${SDK_INSTALL_DIR})
 endif()
 
@@ -318,29 +325,35 @@ string(SUBSTRING "${PYTHON3_VERSION}" 0 3 PYTHON3_VERSION)
 string(REPLACE "." "" PYTHON3VERSION "${PYTHON3_VERSION}")
 
 if(WIN32)
-    # FreeOrion packages the python3 standard library in a zip file for
-    # distribution.
-    ExternalProject_Add_Step(python3
-        zipPythonSTDlib
-        DEPENDEES install
-        WORKING_DIRECTORY
-            <INSTALL_DIR>/lib/python${PYTHON3VERSION}
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python${PYTHON3VERSION}/lib-dynload
-        COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
-            <INSTALL_DIR>/bin/python${PYTHON3VERSION}.zip
-            .
-        COMMENT "Zip python3 standard library"
-    )
-
-    ExternalProject_Add_Step(python3
-        removePythonSTDlib
-        DEPENDEES zipPythonSTDlib
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-            <INSTALL_DIR>/lib/python${PYTHON3VERSION}
-        COMMENT "Remove python3 standard library from install"
-    )
+    set(PYTHON_STDLIB_POSTFIX "${PYTHON3VERSION}")
+    set(PYTHON_STDLIB_DEST "bin")
+else()
+    set(PYTHON_STDLIB_POSTFIX "${PYTHON3_VERSION}")
+    set(PYTHON_STDLIB_DEST "lib")
 endif()
+
+# FreeOrion packages the python3 standard library in a zip file for
+# distribution.
+ExternalProject_Add_Step(python3
+    zipPythonSTDlib
+    DEPENDEES install
+    WORKING_DIRECTORY
+        <INSTALL_DIR>/lib/python${PYTHON_STDLIB_POSTFIX}
+    COMMAND ${CMAKE_COMMAND} -E remove_directory
+        <INSTALL_DIR>/lib/python${PYTHON_STDLIB_POSTFIX}/lib-dynload
+    COMMAND ${ZIP_EXECUTABLE} -r -9 -q --exclude=*.pyc
+        <INSTALL_DIR>/${PYTHON_STDLIB_DEST}/python${PYTHON3VERSION}.zip
+        .
+    COMMENT "Zip python3 standard library"
+)
+
+ExternalProject_Add_Step(python3
+    removePythonSTDlib
+    DEPENDEES zipPythonSTDlib
+    COMMAND ${CMAKE_COMMAND} -E remove_directory
+        <INSTALL_DIR>/lib/python${PYTHON_STDLIB_POSTFIX}
+    COMMENT "Remove python3 standard library from install"
+)
 
 ExternalProject_PatchSet(freetype FREETYPE_PATCHSET)
 ExternalProject_Add(freetype

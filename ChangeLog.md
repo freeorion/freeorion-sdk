@@ -2,6 +2,13 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v14 - 2023-04-25
+
+- Update boost version to 1.82
+- Update Python version to 3.9.10
+- Drop framework build of Python on MacOS
+- Build only MS VS 2022 version of Windows SDK
+
 ## v13 - 2022-06-13
 
 - Update boost version to 1.79

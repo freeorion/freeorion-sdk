@@ -9,7 +9,7 @@ echo the SDK to build FreeOrion.
 echo ----------------------------------------------------
 echo Cloning the FreeOrion repository from GitHub...
 cd "%~d0%~p0"
-git clone https://github.com/freeorion/freeorion.git FreeOrion
+git clone git@github.com:freeorion/freeorion.git FreeOrion
 move bin\* FreeOrion\ > NUL
 rmdir bin
 echo Done.

@@ -154,7 +154,7 @@ jobs:
       name: Artifacts
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       with:
-        name: python SDK
+        name: python ${{ matrix.ndk-arch }} SDK
         path: |
           ${{ matrix.ndk-arch == 'x86_64' && 'python39.zip' || '' }}
           FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip

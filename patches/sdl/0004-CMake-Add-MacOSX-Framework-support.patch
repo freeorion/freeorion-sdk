@@ -8,10 +8,10 @@ Subject: [PATCH] CMake: Add MacOSX Framework support
  1 file changed, 13 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ec2cdd4..c3185d3 100644
+index 707eb5c..af93a52 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -419,6 +419,9 @@ option_string(BACKGROUNDING_SIGNAL "number to use for magic backgrounding signal
+@@ -505,6 +505,9 @@ dep_option(SDL_HIDAPI_LIBUSB       "Use libusb for low level joystick drivers" O
  dep_option(SDL_HIDAPI_JOYSTICK     "Use HIDAPI for low level joystick drivers" ON SDL_HIDAPI OFF)
  dep_option(SDL_VIRTUAL_JOYSTICK    "Enable the virtual-joystick driver" ON SDL_HIDAPI OFF)
  set_option(SDL_ASAN                "Use AddressSanitizer to detect memory errors" OFF)
@@ -19,9 +19,9 @@ index ec2cdd4..c3185d3 100644
 +  set_option(BUILD_FRAMEWORK   "Build Framework bundle for OSX" OFF)
 +endif()
  
- set(SDL_SHARED ${SDL_SHARED_ENABLED_BY_DEFAULT} CACHE BOOL "Build a shared version of the library")
- set(SDL_STATIC ${SDL_STATIC_ENABLED_BY_DEFAULT} CACHE BOOL "Build a static version of the library")
-@@ -2731,6 +2734,16 @@ if(SDL_SHARED)
+ option(SDL_SHARED "Build a shared version of the library" ${SDL_SHARED_ENABLED_BY_DEFAULT})
+ option(SDL_STATIC "Build a static version of the library" ${SDL_STATIC_ENABLED_BY_DEFAULT})
+@@ -3097,6 +3100,16 @@ if(SDL_SHARED)
      endif()
      set_target_properties(SDL2 PROPERTIES STATIC_LIBRARY_FLAGS "/NODEFAULTLIB")
    endif()
@@ -38,7 +38,7 @@ index ec2cdd4..c3185d3 100644
    # FIXME: if CMAKE_VERSION >= 3.13, use target_link_options for EXTRA_LDFLAGS
    target_link_libraries(SDL2 PRIVATE ${EXTRA_LIBS} ${EXTRA_LDFLAGS} ${EXTRA_LDFLAGS_BUILD})
    target_include_directories(SDL2 PUBLIC
-@@ -3052,7 +3055,7 @@ if(NOT SDL2_DISABLE_INSTALL)
+@@ -3288,7 +3301,7 @@ if(NOT SDL2_DISABLE_INSTALL)
      set(SOPOSTFIX "")
    endif()
  

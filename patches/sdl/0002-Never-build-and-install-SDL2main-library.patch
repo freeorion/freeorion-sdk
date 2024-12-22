@@ -8,10 +8,10 @@ Subject: [PATCH] Never build and install SDL2main library
  1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d8209ca..b0a24bc 100644
+index f951d0e..81257e0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2670,18 +2670,18 @@ endif()
+@@ -2747,17 +2747,17 @@ endif()
  # Ensure that the extra cflags are used at compile time
  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
  
@@ -22,7 +22,6 @@ index d8209ca..b0a24bc 100644
 -  add_library(SDL2::SDL2main ALIAS SDL2main)
 -  target_include_directories(SDL2main BEFORE PRIVATE "${SDL2_BINARY_DIR}/include")
 -  target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
--  set(_INSTALL_LIBS "SDL2main")
 -  if (NOT ANDROID)
 -    set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
 -  endif()
@@ -34,7 +33,6 @@ index d8209ca..b0a24bc 100644
 +#  add_library(SDL2::SDL2main ALIAS SDL2main)
 +#  target_include_directories(SDL2main BEFORE PRIVATE "${SDL2_BINARY_DIR}/include")
 +#  target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
-+#  set(_INSTALL_LIBS "SDL2main")
 +#  if (NOT ANDROID)
 +#    set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
 +#  endif()
@@ -42,6 +40,46 @@ index d8209ca..b0a24bc 100644
  
  if(ANDROID)
    target_include_directories(sdl-build-options INTERFACE "${ANDROID_NDK}/sources/android/cpufeatures")
+@@ -2858,12 +2858,12 @@ if(SDL_SHARED)
+     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+ endif()
+ 
+-if(NOT WINDOWS_STORE)
+-  install(TARGETS SDL2main EXPORT SDL2mainTargets
+-    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+-endif()
++#if(NOT WINDOWS_STORE)
++#  install(TARGETS SDL2main EXPORT SDL2mainTargets
++#    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
++#endif()
+ 
+ if(SDL_STATIC)
+   install(TARGETS SDL2-static EXPORT SDL2staticTargets
+@@ -2893,13 +2893,13 @@ if(SDL_SHARED)
+   )
+ endif()
+ 
+-if(NOT WINDOWS_STORE)
+-  install(EXPORT SDL2mainTargets
+-    FILE SDL2mainTargets.cmake
+-    NAMESPACE SDL2::
+-    DESTINATION ${PKG_PREFIX}
+-  )
+-endif()
++#if(NOT WINDOWS_STORE)
++#  install(EXPORT SDL2mainTargets
++#    FILE SDL2mainTargets.cmake
++#    NAMESPACE SDL2::
++#    DESTINATION ${PKG_PREFIX}
++#  )
++#endif()
+ 
+ if(SDL_STATIC)
+   install(EXPORT SDL2staticTargets
 -- 
 2.14.3
 

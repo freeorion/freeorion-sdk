@@ -8,38 +8,40 @@ Subject: [PATCH] Never build and install SDL2main library
  1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index aa17932b6..3fe76072c 100644
+index d8209ca..b0a24bc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2540,16 +2540,16 @@ endif()
+@@ -2670,18 +2670,18 @@ endif()
  # Ensure that the extra cflags are used at compile time
  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
-
+ 
 -# Always build SDLmain
 -if(NOT WINDOWS_STORE)
--add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
--# alias target for in-tree builds
--add_library(SDL2::SDL2main ALIAS SDL2main)
--target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
--set(_INSTALL_LIBS "SDL2main")
--if (NOT ANDROID)
--  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
+-  add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
+-  # alias target for in-tree builds
+-  add_library(SDL2::SDL2main ALIAS SDL2main)
+-  target_include_directories(SDL2main BEFORE PRIVATE "${SDL2_BINARY_DIR}/include")
+-  target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
+-  set(_INSTALL_LIBS "SDL2main")
+-  if (NOT ANDROID)
+-    set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
+-  endif()
 -endif()
--endif()
-+# Always build SDLmain
++# Never build SDLmain
 +#if(NOT WINDOWS_STORE)
-+#add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
-+# alias target for in-tree builds
-+#add_library(SDL2::SDL2main ALIAS SDL2main)
-+#target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
-+#set(_INSTALL_LIBS "SDL2main")
-+#if (NOT ANDROID)
-+#  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
++#  add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
++#  # alias target for in-tree builds
++#  add_library(SDL2::SDL2main ALIAS SDL2main)
++#  target_include_directories(SDL2main BEFORE PRIVATE "${SDL2_BINARY_DIR}/include")
++#  target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>)
++#  set(_INSTALL_LIBS "SDL2main")
++#  if (NOT ANDROID)
++#    set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
++#  endif()
 +#endif()
-+#endif()
-
- if (ANDROID AND HAVE_HIDAPI)
-   set(_INSTALL_LIBS ${_INSTALL_LIBS} "hidapi")
+ 
+ if(ANDROID)
+   target_include_directories(sdl-build-options INTERFACE "${ANDROID_NDK}/sources/android/cpufeatures")
 -- 
 2.14.3
 

@@ -8,20 +8,20 @@ Subject: [PATCH] CMake: Add MacOSX Framework support
  1 file changed, 13 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 56cced0f0..f32165cb7 100644
+index ec2cdd4..c3185d3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -373,6 +373,9 @@ dep_option(KMSDRM_SHARED       "Dynamically load KMS DRM support" ON "VIDEO_KMSDRM" OFF)
- option_string(BACKGROUNDING_SIGNAL "number to use for magic backgrounding signal or 'OFF'" "OFF")
+@@ -399,6 +399,9 @@ option_string(BACKGROUNDING_SIGNAL "number to use for magic backgrounding signal
  option_string(FOREGROUNDING_SIGNAL "number to use for magic foregrounding signal or 'OFF'" "OFF")
  set_option(HIDAPI              "Use HIDAPI for low level joystick drivers" ${OPT_DEF_HIDAPI})
+ set_option(JOYSTICK_VIRTUAL    "Enable the virtual-joystick driver" ON)
 +if(APPLE)
 +  set_option(BUILD_FRAMEWORK   "Build Framework bundle for OSX" OFF)
 +endif()
  
  set(SDL_SHARED ${SDL_SHARED_ENABLED_BY_DEFAULT} CACHE BOOL "Build a shared version of the library")
  set(SDL_STATIC ${SDL_STATIC_ENABLED_BY_DEFAULT} CACHE BOOL "Build a static version of the library")
-@@ -1819,6 +1822,16 @@ if(SDL_SHARED)
+@@ -2244,6 +2247,16 @@ if(SDL_SHARED)
      set_target_properties(SDL2 PROPERTIES STATIC_LIBRARY_FLAGS "/NODEFAULTLIB")
    endif()
    set(_INSTALL_LIBS "SDL2" ${_INSTALL_LIBS})
@@ -35,9 +35,9 @@ index 56cced0f0..f32165cb7 100644
 +      MACOSX_RPATH ON
 +      OUTPUT_NAME "SDL2")
 +  endif()
-   target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
-   target_include_directories(SDL2 PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include/SDL2>)
-   if (NOT ANDROID)
+   target_link_libraries(SDL2 PRIVATE ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+   target_include_directories(SDL2 PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include> $<INSTALL_INTERFACE:include/SDL2>)
+   if(ANDROID)
 -- 
 2.14.3
 

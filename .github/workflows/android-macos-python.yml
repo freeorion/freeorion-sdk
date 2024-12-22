@@ -15,7 +15,7 @@ on:
 jobs:
   build-android:
     name: ${{ matrix.ndk-arch }} on ${{ matrix.arch }} Android
-    runs-on: macos-11
+    runs-on: macos-13
     strategy:
       matrix:
         ndk-arch: [x86_64]

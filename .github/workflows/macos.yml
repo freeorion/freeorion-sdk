@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-11]
+        os: [macos-13]
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: 2
       HOMEBREW_NO_AUTO_UPDATE: 1
@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          xcversion select 11.7
+          xcodes select 14.1
           cmake -DCMAKE_XCODE_BUILD_SYSTEM=1 ..
       - name: Build
         run: |

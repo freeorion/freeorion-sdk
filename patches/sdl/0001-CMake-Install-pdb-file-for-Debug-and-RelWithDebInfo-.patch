@@ -12,8 +12,8 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8f1e828d1..aa17932b6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1947,6 +1947,13 @@ if(NOT (WINDOWS OR CYGWIN))
-   install(FILES "${SDL2_SOURCE_DIR}/sdl2.m4" DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/aclocal")
+@@ -2848,6 +2848,13 @@ if(NOT (WINDOWS OR CYGWIN))
+   install(FILES "${SDL2_SOURCE_DIR}/sdl2.m4" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/aclocal")
  endif()
  
 +if(SDL_SHARED AND (MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))

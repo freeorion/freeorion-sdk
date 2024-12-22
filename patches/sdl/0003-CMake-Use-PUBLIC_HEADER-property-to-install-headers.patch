@@ -8,10 +8,10 @@ Subject: [PATCH] CMake: Use PUBLIC_HEADER property to install headers
  1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a420993..ec2cdd4 100644
+index 18bcfc2..0937ac9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2206,17 +2206,23 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
+@@ -2552,19 +2552,25 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
  #endif()
  #endif()
  
@@ -29,40 +29,44 @@ index a420993..ec2cdd4 100644
  
  if(SDL_SHARED)
 -  add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
++  add_library(SDL2 SHARED ${INCLUDE_FILES} ${SOURCE_FILES} ${VERSION_SOURCES})
+   # alias target for in-tree builds
+   add_library(SDL2::SDL2 ALIAS SDL2)
 -  if(APPLE)
 -    set_target_properties(SDL2 PROPERTIES
 -      MACOSX_RPATH 1
 -      OUTPUT_NAME "SDL2-${LT_RELEASE}")
 -  elseif(UNIX AND NOT ANDROID)
-+  add_library(SDL2 SHARED ${INCLUDE_FILES} ${SOURCE_FILES} ${VERSION_SOURCES})
 +  set_target_properties(SDL2 PROPERTIES
 +      PUBLIC_HEADER "${INCLUDE_FILES}")
 +  if(UNIX AND NOT ANDROID)
      set_target_properties(SDL2 PROPERTIES
        VERSION ${LT_VERSION}
-       SOVERSION ${LT_REVISION}
-@@ -2269,7 +2275,9 @@ endif()
+       SOVERSION ${LT_MAJOR}
+@@ -2620,9 +2626,11 @@ endif()
  
  if(SDL_STATIC)
    set (BUILD_SHARED_LIBS FALSE)
 -  add_library(SDL2-static STATIC ${SOURCE_FILES})
 +  add_library(SDL2-static STATIC ${INCLUDE_FILES} ${SOURCE_FILES})
+   # alias target for in-tree builds
+   add_library(SDL2::SDL2-static ALIAS SDL2-static)
 +  set_target_properties(SDL2-static PROPERTIES
 +      PUBLIC_HEADER "${INCLUDE_FILES}")
    if (NOT SDL_SHARED OR NOT WIN32)
      set_target_properties(SDL2-static PROPERTIES OUTPUT_NAME "SDL2")
      # Note: Apparently, OUTPUT_NAME must really be unique; even when
-@@ -2311,7 +2319,8 @@ endif()
+@@ -2664,7 +2672,8 @@ endif()
  install(TARGETS ${_INSTALL_LIBS} EXPORT SDL2Targets
-   LIBRARY DESTINATION "lib${LIB_SUFFIX}"
-   ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
--  RUNTIME DESTINATION bin)
-+  RUNTIME DESTINATION bin
-+  PUBLIC_HEADER DESTINATION include/SDL2)
+   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}${LIB_SUFFIX}"
+   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}${LIB_SUFFIX}"
+-  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
++  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++  PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/SDL2")
  
  ##### Export files #####
  if (WINDOWS)
-@@ -2339,15 +2348,6 @@ install(
+@@ -2692,15 +2701,6 @@ install(
    COMPONENT Devel
  )
  
@@ -73,16 +77,16 @@ index a420993..ec2cdd4 100644
 -  list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
 -endforeach()
 -list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
--install(FILES ${INCLUDE_FILES} DESTINATION include/SDL2)
+-install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2)
 -
  string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
  if (UPPER_BUILD_TYPE MATCHES DEBUG)
    set(SOPOSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-@@ -2355,7 +2355,7 @@ else()
+@@ -2708,7 +2708,7 @@ else()
    set(SOPOSTFIX "")
  endif()
  
--if(NOT (WINDOWS OR CYGWIN))
+-if(NOT (WINDOWS OR CYGWIN OR MINGW))
 +if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
    if(SDL_SHARED)
      set(SOEXT ${CMAKE_SHARED_LIBRARY_SUFFIX}) # ".so", ".dylib", etc.

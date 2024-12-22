@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         with:
-          name: Windows SDK
+          name: Windows ${{ matrix.toolset }}-${{ matrix.arch }} SDK
           path: |
             build/FreeOrionSDK_*_MSVC-${{ matrix.toolset }}-${{ matrix.arch }}.zip
       - name: Prepare Release

@@ -8,11 +8,11 @@ Subject: [PATCH] CMake: Use PUBLIC_HEADER property to install headers
  1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3fe76072c..56cced0f0 100644
+index a420993..ec2cdd4 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1795,13 +1795,19 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
- #  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
+@@ -2206,17 +2206,23 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
+ #endif()
  #endif()
  
 +file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
@@ -23,6 +23,10 @@ index 3fe76072c..56cced0f0 100644
 +endforeach()
 +list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
 +
+ if (ANDROID AND HAVE_HIDAPI)
+   set(_INSTALL_LIBS ${_INSTALL_LIBS} "hidapi")
+ endif()
+ 
  if(SDL_SHARED)
 -  add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
 -  if(APPLE)
@@ -37,7 +41,7 @@ index 3fe76072c..56cced0f0 100644
      set_target_properties(SDL2 PROPERTIES
        VERSION ${LT_VERSION}
        SOVERSION ${LT_REVISION}
-@@ -1848,7 +1854,9 @@ endif()
+@@ -2269,7 +2275,9 @@ endif()
  
  if(SDL_STATIC)
    set (BUILD_SHARED_LIBS FALSE)
@@ -48,7 +52,7 @@ index 3fe76072c..56cced0f0 100644
    if (NOT SDL_SHARED OR NOT WIN32)
      set_target_properties(SDL2-static PROPERTIES OUTPUT_NAME "SDL2")
      # Note: Apparently, OUTPUT_NAME must really be unique; even when
-@@ -1887,7 +1897,8 @@ endif()
+@@ -2311,7 +2319,8 @@ endif()
  install(TARGETS ${_INSTALL_LIBS} EXPORT SDL2Targets
    LIBRARY DESTINATION "lib${LIB_SUFFIX}"
    ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
@@ -57,8 +61,8 @@ index 3fe76072c..56cced0f0 100644
 +  PUBLIC_HEADER DESTINATION include/SDL2)
  
  ##### Export files #####
- if (APPLE)
-@@ -1799,23 +1810,15 @@ install(
+ if (WINDOWS)
+@@ -2339,15 +2348,6 @@ install(
    COMPONENT Devel
  )
  
@@ -70,14 +74,14 @@ index 3fe76072c..56cced0f0 100644
 -endforeach()
 -list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
 -install(FILES ${INCLUDE_FILES} DESTINATION include/SDL2)
- 
+-
  string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
  if (UPPER_BUILD_TYPE MATCHES DEBUG)
    set(SOPOSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
- else()
+@@ -2355,7 +2355,7 @@ else()
    set(SOPOSTFIX "")
  endif()
-
+ 
 -if(NOT (WINDOWS OR CYGWIN))
 +if((NOT WINDOWS OR CYGWIN) AND (NOT BUILD_FRAMEWORK))
    if(SDL_SHARED)

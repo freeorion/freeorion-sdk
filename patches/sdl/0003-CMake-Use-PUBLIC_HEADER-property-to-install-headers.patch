@@ -8,26 +8,28 @@ Subject: [PATCH] CMake: Use PUBLIC_HEADER property to install headers
  1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b0a24bc..6a74f12 100644
+index 22b91ad..ab0ff17 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2683,6 +2683,15 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
- #  endif()
- #endif()
+@@ -2874,6 +2874,17 @@ if(NOT WINDOWS_STORE AND NOT SDL2_DISABLE_SDL2MAIN)
+   endif()
+ endif()
  
-+file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
-+file(GLOB BIN_INCLUDE_FILES ${SDL2_BINARY_DIR}/include/*.h)
-+foreach(_FNAME ${BIN_INCLUDE_FILES})
-+  get_filename_component(_INCNAME ${_FNAME} NAME)
-+  list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
-+endforeach()
-+list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
-+install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2)
++if(NOT SDL2_DISABLE_INSTALL)
++  file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
++  file(GLOB BIN_INCLUDE_FILES ${SDL2_BINARY_DIR}/include/*.h)
++  foreach(_FNAME ${BIN_INCLUDE_FILES})
++    get_filename_component(_INCNAME ${_FNAME} NAME)
++    list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
++  endforeach()
++  list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
++  install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2)
++endif()
 +
  if(ANDROID)
    target_include_directories(sdl-build-options INTERFACE "${ANDROID_NDK}/sources/android/cpufeatures")
  endif()
-@@ -2692,14 +2701,12 @@ if(IOS OR TVOS)
+@@ -2883,14 +2894,12 @@ if(IOS OR TVOS)
  endif()
  
  if(SDL_SHARED)
@@ -46,7 +48,7 @@ index b0a24bc..6a74f12 100644
      set_target_properties(SDL2 PROPERTIES
        VERSION ${LT_VERSION}
        SOVERSION ${LT_MAJOR}
-@@ -2736,9 +2743,11 @@ endif()
+@@ -2929,9 +2938,11 @@ endif()
  
  if(SDL_STATIC)
    set (BUILD_SHARED_LIBS FALSE)
@@ -59,41 +61,41 @@ index b0a24bc..6a74f12 100644
    if (NOT SDL_SHARED OR NOT WIN32 OR MINGW)
      set_target_properties(SDL2-static PROPERTIES OUTPUT_NAME "SDL2")
      # Note: Apparently, OUTPUT_NAME must really be unique; even when
-@@ -2855,7 +2855,8 @@ endif()
-   install(TARGETS SDL2 EXPORT SDL2Targets
-     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
--    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
-+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-+    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/SDL2")
- endif()
+@@ -2974,7 +2985,8 @@ if(NOT SDL2_DISABLE_INSTALL)
+     install(TARGETS SDL2 EXPORT SDL2Targets
+       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
++      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++      PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/SDL2")
+   endif()
  
- #if(NOT WINDOWS_STORE)
-@@ -2808,15 +2818,6 @@ install(
-   COMPONENT Devel
- )
+   if(NOT WINDOWS_STORE AND NOT SDL2_DISABLE_SDL2MAIN)
+@@ -3036,15 +3048,6 @@ if(NOT SDL2_DISABLE_INSTALL)
+     COMPONENT Devel
+   )
  
--file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
--file(GLOB BIN_INCLUDE_FILES ${SDL2_BINARY_DIR}/include/*.h)
--foreach(_FNAME ${BIN_INCLUDE_FILES})
--  get_filename_component(_INCNAME ${_FNAME} NAME)
--  list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
--endforeach()
--list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
--install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2)
+-  file(GLOB INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/*.h)
+-  file(GLOB BIN_INCLUDE_FILES ${SDL2_BINARY_DIR}/include/*.h)
+-  foreach(_FNAME ${BIN_INCLUDE_FILES})
+-    get_filename_component(_INCNAME ${_FNAME} NAME)
+-    list(REMOVE_ITEM INCLUDE_FILES ${SDL2_SOURCE_DIR}/include/${_INCNAME})
+-  endforeach()
+-  list(APPEND INCLUDE_FILES ${BIN_INCLUDE_FILES})
+-  install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/SDL2)
 -
- string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
- if (UPPER_BUILD_TYPE MATCHES DEBUG)
-   set(SOPOSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-@@ -2824,7 +2825,7 @@ else()
-   set(SOPOSTFIX "")
- endif()
+   string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPER_BUILD_TYPE)
+   if (UPPER_BUILD_TYPE MATCHES DEBUG)
+     set(SOPOSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
+@@ -3052,7 +3055,7 @@ if(NOT SDL2_DISABLE_INSTALL)
+     set(SOPOSTFIX "")
+   endif()
  
--if(NOT (WINDOWS OR CYGWIN) OR MINGW)
-+if((NOT (WINDOWS OR CYGWIN) OR MINGW) AND (NOT BUILD_FRAMEWORK))
-   if(SDL_SHARED)
-     set(SOEXT ${CMAKE_SHARED_LIBRARY_SUFFIX}) # ".so", ".dylib", etc.
-     get_target_property(SONAME SDL2 OUTPUT_NAME)
+-  if(NOT (WINDOWS OR CYGWIN) OR MINGW)
++  if((NOT (WINDOWS OR CYGWIN) OR MINGW) AND (NOT BUILD_FRAMEWORK))
+     if(SDL_SHARED)
+       set(SOEXT ${CMAKE_SHARED_LIBRARY_SUFFIX}) # ".so", ".dylib", etc.
+       get_target_property(SONAME SDL2 OUTPUT_NAME)
 -- 
 2.14.3
 

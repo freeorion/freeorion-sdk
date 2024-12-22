@@ -34,9 +34,9 @@ set(FREETYPE_VERSION 2.9)
 set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)
 set(FREETYPE_MD5 d23a1b246e78890458c6672cb45eacd0)
 
-set(SDL_VERSION 2.0.20)
+set(SDL_VERSION 2.0.22)
 set(SDL_URL https://www.libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz)
-set(SDL_MD5 a53acc02e1cca98c4123229069b67c9e)
+set(SDL_MD5 40aedb499cb2b6f106d909d9d97f869a)
 
 set(LIBOGG_VERSION 1.3.2)
 set(LIBOGG_URL http://downloads.xiph.org/releases/ogg/libogg-${LIBOGG_VERSION}.tar.gz)

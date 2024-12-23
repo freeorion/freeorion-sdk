@@ -1,0 +1,61 @@
+From 8a05500c8ad7b72f38ca3ff67116b1e2e4d61afa Mon Sep 17 00:00:00 2001
+From: Marcel Metz <mmetz@adrian-broher.net>
+Date: Fri, 1 Apr 2016 17:51:35 +0200
+Subject: [PATCH] CMake: Use PUBLIC_HEADER property to install headers
+
+---
+ CMakeLists.txt | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1bc7ffb..5bc532e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3278,7 +3278,7 @@ if(APPLE)
+ endif()
+ 
+ if(SDL_SHARED)
+-  add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
++  add_library(SDL2 SHARED ${SDL2_INCLUDE_FILES} ${SDL_GENERATED_HEADERS} ${SOURCE_FILES} ${VERSION_SOURCES})
+   add_dependencies(SDL2 sdl_headers_copy)
+   # alias target for in-tree builds
+   add_library(SDL2::SDL2 ALIAS SDL2)
+@@ -3291,6 +3291,8 @@ if(SDL_SHARED)
+     endif()
+   endif()
+   if(APPLE)
++    set_target_properties(SDL2 PROPERTIES
++	    PUBLIC_HEADER "${SDL2_INCLUDE_FILES} ${SDL_GENERATED_HEADERS}")
+     # FIXME: Remove SOVERSION in SDL3
+     set_target_properties(SDL2 PROPERTIES
+       MACOSX_RPATH 1
+@@ -3356,13 +3358,15 @@ if(SDL_SHARED)
+ endif()
+ 
+ if(SDL_STATIC)
+-  add_library(SDL2-static STATIC ${SOURCE_FILES})
++  add_library(SDL2-static STATIC ${SDL2_INCLUDE_FILES} ${SDL_GENERATED_HEADERS} ${SOURCE_FILES})
+   add_dependencies(SDL2-static sdl_headers_copy)
+   # alias target for in-tree builds
+   add_library(SDL2::SDL2-static ALIAS SDL2-static)
+   set_target_properties(SDL2-static PROPERTIES
+     OUTPUT_NAME "${sdl_static_libname}"
+     POSITION_INDEPENDENT_CODE "${SDL_STATIC_PIC}")
++  set_target_properties(SDL2-static PROPERTIES
++	  PUBLIC_HEADER "${SDL2_INCLUDE_FILES} ${SDL_GENERATED_HEADERS}")
+   target_compile_definitions(SDL2-static PRIVATE SDL_STATIC_LIB)
+   # TODO: Win32 platforms keep the same suffix .lib for import and static
+   # libraries - do we need to consider this?
+@@ -3410,7 +3414,8 @@ if(NOT SDL2_DISABLE_INSTALL)
+       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-      FRAMEWORK DESTINATION "${CMAKE_INSTALL_PREFIX}")
++      FRAMEWORK DESTINATION "${CMAKE_INSTALL_PREFIX}"
++      PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/SDL2")
+   endif()
+ 
+   if(NOT WINDOWS_STORE AND NOT SDL2_DISABLE_SDL2MAIN)
+-- 
+2.14.3
+

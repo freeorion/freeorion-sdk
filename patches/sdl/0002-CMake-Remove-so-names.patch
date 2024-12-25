@@ -1,0 +1,36 @@
+From b9cfc3565b4d56adc5f022a5ab18c89959bc9476 Mon Sep 17 00:00:00 2001
+From: O01eg <o01eg@yandex.ru>
+Date: Wed, 25 Dec 2024 10:40:02 +0400
+Subject: [PATCH 2/2] CMake: Remove so-names
+
+---
+ CMakeLists.txt | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a596eec..b509bb3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3290,9 +3290,7 @@ if(SDL_SHARED)
+   if(APPLE)
+     # FIXME: Remove SOVERSION in SDL3
+     set_target_properties(SDL2 PROPERTIES
+-      MACOSX_RPATH 1
+-      SOVERSION 0
+-      OUTPUT_NAME "SDL2-${LT_RELEASE}")
++      MACOSX_RPATH 1)
+   elseif(UNIX AND NOT ANDROID)
+     set_target_properties(SDL2 PROPERTIES
+       VERSION ${LT_VERSION}
+@@ -3518,7 +3516,7 @@ if(NOT SDL2_DISABLE_INSTALL)
+     install(FILES ${SDL2_BINARY_DIR}/sdl2.pc
+             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+   endif()
+-  if(NOT (WINDOWS OR CYGWIN) OR MINGW)
++  if(NOT (WINDOWS OR CYGWIN OR APPLE) OR MINGW)
+     if(SDL_SHARED)
+       set(SOEXT ${CMAKE_SHARED_LIBRARY_SUFFIX}) # ".so", ".dylib", etc.
+       get_target_property(SONAME SDL2 OUTPUT_NAME)
+-- 
+2.45.2
+

@@ -630,6 +630,7 @@ ExternalProject_Add(boost
         --without-graph_parallel
         --without-mpi
         --without-wave
+        --without-predef
         --prefix=<INSTALL_DIR>
         threading=multi
         link=${BOOST_LINK}

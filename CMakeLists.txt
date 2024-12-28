@@ -613,6 +613,7 @@ ExternalProject_Add(boost
     BUILD_IN_SOURCE 1
     ${BOOST_PATCHSET}
     CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
+    COMMAND <SOURCE_DIR>/b2 --help
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         toolset=${BOOST_TOOLSET}
         -j${BOOST_PARALLEL_JOBS}

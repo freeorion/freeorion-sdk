@@ -58,7 +58,7 @@ inter-compatible.  The following software versions are included:
 
 Dependency Versions Included:
 
-* Boost 1.74          <http://www.boost.org/>
+* Boost 1.87          <http://www.boost.org/>
 * FreeType 2.9        <https://www.freetype.org/>
 * GLEW 2.2.0          <http://glew.sourceforge.net/>
 * libogg 1.3.2        <https://xiph.org/ogg/>
@@ -66,5 +66,5 @@ Dependency Versions Included:
 * OpenAL Soft 1.18.2  <http://kcat.strangesoft.net/openal.html>
 * libpng 1.6.37       <http://www.libpng.org/pub/png/libpng.html>
 * zlib 1.2.11         <http://www.zlib.net/>
-* Python 3.6.5        <https://www.python.org/>
-* SDL 2.0.12          <https://www.libsdl.org/>
+* Python 3.9.10       <https://www.python.org/>
+* SDL 2.26.0          <https://www.libsdl.org/>

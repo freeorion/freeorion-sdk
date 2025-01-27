@@ -134,6 +134,12 @@ jobs:
         ref: '529027ab2f1253f17797d364fb6f456d57dc9d5e'
         path: 'build-boost/Boost-for-Android'
 
+    - name: Download Boost
+      shell: bash
+      run: |
+        cd build-boost/Boost-for-Android
+        wget https://archives.boost.io/release/1.78.0/source/boost_1_78_0.tar.bz2
+
     - name: Build Boost
       shell: bash
       run: |

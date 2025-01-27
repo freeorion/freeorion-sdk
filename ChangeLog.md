@@ -2,6 +2,15 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file.
 
+## v15 - 2025-01-27
+
+- Update boost version to 1.87
+- Update SDL2 version to 2.26.0
+- Drop MSVC toolkit Windows Vista support. The minimum required Windows version is
+  now Windows 10.
+- Change OSX deployment target to 10.15
+- Raise Mac OS X build environment to Xcode 14.1
+
 ## v14 - 2023-04-25
 
 - Update boost version to 1.82

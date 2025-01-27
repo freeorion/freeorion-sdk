@@ -70,7 +70,7 @@ Note: `-T v143` requires Visual Studio 2022. SDKs are generally compatible for b
 
 eg. together: `cmake .. -G "Visual Studio 17 2022" -A x64 -T v143`
 
-After that, the SDK can be build with:
+After that, the SDK can be built with:
 
 `cmake --build . --config RelWithDebInfo`
 

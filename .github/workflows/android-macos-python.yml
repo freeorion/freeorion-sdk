@@ -15,26 +15,30 @@ on:
 jobs:
   build-android:
     name: ${{ matrix.ndk-arch }} on ${{ matrix.arch }} Android
-    runs-on: macos-13
+    runs-on: ${{ matrix.host }}
     strategy:
       matrix:
         ndk-arch: [x86_64]
         arch: [x86_64]
         api-level: [21]
         target: [default]
+        host: [ubuntu-24.04]
         include:
           - ndk-arch: arm64-v8a
             arch: x86_64
             api-level: 30
             target: google_apis
+            host: ubuntu-24.04
           - ndk-arch: x86
             arch: x86
             api-level: 21
             target: default
+            host: ubuntu-24.04
           - ndk-arch: armeabi-v7a
             arch: x86_64
             api-level: 30
             target: google_apis
+            host: ubuntu-24.04
 
     steps:
     - name: checkout
@@ -61,6 +65,13 @@ jobs:
           ~/.android/adb*
           ~/.android/debug.keystore
         key: avd-${{ matrix.api-level }}-${{ matrix.target }}-${{ matrix.arch }}
+
+
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
 
     - name: run emulator to generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -109,13 +120,12 @@ jobs:
         cmake: 3.10.2.4988404
         channel: beta
         script: |
-          # ls -lR /Users/runner/Library/Android/sdk
           adb devices
           mkdir ../python-build
           mkdir ../python-install-prefix
           cd ../python-build
-          # ls -lR /Users/runner/Library/Android/sdk/ndk/23.0.7421159/
-          cmake -DANDROID_NDK=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/Users/runner/Library/Android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/Users/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 ../python-cmake-buildsystem/
+          # ls -lR /usr/local/lib/android/sdk/
+          cmake -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/home/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 ../python-cmake-buildsystem/
           cmake --build . -- VERBOSE=1
           cmake --build . --target install
 
@@ -145,7 +155,7 @@ jobs:
       run: |
         export PYTHON_PATH=$(cd build-python/python-install-prefix/ ; pwd)
         cd build-boost/Boost-for-Android
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.78.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system /Users/runner/Library/Android/sdk/ndk/23.0.7421159/
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.78.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system /usr/local/lib/android/sdk/ndk/23.0.7421159/
 
     - name: Pack Boost
       shell: bash

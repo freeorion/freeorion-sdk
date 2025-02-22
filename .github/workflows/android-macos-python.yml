@@ -57,8 +57,8 @@ jobs:
         include(Version.cmake)
         include(Sources.cmake)
         file(APPEND "$ENV{GITHUB_OUTPUT}" "dist-version=${DIST_VERSION}
-python-cmake-hash=${PYTHON_CMAKE_HASH}
-python-version=${PYTHON3_VERSION}")
+        python-cmake-hash=${PYTHON_CMAKE_HASH}
+        python-version=${PYTHON3_VERSION}")
 
     - uses: actions/cache@v3
       id: avd-cache
@@ -128,7 +128,7 @@ python-version=${PYTHON3_VERSION}")
           mkdir ../python-install-prefix
           cd ../python-build
           # ls -lR /usr/local/lib/android/sdk/
-          cmake -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/home/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 -DPYTHON_VERSION=${{ steps.cmake-dist-version.outputs.python-cmake-hash }} ../python-cmake-buildsystem/
+          cmake -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/23.0.7421159/ -DCMAKE_INSTALL_PREFIX:PATH=../python-install-prefix -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/23.0.7421159/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.ndk-arch }} -DCMAKE_CROSSCOMPILING_EMULATOR=/home/runner/work/freeorion-sdk/freeorion-sdk/.github/workflows/adb-emu.sh -DANDROID_ALLOW_UNDEFINED_SYMBOLS=On -DENABLE_DECIMAL=Off -DENABLE_CTYPES=Off -DENABLE_CODECS_JP=OFF -DENABLE_CODECS_KR=OFF -DENABLE_CODECS_TW=OFF -DENABLE_MULTIBYTECODEC=OFF -DENABLE_CODECS_CN=OFF -DENABLE_CODECS_HK=OFF -DENABLE_CODECS_ISO2022=OFF -DBUILD_EXTENSIONS_AS_BUILTIN=On -DANDROID_PLATFORM=android-21 -DPYTHON_VERSION=${{ steps.cmake-dist-version.outputs.python-version }} ../python-cmake-buildsystem/
           cmake --build . -- VERBOSE=1
           cmake --build . --target install
 

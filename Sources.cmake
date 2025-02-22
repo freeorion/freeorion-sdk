@@ -27,9 +27,9 @@ set(PYTHON_CMAKE_HASH 52b4f065eefd3ba0a2fb4a48cfa6871ac1924249)
 set(PYTHON_CMAKE_URL https://github.com/freeorion/python-cmake-buildsystem/archive/${PYTHON_CMAKE_HASH}.zip)
 set(PYTHON_CMAKE_MD5 2fe9f2a445978ba28ad013e1751d9fb8)
 
-set(PYTHON3_VERSION 3.9.21)
+set(PYTHON3_VERSION 3.10.13)
 set(PYTHON3_URL https://www.python.org/ftp/python/${PYTHON3_VERSION}/Python-${PYTHON3_VERSION}.tgz)
-set(PYTHON3_MD5 e61b3568082b57d55fd74cfc7ca020b4)
+set(PYTHON3_MD5 cbcad7f5e759176bf8ce8a5f9d487087)
 
 set(FREETYPE_VERSION 2.9)
 set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)

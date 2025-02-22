@@ -135,10 +135,10 @@ jobs:
     - name: Pack Python SDK
       shell: bash
       run: |
-        cd build-python/python-install-prefix/lib/python3.9
-        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python39.zip .
+        cd build-python/python-install-prefix/lib/python3.10
+        zip -r -9 -q --exclude=*.pyc --exclude=*.a --exclude=*.so ../../../../python310.zip .
         cd ../..
-        zip -r -9 -q ../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.9.a bin/python
+        zip -r -9 -q ../../FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip include/ lib/libpython3.10.a bin/python
         cd ..
 
     - uses: actions/checkout@v3
@@ -175,7 +175,7 @@ jobs:
       with:
         name: python ${{ matrix.ndk-arch }} SDK
         path: |
-          ${{ matrix.ndk-arch == 'x86_64' && 'python39.zip' || '' }}
+          ${{ matrix.ndk-arch == 'x86_64' && 'python310.zip' || '' }}
           FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip
 
     - name: Prepare Release
@@ -190,6 +190,6 @@ jobs:
         name: ${{ steps.prepare-release-options.outputs.release-name }}
         draft: true
         files: |
-          python39.zip
+          python310.zip
           FreeOrionSDK_${{ steps.cmake-dist-version.outputs.dist-version }}_Android-${{ matrix.ndk-arch }}.zip
         token: ${{ secrets.RELEASE_TOKEN }}

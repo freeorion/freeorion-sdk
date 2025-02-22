@@ -12,7 +12,7 @@ jobs:
       matrix:
         os: [macos-13]
     env:
-      CMAKE_BUILD_PARALLEL_LEVEL: 2
+      CMAKE_BUILD_PARALLEL_LEVEL: 1
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - name: Checkout sources

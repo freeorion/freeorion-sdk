@@ -1,6 +1,11 @@
 # Changelog
 
-Notable changes to the FreeOrionSDK project will be documented in this file.
+Notable changes to the FreeOrionSDK project will be documented in this file
+
+## v16 - 2025-05-18
+
+- Update Python version to 3.10.16
+- Sync python-cmake-buildsysem between MacOS, Windows, and Android
 
 ## v15 - 2025-01-27
 

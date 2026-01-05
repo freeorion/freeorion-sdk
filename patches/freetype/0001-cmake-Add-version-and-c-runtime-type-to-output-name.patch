@@ -13,18 +13,18 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index b0f86126b..dc2c4a554 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -160,6 +160,11 @@ set(PROJECT_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
- set(SHARED_LIBRARY_VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
- 
+@@ -180,6 +180,11 @@ set(PROJECT_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+ math(EXPR LIBRARY_SOVERSION "${LIBTOOL_CURRENT} - ${LIBTOOL_AGE}")
+ set(LIBRARY_VERSION "${LIBRARY_SOVERSION}.${LIBTOOL_AGE}.${LIBTOOL_REVISION}")
  
 +# Set default version and debug suffix for libraries on MSVC
 +if (MSVC)
 +  set(CMAKE_DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}d")
 +endif ()
 +
- # Compiler definitions for building the library
- add_definitions(-DFT2_BUILD_LIBRARY)
- 
+ # External dependency library detection is automatic.  See the notes at the
+ # top of this file, for how to force or disable dependencies completely.
+ option(FT_DISABLE_ZLIB
 -- 
 2.14.3
 

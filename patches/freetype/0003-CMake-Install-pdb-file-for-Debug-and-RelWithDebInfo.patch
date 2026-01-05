@@ -11,10 +11,10 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 2b795fda1..f99a594e8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -428,6 +428,13 @@ if (NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
-     DESTINATION lib/cmake/freetype
-     FILE freetype-config.cmake
-     )
+@@ -684,6 +684,13 @@ if (NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
+     FILES ${PROJECT_BINARY_DIR}/freetype-config-version.cmake
+     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/freetype
+     COMPONENT headers)
 +  if((MSVC_VERSION GREATER 1500) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
 +    install(FILES
 +      $<TARGET_PDB_FILE:freetype>

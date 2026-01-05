@@ -11,15 +11,14 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f99a594e8..620f36f98 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -120,7 +120,7 @@ project(freetype)
- 
- 
- if (WIN32 AND NOT MINGW AND BUILD_SHARED_LIBS)
--  message(FATAL_ERROR "Building shared libraries on Windows needs MinGW")
-+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
- endif ()
- 
- # Disallow in-source builds
+@@ -504,6 +504,7 @@ project(freetype)
+   if (BUILD_SHARED_LIBS)
+     target_compile_definitions(
+       freetype PRIVATE DLL_EXPORT)
++    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+   endif ()
+ else ()
+   # Windows handles exports with DLL_EXPORT defined above.
 -- 
 2.14.3
 

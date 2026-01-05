@@ -31,9 +31,9 @@ set(PYTHON3_VERSION 3.10.16)
 set(PYTHON3_URL https://www.python.org/ftp/python/${PYTHON3_VERSION}/Python-${PYTHON3_VERSION}.tgz)
 set(PYTHON3_MD5 2515d8571c6fdd7fc620aa9e1cc6d202)
 
-set(FREETYPE_VERSION 2.9)
-set(FREETYPE_URL http://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)
-set(FREETYPE_MD5 d23a1b246e78890458c6672cb45eacd0)
+set(FREETYPE_VERSION 2.14.1)
+set(FREETYPE_URL https://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz)
+set(FREETYPE_MD5 d8c8b0c3a6d4c7ed4c90e1a8c7171887)
 
 set(SDL_VERSION 2.26.0)
 set(SDL_URL https://www.libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz)

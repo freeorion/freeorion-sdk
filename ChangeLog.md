@@ -2,6 +2,11 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file
 
+## v17 - ????-??-??
+
+- Update zlib version to 1.3.1
+- Update libpng version to 1.6.53
+
 ## v16 - 2025-05-18
 
 - Update Python version to 3.10.16

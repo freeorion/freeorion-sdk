@@ -11,7 +11,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 0fe939d..37bfdaf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -225,6 +225,13 @@ endif()
+@@ -193,6 +193,13 @@ endif()
  if(NOT SKIP_INSTALL_FILES AND NOT SKIP_INSTALL_ALL )
      install(FILES ${ZLIB_PC} DESTINATION "${INSTALL_PKGCONFIG_DIR}")
  endif()

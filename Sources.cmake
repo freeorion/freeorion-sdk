@@ -39,9 +39,9 @@ set(SDL_VERSION 2.32.10)
 set(SDL_URL https://www.libsdl.org/release/SDL2-${SDL_VERSION}.tar.gz)
 set(SDL_MD5 7b234751c91737168d88c83041ca5aa9)
 
-set(LIBOGG_VERSION 1.3.2)
-set(LIBOGG_URL http://downloads.xiph.org/releases/ogg/libogg-${LIBOGG_VERSION}.tar.gz)
-set(LIBOGG_MD5 b72e1a1dbadff3248e4ed62a4177e937)
+set(LIBOGG_VERSION 1.3.6)
+set(LIBOGG_URL https://downloads.xiph.org/releases/ogg/libogg-${LIBOGG_VERSION}.tar.gz)
+set(LIBOGG_MD5 e2ab08345a440d32e88b2156cf499eb9)
 
 set(LIBVORBIS_VERSION 1.3.5)
 set(LIBVORBIS_URL http://downloads.xiph.org/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz)

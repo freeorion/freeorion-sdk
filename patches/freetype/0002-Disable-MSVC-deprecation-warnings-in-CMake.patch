@@ -11,14 +11,14 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index dc2c4a554..2b795fda1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -163,6 +163,7 @@ set(SHARED_LIBRARY_VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
+@@ -183,6 +183,7 @@ set(SHARED_LIBRARY_VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
  # Set default version and debug suffix for libraries on MSVC
  if (MSVC)
    set(CMAKE_DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}d")
 +  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
  endif ()
  
- # Compiler definitions for building the library
+ # External dependency library detection is automatic.  See the notes at the
 -- 
 2.14.3
 

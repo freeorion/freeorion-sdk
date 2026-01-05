@@ -6,6 +6,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file
 
 - Update zlib version to 1.3.1
 - Update libpng version to 1.6.53
+- Update freetype version to 2.14.1
 
 ## v16 - 2025-05-18
 

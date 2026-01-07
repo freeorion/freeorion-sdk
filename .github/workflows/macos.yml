@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-15, macos-26]
+        os: [macos-15-intel, macos-26]
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: 1
       HOMEBREW_NO_AUTO_UPDATE: 1
@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_XCODE_BUILD_SYSTEM=1 ..
+          cmake -DCMAKE_XCODE_BUILD_SYSTEM=1 -DCMAKE_OSX_ARCHITECTURES=${{ matrix.os == 'macos-15-intel' && 'x86_64' || 'arm64' }} ..
       - name: Build
         run: |
           cd build

@@ -11,18 +11,18 @@ diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
 index 7920d57..2a41cb7 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
-@@ -242,15 +242,6 @@ install (FILES
-     ${GLEW_DIR}/include/GL/glxew.h
-     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/GL)
+@@ -248,15 +248,6 @@ install (
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/GL
+     COMPONENT Development)
  
--if(MAYBE_EXPORT)
--  install(EXPORT glew-targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew
--    NAMESPACE GLEW::)
--  install(FILES
--      ${CMAKE_CURRENT_SOURCE_DIR}/glew-config.cmake
--      ${CMAKE_CURRENT_SOURCE_DIR}/CopyImportedTargetProperties.cmake
--    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew)
--endif()
+-install(EXPORT glew-targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew
+-  COMPONENT Development
+-  NAMESPACE GLEW::)
+-install(FILES
+-    ${CMAKE_CURRENT_SOURCE_DIR}/glew-config.cmake
+-    ${CMAKE_CURRENT_SOURCE_DIR}/CopyImportedTargetProperties.cmake
+-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew
+-  COMPONENT Development)
 -
  if(NOT TARGET uninstall)
    configure_file(

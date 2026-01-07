@@ -1,0 +1,30 @@
+From bcb61ee476d0e1e242a0420448a2059cc1a27549 Mon Sep 17 00:00:00 2001
+From: O01eg <o01eg@yandex.ru>
+Date: Wed, 7 Jan 2026 21:19:45 +0400
+Subject: [PATCH] Fix search for include directories
+
+---
+ lib/CMakeLists.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 0b3cd4c..6bb50ec 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -154,6 +154,13 @@ if (NOT BUILD_FRAMEWORK)
+     endif()
+ else()
+     add_library(vorbis ${VORBIS_PUBLIC_HEADERS} ${VORBIS_HEADERS} ${VORBIS_SOURCES} ${VORBISFILE_SOURCES} ${VORBISENC_SOURCES})
++    target_include_directories(vorbis
++        PUBLIC
++            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
++            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
++       PRIVATE
++            ${CMAKE_CURRENT_SOURCE_DIR}
++    )
+     set_target_properties(vorbis PROPERTIES
+         FRAMEWORK TRUE
+         FRAMEWORK_VERSION ${PROJECT_VERSION}
+-- 
+2.51.0
+

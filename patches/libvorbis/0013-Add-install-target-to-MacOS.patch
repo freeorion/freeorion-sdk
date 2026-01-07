@@ -1,0 +1,27 @@
+From badd18932d9c7df27650ad185251b83bf1e9ab1c Mon Sep 17 00:00:00 2001
+From: O01eg <o01eg@yandex.ru>
+Date: Wed, 7 Jan 2026 21:15:31 +0400
+Subject: [PATCH] Add install target to MacOS
+
+---
+ lib/CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 20492db..0b3cd4c 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -165,4 +165,10 @@ else()
+         OUTPUT_NAME Vorbis
+     )
+     target_link_libraries(vorbis ${OGG_LIBRARIES})
++    install(TARGETS vorbis
++        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    )
+ endif()
+-- 
+2.51.0
+

@@ -9,6 +9,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file
 - Update freetype version to 2.14.1
 - Update sdl2 version to 2.32.10
 - Update libogg version to 1.3.6
+- Update libvorbis version to 1.3.7
 
 ## v16 - 2025-05-18
 

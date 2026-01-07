@@ -13,7 +13,7 @@ index 5081e0f..7920d57 100644
 --- a/build/cmake/CMakeLists.txt
 +++ b/build/cmake/CMakeLists.txt
 @@ -208,26 +208,28 @@ if (BUILD_UTILS)
-             DESTINATION ${CMAKE_INSTALL_BINDIR})
+             COMPONENT Runtime)
  endif ()
  
 -set (prefix ${CMAKE_INSTALL_PREFIX})
@@ -28,6 +28,14 @@ index 5081e0f..7920d57 100644
 -#  Mac OSX has no glu.pc unless optional X11/GLX is installed
 -if (APPLE)
 -  set (requireslib)
+-endif ()
+-
+-configure_file (${GLEW_DIR}/glew.pc.in ${CMAKE_CURRENT_BINARY_DIR}/glew.pc @ONLY)
+-
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/glew.pc
+-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+-        COMPONENT Development
+-)
 +if (NOT WIN32 AND CYGWIN)
 +    set (prefix ${CMAKE_INSTALL_PREFIX})
 +    set (exec_prefix ${CMAKE_INSTALL_PREFIX})
@@ -40,25 +48,19 @@ index 5081e0f..7920d57 100644
 +
 +    #  Mac OSX has no glu.pc unless optional X11/GLX is installed
 +    if (APPLE)
-+        set (requireslib)
++      set (requireslib)
 +    endif ()
 +
 +    configure_file (${GLEW_DIR}/glew.pc.in ${CMAKE_CURRENT_BINARY_DIR}/glew.pc @ONLY)
 +
 +    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/glew.pc
 +            DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++            COMPONENT Development
 +    )
- endif ()
++endif()
  
--configure_file (${GLEW_DIR}/glew.pc.in ${CMAKE_CURRENT_BINARY_DIR}/glew.pc @ONLY)
--
--install(FILES ${CMAKE_CURRENT_BINARY_DIR}/glew.pc
--        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
--)
--
- if(WIN32 AND MSVC AND (NOT MSVC_VERSION LESS 1600) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
+ if(WIN32 AND MSVC AND (NOT MSVC_VERSION LESS 1600))
      install(
-         FILES $<TARGET_PDB_FILE:glew>
 -- 
 2.14.3
 

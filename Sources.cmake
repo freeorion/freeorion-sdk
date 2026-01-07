@@ -51,9 +51,9 @@ set(OPENAL_SOFT_VERSION 1.18.2)
 set(OPENAL_SOFT_URL https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOFT_VERSION}.tar.gz)
 set(OPENAL_SOFT_MD5 fa2cb3df766ab5976c86efbcc1d24d68)
 
-set(GLEW_VERSION 2.2.0)
-set(GLEW_URL http://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)
-set(GLEW_MD5 3579164bccaef09e36c0af7f4fd5c7c7)
+set(GLEW_VERSION 2.3.0)
+set(GLEW_URL https://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)
+set(GLEW_MD5 1b321240e1f6651175e953b46bccb3f2)
 
 set(BOOST_VERSION 1.87.0)
 string(REPLACE "." "_" BOOST_VERSION_ ${BOOST_VERSION})

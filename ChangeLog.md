@@ -10,6 +10,7 @@ Notable changes to the FreeOrionSDK project will be documented in this file
 - Update sdl2 version to 2.32.10
 - Update libogg version to 1.3.6
 - Update libvorbis version to 1.3.7
+- Update glew version to 2.3.0
 
 ## v16 - 2025-05-18
 

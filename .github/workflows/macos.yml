@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-15-intel, macos-26]
+        os: [macos-15-intel] # ToDo: fix boost for arm64 , macos-26]
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: 1
       HOMEBREW_NO_AUTO_UPDATE: 1

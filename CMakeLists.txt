@@ -1,8 +1,4 @@
-if(WIN32)
-    set(REQUIRED_CMAKE_VERSION 3.10)
-else()
-    set(REQUIRED_CMAKE_VERSION 3.7)
-endif()
+set(REQUIRED_CMAKE_VERSION 3.10)
 
 cmake_minimum_required(VERSION ${REQUIRED_CMAKE_VERSION})
 
@@ -526,10 +522,17 @@ list(APPEND DIST_PACK_TARGETS glew)
 
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
-    set(BOOST_CONFIGURE_FLAGS
-        #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
-        architecture=x86
-    )
+    if(CMAKE_OSX_ARCHITECTURES MATCHES "arm")
+        set(BOOST_CONFIGURE_FLAGS
+            #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
+            architecture=arm
+        )
+    else()
+        set(BOOST_CONFIGURE_FLAGS
+            #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
+            architecture=x86
+        )
+    endif()
     set(BOOST_ARCHITECTURES)
     foreach(_OSX_ARCH IN LISTS CMAKE_OSX_ARCHITECTURES)
         set(BOOST_ARCHITECTURES "${BOOST_ARCHITECTURES} -arch ${_OSX_ARCH}")

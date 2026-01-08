@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         with:
-          name: MacOS SDK
+          name: MacOS ${{ matrix.os }} SDK
           path: |
             build/FreeOrionSDK_*.tar.bz2
       - name: Prepare Release

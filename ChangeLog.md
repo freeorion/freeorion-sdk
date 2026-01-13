@@ -2,7 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file
 
-## v17 - ????-??-??
+## v17 - 2026-01-13
 
 - Update zlib version to 1.3.1
 - Update libpng version to 1.6.53

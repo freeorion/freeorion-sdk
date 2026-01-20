@@ -44,7 +44,7 @@ set(LIBOGG_URL https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-${LIBOGG_VERS
 set(LIBOGG_MD5 e2ab08345a440d32e88b2156cf499eb9)
 
 set(LIBVORBIS_VERSION 1.3.7)
-set(LIBVORBIS_URL https://downloads.xiph.org/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz)
+set(LIBVORBIS_URL https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz)
 set(LIBVORBIS_MD5 9b8034da6edc1a17d18b9bc4542015c7)
 
 set(OPENAL_SOFT_VERSION 1.18.2)

@@ -2,6 +2,10 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file
 
+## v18 - ????-??-??
+
+- Update boost version to 1.88
+
 ## v17 - 2026-01-13
 
 - Update zlib version to 1.3.1

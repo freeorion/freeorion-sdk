@@ -12,11 +12,11 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index a871f4cf..e5b836cd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1211,10 +1211,13 @@ SET(PACKAGE_VERSION "${LIB_VERSION}")
- CONFIGURE_FILE(
-     "${OpenAL_SOURCE_DIR}/config.h.in"
-     "${OpenAL_BINARY_DIR}/config.h")
--CONFIGURE_FILE(
+@@ -1530,10 +1530,13 @@ SET(PACKAGE_VERSION "${LIB_VERSION}")
+ configure_file(
+     "${OpenAL_SOURCE_DIR}/config_simd.h.in"
+     "${OpenAL_BINARY_DIR}/config_simd.h")
+-configure_file(
 -    "${OpenAL_SOURCE_DIR}/openal.pc.in"
 -    "${OpenAL_BINARY_DIR}/openal.pc"
 -    @ONLY)
@@ -28,21 +28,25 @@ index a871f4cf..e5b836cd 100644
 +        @ONLY)
 +ENDIF()
  
- MACRO(ADD_INCLUDE_DIRS TRGT TESTVAR INCVAR)
-     IF(${TESTVAR})
-@@ -1342,8 +1345,10 @@ IF(ALSOFT_INSTALL)
-                   include/AL/efx-presets.h
-             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/AL
-     )
--    INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
--            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+ 
+ set(MODULES_OBJS )
+@@ -1869,10 +1872,12 @@ IF(ALSOFT_INSTALL)
+         FILE OpenALTargets.cmake)
+     install(DIRECTORY include/AL
+         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+-    install(FILES "${OpenAL_BINARY_DIR}/openal.pc"
+-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+-    install(FILES "${OpenAL_BINARY_DIR}/OpenALConfig.cmake"
+-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/OpenAL")
 +    IF(NOT WIN32 OR CYGWIN)
 +        INSTALL(FILES "${OpenAL_BINARY_DIR}/openal.pc"
 +                DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
++        INSTALL(FILES "${OpenAL_BINARY_DIR}/OpenALConfig.cmake"
++                DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/OpenAL")
 +    ENDIF()
-     IF(TARGET soft_oal)
-         INSTALL(TARGETS soft_oal
-                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+     if(TARGET soft_oal)
+         install(TARGETS soft_oal)
+     endif()
 -- 
 2.14.3
 

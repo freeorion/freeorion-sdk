@@ -47,9 +47,9 @@ set(LIBVORBIS_VERSION 1.3.7)
 set(LIBVORBIS_URL https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-${LIBVORBIS_VERSION}.tar.gz)
 set(LIBVORBIS_MD5 9b8034da6edc1a17d18b9bc4542015c7)
 
-set(OPENAL_SOFT_VERSION 1.18.2)
-set(OPENAL_SOFT_URL https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOFT_VERSION}.tar.gz)
-set(OPENAL_SOFT_MD5 fa2cb3df766ab5976c86efbcc1d24d68)
+set(OPENAL_SOFT_VERSION 1.25.1)
+set(OPENAL_SOFT_URL https://openal-soft.org/openal-releases/openal-soft-${OPENAL_SOFT_VERSION}.tar.bz2)
+set(OPENAL_SOFT_MD5 f469d39e019864aa579061ed191d93fb)
 
 set(GLEW_VERSION 2.3.0)
 set(GLEW_URL https://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)

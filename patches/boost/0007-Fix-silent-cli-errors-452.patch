@@ -1,0 +1,63 @@
+From 6bda79eca54ab4d40c47ec6626a7f982b35725ab Mon Sep 17 00:00:00 2001
+From: Dmitry Arkhipov <grisumbras@yandex.ru>
+Date: Mon, 26 May 2025 18:23:44 +0300
+Subject: [PATCH 002/127] Fix/silent cli errors (#452)
+
+* report CLI parse errors and quit
+* convert -m value with Lyra rather than manually
+---
+ src/engine/jam.cpp      |  4 ++--
+ src/engine/mod_args.cpp | 19 ++++++++++++++++---
+ 2 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/tools/build/src/engine/jam.cpp b/tools/build/src/engine/jam.cpp
+index aac7c616d..b1811bbfb 100644
+--- a/tools/build/src/engine/jam.cpp
++++ b/tools/build/src/engine/jam.cpp
+@@ -313,8 +313,8 @@ int guarded_main(int argc, char * argv[])
+ 				   "after which they are stopped.");
+ 
+ 	cli |= lyra::opt(
+-		[](const std::string & x) {
+-			globs.max_buf = std::stoi(x) * 1024; /* convert to kb */
++		[](int x) {
++			globs.max_buf = x * 1024; /* convert to kb */
+ 		},
+ 		"x")
+ 			   .name("-m")
+diff --git a/tools/build/src/engine/mod_args.cpp b/tools/build/src/engine/mod_args.cpp
+index 9d361b32c..dfe3f514a 100644
+--- a/tools/build/src/engine/mod_args.cpp
++++ b/tools/build/src/engine/mod_args.cpp
+@@ -127,12 +127,25 @@ lyra::cli & lyra_cli() { return args_reg::ref().cli; }
+ void process_args(bool silent)
+ {
+ 	args_reg::ref().reparse();
+-	if (!silent && globs.display_help)
++	if (silent)
++		return;
++
++	std::ostringstream out;
++	int return_code = EXITOK;
++	bool stop = false;
++
++	if (!args_reg::ref().result->is_ok())
++	{
++		stop = true;
++		return_code = EXITBAD;
++		out << "Error: " << args_reg::ref().result->message() << '\n';
++	}
++
++	if (stop || globs.display_help)
+ 	{
+-		std::ostringstream out;
+ 		out << args_reg::ref().cli;
+ 		err_puts(out.str().c_str());
+-		b2::clean_exit(EXITOK);
++		b2::clean_exit(return_code);
+ 	}
+ }
+ 
+-- 
+2.51.0
+

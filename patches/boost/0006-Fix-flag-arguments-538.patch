@@ -1,0 +1,156 @@
+From c92215864f471e24e42cfbf9df001914acbc4aed Mon Sep 17 00:00:00 2001
+From: Dmitry Arkhipov <grisumbras@yandex.ru>
+Date: Sat, 31 Jan 2026 02:43:13 +0300
+Subject: [PATCH 2/6] Fix flag arguments (#538)
+
+* set "flag" flag on arguments where appropriate
+* fix typo in argument definition
+---
+ src/build-system.jam      | 1 +
+ src/build/generators.jam  | 2 +-
+ src/build/project.jam     | 2 +-
+ src/build/targets.jam     | 2 +-
+ src/build/toolset.jam     | 2 +-
+ src/tools/common.jam      | 2 +-
+ src/tools/cray.jam        | 2 +-
+ src/tools/testing-aux.jam | 2 +-
+ src/tools/testing.jam     | 6 +++---
+ 9 files changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/tools/build/src/build-system.jam b/tools/build/src/build-system.jam
+index 724cdb6..bf60d5b 100644
+--- a/tools/build/src/build-system.jam
++++ b/tools/build/src/build-system.jam
+@@ -774,6 +774,7 @@ local rule should-clean-project ( project )
+ 
+     args.add-arg dump-generators : --dump-generators
+         : "Display the active build generators."
++        : flag
+         ;
+     if [ args.get-arg dump-generators ]
+     {
+diff --git a/tools/build/src/build/generators.jam b/tools/build/src/build/generators.jam
+index 3cd1aba..d13aac5 100644
+--- a/tools/build/src/build/generators.jam
++++ b/tools/build/src/build/generators.jam
+@@ -55,7 +55,7 @@ import args ;
+ 
+ 
+ args.add-arg debug-generators : --debug-generators
+-    : "Produces debug output from the generator search process." ;
++    : "Produces debug output from the generator search process." : flag ;
+ .debug = [ args.get-arg debug-generators ] ;
+ 
+ 
+diff --git a/tools/build/src/build/project.jam b/tools/build/src/build/project.jam
+index d961451..63a2306 100644
+--- a/tools/build/src/build/project.jam
++++ b/tools/build/src/build/project.jam
+@@ -485,7 +485,7 @@ PACKAGE_MANAGER_BUILD_INFO(CONAN) = "conanbuildinfo.jam" ;
+ # 3. Environment variable "PACKAGE_MANAGER_BUILD_INFO".
+ # 4. Conan, others.
+ #
+-args.add-arg use-package-manager : --use-package-manage
++args.add-arg use-package-manager : --use-package-manager
+     : "Load target definitions from the given package manager." ;
+ local .use-package-manager = [ args.get-arg use-package-manager ] ;
+ PACKAGE_MANAGER_BUILD_INFO ?= $(PACKAGE_MANAGER_BUILD_INFO($(.use-package-manager:U))) ;
+diff --git a/tools/build/src/build/targets.jam b/tools/build/src/build/targets.jam
+index 769d815..3ce6f38 100644
+--- a/tools/build/src/build/targets.jam
++++ b/tools/build/src/build/targets.jam
+@@ -149,7 +149,7 @@ class abstract-target
+ 
+ 
+ args.add-arg debug-building : --debug-building
+-    : "Prints what targets are being built and with what properties." ;
++    : "Prints what targets are being built and with what properties." : flag ;
+ modules.poke : .debug-building : [ args.get-arg debug-building ] ;
+ 
+ 
+diff --git a/tools/build/src/build/toolset.jam b/tools/build/src/build/toolset.jam
+index 382ab47..b285fb5 100644
+--- a/tools/build/src/build/toolset.jam
++++ b/tools/build/src/build/toolset.jam
+@@ -30,7 +30,7 @@ import utility ;
+ # This is used only for testing, to make sure we do not get random extra
+ # elements in paths.
+ args.add-arg ignore-toolset-requirements : --ignore-toolset-requirements
+-    : "?" ;
++    : "?" : flag ;
+ .ignore-requirements = [ args.get-arg ignore-toolset-requirements ] ;
+ 
+ 
+diff --git a/tools/build/src/tools/common.jam b/tools/build/src/tools/common.jam
+index f616732..a9a5f1c 100644
+--- a/tools/build/src/tools/common.jam
++++ b/tools/build/src/tools/common.jam
+@@ -24,7 +24,7 @@ import numbers ;
+ 
+ .debug-configuration = [ args.get-arg debug-configuration ] ;
+ 
+-args.add-arg show-configuration : --show-configuration : "?" ;
++args.add-arg show-configuration : --show-configuration : "?" : flag ;
+ .show-configuration = [ args.get-arg show-configuration ] ;
+ 
+ # Configurations
+diff --git a/tools/build/src/tools/cray.jam b/tools/build/src/tools/cray.jam
+index b44f4bc..632e2db 100644
+--- a/tools/build/src/tools/cray.jam
++++ b/tools/build/src/tools/cray.jam
+@@ -236,7 +236,7 @@ rule set-cray-feature-defaults ( )
+ 
+ .debug-configuration = [ args.get-arg debug-configuration ] ;
+ 
+-args.add-arg debug-driver : --debug-driver : "?" ;
++args.add-arg debug-driver : --debug-driver : "?" : flag ;
+ .debug-driver = [ args.get-arg debug-driver ] ;
+ 
+ ###
+diff --git a/tools/build/src/tools/testing-aux.jam b/tools/build/src/tools/testing-aux.jam
+index bd01104..e1da102 100644
+--- a/tools/build/src/tools/testing-aux.jam
++++ b/tools/build/src/tools/testing-aux.jam
+@@ -181,7 +181,7 @@ else
+ 
+ 
+ args.add-arg verbose-test : --verbose-test
+-    : "Include output of tests when run." ;
++    : "Include output of tests when run." : flag ;
+ .VERBOSE_TEST = 0 ;
+ if [ args.get-arg verbose-test ]
+ {
+diff --git a/tools/build/src/tools/testing.jam b/tools/build/src/tools/testing.jam
+index 36815a7..4dd15f7 100644
+--- a/tools/build/src/tools/testing.jam
++++ b/tools/build/src/tools/testing.jam
+@@ -225,7 +225,7 @@ rule dump-tests
+     }
+ }
+ 
+-args.add-arg dump-tests : --dump-tests : "?" ;
++args.add-arg dump-tests : --dump-tests : "?" : flag ;
+ if [ args.get-arg dump-tests ]
+ {
+     IMPORT testing : dump-tests : : testing.dump-tests ;
+@@ -520,7 +520,7 @@ toolset.uses-features testing.capture-output :
+     <testing.launcher> <testing.execute> <dll-path> <xdll-path> <target-os> ;
+ 
+ args.add-arg remove-test-targets : --remove-test-targets
+-    : "Delete intermediate test files for successful tests." ;
++    : "Delete intermediate test files for successful tests." : flag ;
+ if [ args.get-arg remove-test-targets ]
+ {
+     feature.set-default preserve-test-targets : off ;
+@@ -649,7 +649,7 @@ else
+ 
+ 
+ args.add-arg verbose-test : --verbose-test
+-    : "Include output of tests when run." ;
++    : "Include output of tests when run." : flag ;
+ .VERBOSE_TEST = 0 ;
+ if [ args.get-arg verbose-test ]
+ {
+-- 
+2.51.0
+

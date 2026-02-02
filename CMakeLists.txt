@@ -626,7 +626,7 @@ ExternalProject_Add(boost
     BUILD_COMMAND <SOURCE_DIR>/b2 install
         toolset=${BOOST_TOOLSET}
         -j${BOOST_PARALLEL_JOBS}
-        -d
+        -d1
         --layout=system
         # ToDo: Remove --no-cmake-config in boost 1.71
         --no-cmake-config

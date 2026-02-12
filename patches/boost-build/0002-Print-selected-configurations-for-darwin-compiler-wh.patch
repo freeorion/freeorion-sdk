@@ -8,10 +8,10 @@ Subject: [tools/build] Print selected configurations for darwin compiler when
  tools/build/src/tools/darwin.jam | 23 ++++++++++++-----------
  1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
+diff --git a/src/tools/darwin.jam b/src/tools/darwin.jam
 index 1760a198..6f7be142 100644
---- a/tools/build/src/tools/darwin.jam
-+++ b/tools/build/src/tools/darwin.jam
+--- a/src/tools/darwin.jam
++++ b/src/tools/darwin.jam
 @@ -19,6 +19,7 @@
  import version ;
  import property-set ;

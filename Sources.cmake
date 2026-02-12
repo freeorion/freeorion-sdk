@@ -55,6 +55,10 @@ set(GLEW_VERSION 2.3.0)
 set(GLEW_URL https://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)
 set(GLEW_MD5 1b321240e1f6651175e953b46bccb3f2)
 
+set(BOOST_BUILD_VERSION 5.2.1)
+set(BOOST_BUILD_URL https://github.com/bfgroup/b2/releases/download/${BOOST_BUILD_VERSION}/b2-${BOOST_BUILD_VERSION}.tar.bz2)
+set(BOOST_BUILD_MD5 3800c8baba62c3fad88b1760cf765eb6)
+
 set(BOOST_VERSION 1.88.0)
 string(REPLACE "." "_" BOOST_VERSION_ ${BOOST_VERSION})
 set(BOOST_URL https://downloads.sourceforge.net/project/boost/boost/${BOOST_VERSION}/boost_${BOOST_VERSION_}.tar.gz)

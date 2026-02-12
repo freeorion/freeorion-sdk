@@ -9,10 +9,10 @@ located within the SDK subdirectory anymore.
  tools/build/src/tools/darwin.jam | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/build/src/tools/darwin.jam b/tools/build/src/tools/darwin.jam
+diff --git a/src/tools/darwin.jam b/src/tools/darwin.jam
 index 6f7be142..3881290b 100644
---- a/tools/build/src/tools/darwin.jam
-+++ b/tools/build/src/tools/darwin.jam
+--- a/src/tools/darwin.jam
++++ b/src/tools/darwin.jam
 @@ -15,7 +15,7 @@ import toolset : flags ;
  import type ;
  import common ;

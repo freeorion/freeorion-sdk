@@ -530,6 +530,30 @@ list(APPEND DIST_PACK_TARGETS glew)
 
 if(NOT WIN32)
     set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
+else()
+    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
+endif()
+
+ExternalProject_PatchSet(boost-build BOOST_BUILD_PATCHSET)
+ExternalProject_Add(boost-build
+    DEPENDS patch
+    URL ${BOOST_BUILD_URL}
+    URL_MD5 ${BOOST_BUILD_MD5}
+    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
+    BUILD_IN_SOURCE 1
+    ${BOOST_BUILD_PATCHSET}
+    CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
+    COMMAND <SOURCE_DIR>/b2 --help
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
+        <SOURCE_DIR>/src/engine/b2.exe.manifest
+        ${SDK_BINARY_DIR}/b2.exe.manifest
+    COMMAND ${CMAKE_COMMAND} -E copy
+        <SOURCE_DIR>/src/engine/b2${CMAKE_EXECUTABLE_SUFFIX}
+        ${SDK_BINARY_DIR}/b2${CMAKE_EXECUTABLE_SUFFIX}
+)
+
+if(NOT WIN32)
     if(CMAKE_OSX_ARCHITECTURES MATCHES "arm")
         set(BOOST_CONFIGURE_FLAGS
             #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
@@ -561,7 +585,6 @@ if(NOT WIN32)
     get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
     get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
 else()
-    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
     string(REGEX REPLACE "^v([1-9][0-9]*)(.*)$" "\\1;\\2" _VS_PLATFORM_TOOLSET "${CMAKE_VS_PLATFORM_TOOLSET}")
     list(GET _VS_PLATFORM_TOOLSET 0 _VS_PLATFORM_TOOLSET_VERSION)
     list(GET _VS_PLATFORM_TOOLSET 1 _VS_PLATFORM_TOOLSET_TARGET)
@@ -615,15 +638,14 @@ endif()
 
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
-    DEPENDS patch zlib python3
+    DEPENDS patch zlib python3 boost-build
     URL ${BOOST_URL}
     URL_MD5 ${BOOST_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     BUILD_IN_SOURCE 1
     ${BOOST_PATCHSET}
-    CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
-    COMMAND <SOURCE_DIR>/b2 --help
-    BUILD_COMMAND <SOURCE_DIR>/b2 install
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ${SDK_BINARY_DIR}/b2 install
         toolset=${BOOST_TOOLSET}
         -j${BOOST_PARALLEL_JOBS}
         -d

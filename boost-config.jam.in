@@ -1,7 +1,0 @@
-using python
-    : @PYTHON3_VERSION@  # version
-    : @PYTHON3_INSTALL_DIR@/bin/python@PYTHON3_VERSION@  # cmd-or-prefix
-    : @PYTHON3_INSTALL_DIR@/include/python@PYTHON3_VERSION@ # includes
-    : @PYTHON3_INSTALL_DIR@/lib # libraries
-    ;
-

@@ -15,9 +15,9 @@ set(ZIP_DEPS_MD5 8bd9a45e1259238c1f6bb277fe6386c0)
 set(ZIP_URL http://downloads.sourceforge.net/project/gnuwin32/zip/${ZIP_VERSION}/zip-${ZIP_VERSION}-bin.zip)
 set(ZIP_MD5 5b268fe06ce5f89bc5762805a7a9d7aa)
 
-set(ZLIB_VERSION 1.3.1)
+set(ZLIB_VERSION 1.3.2)
 set(ZLIB_URL https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz)
-set(ZLIB_MD5 9855b6d802d7fe5b7bd5b196a2271655)
+set(ZLIB_MD5 a1e6c958597af3c67d162995a342138a)
 
 set(LIBPNG_VERSION 1.6.53)
 set(LIBPNG_URL https://download.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.gz)

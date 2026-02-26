@@ -125,21 +125,21 @@ jobs:
     - uses: actions/checkout@v6
       with:
         repository: 'moritz-wundke/Boost-for-Android'
-        ref: '8b866f6c7b63b833f3ba5059d5b3751e28385ae2'
+        ref: '6dcf8c41657d2e5829253009137302a576a174cb'
         path: 'build-boost/Boost-for-Android'
 
     - name: Download Boost
       shell: bash
       run: |
         cd build-boost/Boost-for-Android
-        wget https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2
+        wget https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2
 
     - name: Build Boost
       shell: bash
       run: |
         export PYTHON_PATH=$(cd build-python/python-install-prefix/ ; pwd)
         cd build-boost/Boost-for-Android
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.86.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system --without-libraries=stacktrace /usr/local/lib/android/sdk/ndk/23.0.7421159/
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=1.90.0 --arch=${{ matrix.ndk-arch }} --with-iconv --with-python=${PYTHON_PATH} --layout=system --without-libraries=stacktrace /usr/local/lib/android/sdk/ndk/23.0.7421159/
 
     - name: Pack Boost
       shell: bash

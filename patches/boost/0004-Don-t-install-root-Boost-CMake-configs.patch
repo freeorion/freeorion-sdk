@@ -1,0 +1,34 @@
+From d9ac08505e8cbf235aa608a21026bcbb9e6ce864 Mon Sep 17 00:00:00 2001
+From: O01eg <o01eg@yandex.ru>
+Date: Sat, 4 Apr 2026 11:00:53 +0400
+Subject: [PATCH 3/3] Don't install root Boost CMake configs
+
+---
+ tools/cmake/include/BoostRoot.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/cmake/include/BoostRoot.cmake b/tools/cmake/include/BoostRoot.cmake
+index 98a19df8..15f80f4c 100644
+--- a/tools/cmake/include/BoostRoot.cmake
++++ b/tools/cmake/include/BoostRoot.cmake
+@@ -433,7 +433,7 @@ endif()
+ set(CONFIG_INSTALL_DIR "${BOOST_INSTALL_CMAKEDIR}/Boost-${BOOST_SUPERPROJECT_VERSION}")
+ set(CONFIG_FILE_NAME "${CMAKE_CURRENT_LIST_DIR}/../config/BoostConfig.cmake")
+ 
+-install(FILES "${CONFIG_FILE_NAME}" DESTINATION "${CONFIG_INSTALL_DIR}")
++#install(FILES "${CONFIG_FILE_NAME}" DESTINATION "${CONFIG_INSTALL_DIR}")
+ 
+ set(CONFIG_VERSION_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/tmpinst/BoostConfigVersion.cmake")
+ 
+@@ -452,7 +452,7 @@ else()
+ 
+ endif()
+ 
+-install(FILES "${CONFIG_VERSION_FILE_NAME}" DESTINATION "${CONFIG_INSTALL_DIR}")
++#install(FILES "${CONFIG_VERSION_FILE_NAME}" DESTINATION "${CONFIG_INSTALL_DIR}")
+ 
+ set(CPACK_PACKAGE_VENDOR "Boost")
+ set(CPACK_GENERATOR "TGZ")
+-- 
+2.53.0
+

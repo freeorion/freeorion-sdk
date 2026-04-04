@@ -546,7 +546,6 @@ ExternalProject_Add(boost
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
     ${BOOST_PATCHSET}
     CMAKE_ARGS
-        --debug-find-pkg=Python
         -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

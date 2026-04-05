@@ -2,7 +2,7 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file
 
-## v18 - ????-??-??
+## v18 - 2026-04-05
 
 - Update boost version to 1.88
 - Update libopenal-soft version to 1.25.1

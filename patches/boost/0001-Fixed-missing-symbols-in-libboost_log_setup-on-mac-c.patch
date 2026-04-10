@@ -7,10 +7,10 @@ Subject: [libs/log] Fixed missing symbols in libboost_log_setup (on mac/clang)
  boost/log/detail/setup_config.hpp | 18 ++++++++++++++----
  1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/boost/log/detail/setup_config.hpp b/boost/log/detail/setup_config.hpp
+diff --git a/libs/log/include/boost/log/detail/setup_config.hpp b/libs/log/include/boost/log/detail/setup_config.hpp
 index 8fde5b3..28c6671 100644
---- a/boost/log/detail/setup_config.hpp
-+++ b/boost/log/detail/setup_config.hpp
+--- a/libs/log/include/boost/log/detail/setup_config.hpp
++++ b/libs/log/include/boost/log/detail/setup_config.hpp
 @@ -31,8 +31,13 @@
  #   endif
  

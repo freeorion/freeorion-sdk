@@ -2,6 +2,10 @@
 
 Notable changes to the FreeOrionSDK project will be documented in this file
 
+## v19 - ????-??-??
+
+- Replace B2 (former Boost.Build) with CMake
+
 ## v18 - 2026-04-05
 
 - Update boost version to 1.88

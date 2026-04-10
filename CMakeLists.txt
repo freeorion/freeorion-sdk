@@ -538,185 +538,54 @@ ExternalProject_Add(glew
 )
 list(APPEND DIST_PACK_TARGETS glew)
 
-if(NOT WIN32)
-    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.sh)
-else()
-    set(BOOST_CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap.bat)
-endif()
-
-ExternalProject_PatchSet(boost-build BOOST_BUILD_PATCHSET)
-ExternalProject_Add(boost-build
-    DEPENDS patch
-    URL ${BOOST_BUILD_URL}
-    URL_MD5 ${BOOST_BUILD_MD5}
-    DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    BUILD_IN_SOURCE 1
-    ${BOOST_BUILD_PATCHSET}
-    CONFIGURE_COMMAND ${BOOST_CONFIGURE_COMMAND}
-    COMMAND <SOURCE_DIR>/b2 --help
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy
-        <SOURCE_DIR>/src/engine/b2.exe.manifest
-        ${SDK_BINARY_DIR}/b2.exe.manifest
-    COMMAND ${CMAKE_COMMAND} -E copy
-        <SOURCE_DIR>/src/engine/b2${CMAKE_EXECUTABLE_SUFFIX}
-        ${SDK_BINARY_DIR}/b2${CMAKE_EXECUTABLE_SUFFIX}
-)
-
-if(NOT WIN32)
-    if(CMAKE_OSX_ARCHITECTURES MATCHES "arm")
-        set(BOOST_CONFIGURE_FLAGS
-            #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
-            architecture=arm
-        )
-    else()
-        set(BOOST_CONFIGURE_FLAGS
-            #macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}
-            architecture=x86
-        )
-    endif()
-    set(BOOST_ARCHITECTURES)
-    foreach(_OSX_ARCH IN LISTS CMAKE_OSX_ARCHITECTURES)
-        set(BOOST_ARCHITECTURES "${BOOST_ARCHITECTURES} -arch ${_OSX_ARCH}")
-    endforeach()
-    if(CMAKE_CXX_STANDARD GREATER 10)
-        list(APPEND BOOST_CONFIGURE_FLAGS
-            "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -stdlib=libc++ ${BOOST_ARCHITECTURES}"
-            "cflags=${BOOST_ARCHITECTURES}"
-            "linkflags=-stdlib=libc++ ${BOOST_ARCHITECTURES}"
-            "hardcode-dll-paths=false"
-            "dll-path=@executable_path/../SharedSupport"
-        )
-    endif()
-    set(BOOST_TOOLSET clang)
-    set(BOOST_OSX_SYSROOT ${CMAKE_OSX_SYSROOT})
-    # strip concrete mac osx directory to allow boost build the detection of
-    # available SDKs.
-    get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
-    get_filename_component(BOOST_OSX_SYSROOT "${BOOST_OSX_SYSROOT}" DIRECTORY)
-else()
-    string(REGEX REPLACE "^v([1-9][0-9]*)(.*)$" "\\1;\\2" _VS_PLATFORM_TOOLSET "${CMAKE_VS_PLATFORM_TOOLSET}")
-    list(GET _VS_PLATFORM_TOOLSET 0 _VS_PLATFORM_TOOLSET_VERSION)
-    list(GET _VS_PLATFORM_TOOLSET 1 _VS_PLATFORM_TOOLSET_TARGET)
-    math(EXPR _VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}/10")
-    set(_VS_PLATFORM_TOOLSET_VERSION "${_VS_PLATFORM_TOOLSET_VERSION}.3")
-    set(BOOST_CONFIGURE_FLAGS
-        debug-store=database
-    )
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        list(APPEND BOOST_CONFIGURE_FLAGS address-model=64)
-    else()
-        list(APPEND BOOST_CONFIGURE_FLAGS address-model=32)
-    endif()
-    list(APPEND BOOST_CONFIGURE_FLAGS define=BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN10)
-    set(BOOST_TOOLSET msvc-${_VS_PLATFORM_TOOLSET_VERSION})
-    message(STATUS "Boost toolset is msvc-${_VS_PLATFORM_TOOLSET_VERSION} for ${CMAKE_VS_PLATFORM_TOOLSET}")
-    set(BOOST_OSX_SYSROOT "")
-endif()
-
 if(BUILD_SHARED_LIBS OR APPLE)
-    set(BOOST_LINK "shared")
+    set(BOOST_BUILD_SHARED_LIBS "ON")
 else()
-    set(BOOST_LINK "static")
-endif()
-
-if(CMAKE_BUILD_TYPE MATCHES "^Rel(ease|WithDebInfo)$")
-    set(BOOST_VARIANT "release")
-else()
-    set(BOOST_VARIANT "debug")
-endif()
-
-if(APPLE)
-    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR})
-else()
-    set(PYTHON3_INSTALL_DIR ${SDK_INSTALL_DIR})
-endif()
-
-configure_file(
-    boost-config.jam.in
-    boost-config.jam
-)
-
-if(BOOST_TOOLSET EQUAL clang)
-    configure_file(
-        boost-config-clang.jam.in
-        boost-config-clang.jam
-    )
-    file(READ ${CMAKE_BINARY_DIR}/boost-config-clang.jam BOOST_CONFIG_CONTENTS)
-    file(APPEND ${CMAKE_BINARY_DIR}/boost-config.jam "${BOOST_CONFIG_CONTENTS}")
+    set(BOOST_BUILD_SHARED_LIBS "OFF")
 endif()
 
 ExternalProject_PatchSet(boost BOOST_PATCHSET)
 ExternalProject_Add(boost
-    DEPENDS patch zlib python3 boost-build
+    DEPENDS patch zlib python3
     URL ${BOOST_URL}
     URL_MD5 ${BOOST_MD5}
     DOWNLOAD_DIR ${SDK_DOWNLOAD_DIR}
-    BUILD_IN_SOURCE 1
     ${BOOST_PATCHSET}
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ${SDK_BINARY_DIR}/b2 install
-        toolset=${BOOST_TOOLSET}
-        -j${BOOST_PARALLEL_JOBS}
-        -d
-        --layout=system
-        # ToDo: Remove --no-cmake-config in boost 1.71
-        --no-cmake-config
-        --debug-configuration
-        --abbreviate-paths
-        --user-config=${CMAKE_BINARY_DIR}/boost-config.jam
-        --without-context
-        --without-coroutine
-        --without-fiber
-        --without-graph_parallel
-        --without-mpi
-        --without-wave
-        --without-predef
-        --prefix=<INSTALL_DIR>
-        threading=multi
-        link=${BOOST_LINK}
-        variant=${BOOST_VARIANT}
-        debug-symbols=on
-        ${BOOST_CONFIGURE_FLAGS}
-        pch=off
-        python=${PYTHON3_VERSION}
-        -s NO_BZIP2=1
-        -s NO_LZMA=1
-        -s NO_ZSTD=1
-        -s NO_ZLIB=0
-        # Build documentation for boost::iostreams is outdated.
-        # Starting with 1.55 the zlib dependency detection uses the boost.build
-        # zlib tool, not using ZLIB_LIBPATH anymore.  The new parameters are
-        # documented in source here:
-        # https://github.com/boostorg/build/blob/boost-1.59.0/src/tools/zlib.jam#L40
-        -s ZLIB_INCLUDE=${SDK_INSTALL_DIR}/include
-        -s ZLIB_LIBRARY_PATH=${SDK_INSTALL_DIR}/lib
-    INSTALL_COMMAND ""
+    CMAKE_ARGS
+        -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS=${BOOST_BUILD_SHARED_LIBS}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+        -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES_}
+        -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
+        -DBOOST_ENABLE_PYTHON=ON
+        -DBOOST_EXCLUDE_LIBRARIES=context,coroutine,coroutine2,fiber,graph_parallel,mpi,wave,predef
+        -DBOOST_INSTALL_LAYOUT=system
+        -DBOOST_IOSTREAMS_ENABLE_BZIP2=OFF
+        -DBOOST_IOSTREAMS_ENABLE_LZMA=OFF
+        -DBOOST_IOSTREAMS_ENABLE_ZSTD=OFF
+        -DBOOST_IOSTREAMS_ENABLE_ZLIB=ON
+        -DPython3_ROOT_DIR=${SDK_INSTALL_DIR}
+        -DPython3_EXECUTABLE=${SDK_INSTALL_DIR}/bin/python${PYTHON3_VERSION}
+        -DPython3_INCLUDE_DIR=${SDK_INSTALL_DIR}/include/python${PYTHON3_VERSION}
+        -DPython3_LIBRARY_DIRS=${SDK_INSTALL_DIR}/lib
+        -DPython3_FIND_FRAMEWORK=NEVER
+        -DPython3_FIND_VERSION=${PYTHON3_VERSION}
+        -DPython3_FIND_VERSION_MAJOR=3
+        -DPython_ROOT_DIR=${SDK_INSTALL_DIR}
+        -DPython_EXECUTABLE=${SDK_INSTALL_DIR}/bin/python${PYTHON3_VERSION}
+        -DPython_INCLUDE_DIR=${SDK_INSTALL_DIR}/include/python${PYTHON3_VERSION}
+        -DPython_LIBRARY_DIRS=${SDK_INSTALL_DIR}/lib
+        -DPython_FIND_FRAMEWORK=NEVER
+        -DPython_FIND_VERSION=${PYTHON3_VERSION}
+        -DPython_FIND_VERSION_MAJOR=3
+        -DZLIB_INCLUDE_DIR=${SDK_INSTALL_DIR}/include
+        -DZLIB_LIBRARY_DIRS=${SDK_INSTALL_DIR}/lib
     INSTALL_DIR ${SDK_INSTALL_DIR}
 )
 list(APPEND DIST_PACK_TARGETS boost)
-
-if(WIN32)
-    ExternalProject_Add_Step(boost
-        copyDLL
-        DEPENDEES install
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/CopyFiles.cmake --
-            <INSTALL_DIR>/lib/*.dll
-            ${SDK_INSTALL_DIR}/bin/
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/DeleteFiles.cmake --
-            <INSTALL_DIR>/lib/*.dll
-        COMMENT "Copy boost dll files into SDK bin directory"
-    )
-endif()
-
-ExternalProject_Add_Step(boost
-    removeExtraPDB
-    DEPENDEES install
-    COMMAND ${CMAKE_COMMAND} -E remove
-        <INSTALL_DIR>/lib/accepts_shared_option.pdb
-        <INSTALL_DIR>/lib/has_atomic_flag_lockfree.pdb
-    COMMENT "Remove extra PDB files"
-)
 
 if(WIN32)
     configure_file(

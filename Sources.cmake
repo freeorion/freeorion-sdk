@@ -55,6 +55,6 @@ set(GLEW_VERSION 2.3.0)
 set(GLEW_URL https://downloads.sourceforge.net/project/glew/glew/${GLEW_VERSION}/glew-${GLEW_VERSION}.tgz)
 set(GLEW_MD5 1b321240e1f6651175e953b46bccb3f2)
 
-set(BOOST_VERSION 1.88.0)
+set(BOOST_VERSION 1.90.0)
 set(BOOST_URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}-cmake.tar.gz)
-set(BOOST_MD5 fe33be48eeb6de4dc2fefe60a3834c1f)
+set(BOOST_MD5 fdf8c1b6561d0847f4a7c0a488a26906)
